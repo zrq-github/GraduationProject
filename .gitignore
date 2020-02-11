@@ -33,3 +33,7 @@
 
 # Defined
 x64/
+.vs/
+
+#Visual Studio
+*.vcxproj.user
