@@ -9,6 +9,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "..\..\client\clie
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "..\..\server\server\server\server.vcxproj", "{5366021E-3815-4EB6-B6BF-8D05EF50BDCC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ClientApplication", "ClientApplication", "{42C1E0A8-1550-4B32-A54B-063507AB786C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ServerApplication", "ServerApplication", "{0E652E7E-1AE3-42E2-8390-D5D8E0978511}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BaseApplication", "BaseApplication", "{F2D595CF-7394-40EC-88D3-FC628B65E6B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -44,6 +50,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E89A6D4F-6A7E-45FF-92E5-151755EF2D69} = {F2D595CF-7394-40EC-88D3-FC628B65E6B6}
+		{FF61EA60-0948-4026-B072-13F31E988B88} = {42C1E0A8-1550-4B32-A54B-063507AB786C}
+		{5366021E-3815-4EB6-B6BF-8D05EF50BDCC} = {0E652E7E-1AE3-42E2-8390-D5D8E0978511}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0028901F-A586-44AC-8751-C7A9DB31D668}
