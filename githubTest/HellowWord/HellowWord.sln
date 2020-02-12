@@ -9,11 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{7683E6
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "serv11", "serv11\serv11.vcxproj", "{3E82630B-1EF6-4AC1-A834-46F015C59E6F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{8880B2A5-7747-4219-AEE8-DA89ED997C54}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Base", "Base", "{2615608B-C6A7-4EAC-9A32-53FDF713CC1D}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "client\client.vcxproj", "{F7C37E38-2947-4261-B38F-B8D9674A5EC3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,21 +35,12 @@ Global
 		{3E82630B-1EF6-4AC1-A834-46F015C59E6F}.Release|x64.Build.0 = Release|x64
 		{3E82630B-1EF6-4AC1-A834-46F015C59E6F}.Release|x86.ActiveCfg = Release|Win32
 		{3E82630B-1EF6-4AC1-A834-46F015C59E6F}.Release|x86.Build.0 = Release|Win32
-		{F7C37E38-2947-4261-B38F-B8D9674A5EC3}.Debug|x64.ActiveCfg = Debug|x64
-		{F7C37E38-2947-4261-B38F-B8D9674A5EC3}.Debug|x64.Build.0 = Debug|x64
-		{F7C37E38-2947-4261-B38F-B8D9674A5EC3}.Debug|x86.ActiveCfg = Debug|Win32
-		{F7C37E38-2947-4261-B38F-B8D9674A5EC3}.Debug|x86.Build.0 = Debug|Win32
-		{F7C37E38-2947-4261-B38F-B8D9674A5EC3}.Release|x64.ActiveCfg = Release|x64
-		{F7C37E38-2947-4261-B38F-B8D9674A5EC3}.Release|x64.Build.0 = Release|x64
-		{F7C37E38-2947-4261-B38F-B8D9674A5EC3}.Release|x86.ActiveCfg = Release|Win32
-		{F7C37E38-2947-4261-B38F-B8D9674A5EC3}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3E82630B-1EF6-4AC1-A834-46F015C59E6F} = {7683E644-29D7-4CCB-BBBB-813F84EA909B}
-		{F7C37E38-2947-4261-B38F-B8D9674A5EC3} = {8880B2A5-7747-4219-AEE8-DA89ED997C54}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {897A30CB-3D39-4017-865F-41DDB5BF0EF1}
