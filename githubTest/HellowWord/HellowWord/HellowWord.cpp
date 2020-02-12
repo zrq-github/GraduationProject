@@ -7,6 +7,7 @@ int main()
 {
     std::cout << "Hello World!\n";
 	std::cout << "第一次修改\n";
+	std::cout << "这里作为主分支，管理服务器，客户端公用代码";
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
