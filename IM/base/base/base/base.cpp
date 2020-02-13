@@ -7,6 +7,9 @@ int main()
 {
     std::cout << "Hello World!\n";
 	std::cout << "存放clent server公用资源代码\n";
+	std::cout << "写base,在base.sln解决方案中写\n";
+	std::cout << "写client,在client.sln解决方案中写\n";
+	std::cout << "写server,在server.sln解决方案中写\n";
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
