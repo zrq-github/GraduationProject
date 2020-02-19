@@ -40,5 +40,9 @@ x64/
 *.ilk
 *.idb
 
+#VC 6.0产生的文件
+*.dsp
+*.plg
+
 #Visual Studio
 *.vcxproj.user
