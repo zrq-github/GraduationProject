@@ -37,6 +37,8 @@ x64/
 *.log
 *.tlog
 *.pdb
+*.ilk
+*.idb
 
 #Visual Studio
 *.vcxproj.user
