@@ -1,1 +1,6 @@
 CopySelf：获取程序路径
+
+GetSysInfo:获取Windows版本，电脑名字，用户名字（目前代码只支持winxp的查询）
+
+Tcp:看着像tcp监听程序，建议自己写
+
