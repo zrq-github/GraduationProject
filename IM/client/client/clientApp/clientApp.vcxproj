@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3AB28B42-2E3A-4A54-8A4C-7E8F586ABE4B}</ProjectGuid>
+    <ProjectGuid>{315C0417-CD97-40BD-9451-A8732DDEF011}</ProjectGuid>
     <Keyword>QtVS_v302</Keyword>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
@@ -59,7 +59,6 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <AdditionalIncludeDirectories>$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories);$(SolutionDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -74,6 +73,7 @@
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+      <AdditionalIncludeDirectories>$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories);$(SolutionDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -82,14 +82,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="clientApp.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="clientApp.rc" />
+    <QtMoc Include="clientApp.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="clientApp.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="clientApp.qrc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LogonPanel\LogonPanel.vcxproj">
-      <Project>{00f45740-9925-4fe7-b78d-3f0077a3f727}</Project>
+      <Project>{b1b842a6-2378-4ff5-a36e-d01de4c7e39e}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

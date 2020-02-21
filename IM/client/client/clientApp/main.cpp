@@ -1,10 +1,15 @@
+#include "clientApp.h"
 #include <QtWidgets/QApplication>
-#include "LogonPanel/LogonPanel.h"
+#include <LogonPanel/LogonPanel.h>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    IM::LogonPanel logonApp;
-    logonApp.show();
+    //LogonPanel w;
+    //w.show();
+
+    LogonPanel *w = new LogonPanel;
+    w->show();
+
     return a.exec();
 }

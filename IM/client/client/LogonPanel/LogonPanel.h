@@ -1,22 +1,17 @@
 #pragma once
 
+#include <QDialog>
 #include "logonpanel_global.h"
-#include <QtWidgets/qdialog.h>
+namespace Ui { class LogonPanel; };
 
-namespace Ui
+class LOGONPANEL_EXPORT LogonPanel : public QDialog
 {
-    class LogonClass;
-}
+    Q_OBJECT
 
-namespace IM
-{
-    class LOGONPANEL_EXPORT LogonPanel:public QDialog
-    {
-        Q_OBJECT
-    public:
-        LogonPanel(QWidget *parent=Q_NULLPTR);
-    private:
-        Ui::LogonClass *ui;
-    };
+public:
+    LogonPanel(QWidget *parent = Q_NULLPTR);
+    ~LogonPanel();
 
-}
+private:
+    Ui::LogonPanel *ui;
+};
