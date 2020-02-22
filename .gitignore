@@ -44,5 +44,8 @@ x64/
 *.dsp
 *.plg
 
+#qt产生的文件
+*.aps
+
 #Visual Studio
 *.vcxproj.user
