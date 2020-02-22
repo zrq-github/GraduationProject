@@ -43,7 +43,7 @@
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="..\Resource.qrc">
+    <QtRcc Include="clientApp.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
   </ItemGroup>
