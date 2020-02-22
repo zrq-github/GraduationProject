@@ -42,6 +42,7 @@ public:
     LogonPanel(QWidget *parent = Q_NULLPTR);
     ~LogonPanel();
 
+    bool eventFilter(QObject *obj, QEvent *event);
 private:
     Ui::LogonPanel *ui;
 };

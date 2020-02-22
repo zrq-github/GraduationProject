@@ -114,8 +114,18 @@ LogonPanel::LogonPanel(QWidget *parent)
     ui->setupUi(this);
     ui->editPswd->setEchoMode(QLineEdit::Password);     //设置为密码输入模式
     this->setAttribute(Qt::WA_DeleteOnClose);           //设置为关闭时删除
-    this->setWindowFlags(Qt::SplashScreen);             //设置为SplashScreen, 窗口无边
-    //this->setWindowFlags(Qt::FramelessWindowHint);      //无边框，但是在任务显示对话框标题
+    //this->setWindowFlags(Qt::SplashScreen);             //设置为SplashScreen, 窗口无边
+    this->setWindowFlags(Qt::FramelessWindowHint);      //无边框，但是在任务显示对话框标题
+
+    ui->btnMinimize->installEventFilter(this);      //安装事件过滤器
+    ui->btnClose->installEventFilter(this);
+
+    //{   //给对话框加上最小化
+    //    Qt::Window    s flags = Qt::Dialog;
+    //    flags |= Qt::WindowMinimizeButtonHint;
+    //    flags |= Qt::WindowCloseButtonHint;;
+    //    setWindowFlags(flags);
+    //}
 
     readSettings();  //读取存储的用户名和密码
 }
@@ -123,4 +133,32 @@ LogonPanel::LogonPanel(QWidget *parent)
 LogonPanel::~LogonPanel()
 {
     delete ui;
+}
+
+bool LogonPanel::eventFilter(QObject * obj, QEvent * event)
+{
+    if (event->type() == QEvent::MouseButtonPress)
+    {
+        QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event); // 事件转换
+        if (mouseEvent->button() == Qt::LeftButton)
+        {
+            if (obj == ui->btnClose)
+            {
+                this->close();
+                return true;
+            }
+            if (obj = ui->btnMinimize)
+            {
+                this->showMinimized();
+                return true;
+            }
+            return QWidget::eventFilter(obj, event);
+        }
+        return QWidget::eventFilter(obj, event);
+    }
+    else
+    {
+        // pass the event on to the parent class
+        return QWidget::eventFilter(obj, event);
+    }
 }
