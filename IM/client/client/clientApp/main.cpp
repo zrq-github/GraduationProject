@@ -1,3 +1,4 @@
+﻿
 #include "clientApp.h"
 #include <QtWidgets/QApplication>
 #include <LogonPanel/LogonPanel.h>
