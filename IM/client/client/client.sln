@@ -11,6 +11,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "clientApp", "clientApp\clie
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LogonPanel", "LogonPanel\LogonPanel.vcxproj", "{B1B842A6-2378-4FF5-A36E-D01DE4C7E39E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IM", "IM\IM.vcxproj", "{EC9AEB7F-9D2C-4D10-9B65-A163858C9674}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IMTitleBarPanel", "IMTitleBarPanel\IMTitleBarPanel.vcxproj", "{49D3C916-21B9-4D1A-8CB8-C6A2D1A2863A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -39,12 +43,26 @@ Global
 		{B1B842A6-2378-4FF5-A36E-D01DE4C7E39E}.Release|x64.ActiveCfg = Release|x64
 		{B1B842A6-2378-4FF5-A36E-D01DE4C7E39E}.Release|x64.Build.0 = Release|x64
 		{B1B842A6-2378-4FF5-A36E-D01DE4C7E39E}.Release|x86.ActiveCfg = Release|x64
+		{EC9AEB7F-9D2C-4D10-9B65-A163858C9674}.Debug|x64.ActiveCfg = Debug|x64
+		{EC9AEB7F-9D2C-4D10-9B65-A163858C9674}.Debug|x64.Build.0 = Debug|x64
+		{EC9AEB7F-9D2C-4D10-9B65-A163858C9674}.Debug|x86.ActiveCfg = Debug|x64
+		{EC9AEB7F-9D2C-4D10-9B65-A163858C9674}.Release|x64.ActiveCfg = Release|x64
+		{EC9AEB7F-9D2C-4D10-9B65-A163858C9674}.Release|x64.Build.0 = Release|x64
+		{EC9AEB7F-9D2C-4D10-9B65-A163858C9674}.Release|x86.ActiveCfg = Release|x64
+		{49D3C916-21B9-4D1A-8CB8-C6A2D1A2863A}.Debug|x64.ActiveCfg = Debug|x64
+		{49D3C916-21B9-4D1A-8CB8-C6A2D1A2863A}.Debug|x64.Build.0 = Debug|x64
+		{49D3C916-21B9-4D1A-8CB8-C6A2D1A2863A}.Debug|x86.ActiveCfg = Debug|x64
+		{49D3C916-21B9-4D1A-8CB8-C6A2D1A2863A}.Release|x64.ActiveCfg = Release|x64
+		{49D3C916-21B9-4D1A-8CB8-C6A2D1A2863A}.Release|x64.Build.0 = Release|x64
+		{49D3C916-21B9-4D1A-8CB8-C6A2D1A2863A}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{B1B842A6-2378-4FF5-A36E-D01DE4C7E39E} = {0604DB96-B30D-4862-9FBC-26FEED0AAF55}
+		{EC9AEB7F-9D2C-4D10-9B65-A163858C9674} = {0604DB96-B30D-4862-9FBC-26FEED0AAF55}
+		{49D3C916-21B9-4D1A-8CB8-C6A2D1A2863A} = {0604DB96-B30D-4862-9FBC-26FEED0AAF55}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {083D5D18-5608-4A5F-829D-D34477B57A0C}

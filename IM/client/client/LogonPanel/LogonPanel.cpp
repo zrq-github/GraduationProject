@@ -11,12 +11,9 @@ void LogonPanel::mousePressEvent(QMouseEvent * event)
     if (event->button() == Qt::LeftButton)
     {
         m_moving = true;
-        //记录下鼠标相对于窗口的位置
-        //event->globalPos()鼠标按下时，鼠标相对于整个屏幕位置
-        //pos() this->pos()鼠标按下时，窗口相对于整个屏幕位置
         m_lastPos = event->globalPos() - pos();
     }
-    return QDialog::mousePressEvent(event);  //
+    return QDialog::mousePressEvent(event);
 }
 
 void LogonPanel::mouseMoveEvent(QMouseEvent * event)
@@ -76,8 +73,8 @@ void LogonPanel::on_btnLogon_clicked()
     if ((user == m_user) && (encrptPSWD == m_pswd)) //如果用户名和密码正确
     {
         writeSettings();   //保存设置
-        //this->accept();    //对话框 accept()，关闭对话框，
-        QMessageBox::about(this,"成功", "用户密码正确");
+        this->accept();    //对话框 accept()，关闭对话框，
+        //QMessageBox::about(this,"成功", "用户密码正确");
     }
     else
     {
