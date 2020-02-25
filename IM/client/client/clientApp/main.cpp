@@ -1,8 +1,10 @@
-﻿
-#include "clientApp.h"
+﻿#include "clientApp.h"
 #include <QtWidgets/QApplication>
 #include "LogonPanel/LogonPanel.h"
 #include "IM/IM.h"
+
+#include "FriendPanel/FriendPanel.h"
+#include "FriendPanel/BuddyWidget.h"
 
 int main(int argc, char *argv[])
 {
@@ -12,8 +14,13 @@ int main(int argc, char *argv[])
     //w.show();
 
     //测试主面板
-    IM *im = new IM;
-    im->show();
+    //IM *im = new IM;
+    //im->show();
+
+    //测试好友面板
+    BuddyWidget *w = new BuddyWidget;
+    w->show();
+
 
 
     return a.exec();
