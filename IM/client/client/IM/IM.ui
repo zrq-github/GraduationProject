@@ -19,12 +19,12 @@
   <property name="windowTitle">
    <string>IM</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
    <property name="spacing">
     <number>0</number>
    </property>
    <property name="sizeConstraint">
-    <enum>QLayout::SetMinimumSize</enum>
+    <enum>QLayout::SetDefaultConstraint</enum>
    </property>
    <property name="leftMargin">
     <number>0</number>
@@ -39,12 +39,16 @@
     <number>0</number>
    </property>
    <item>
-    <layout class="QVBoxLayout" name="layoutTitleBar"/>
+    <layout class="QVBoxLayout" name="layoutTitleBar">
+     <property name="sizeConstraint">
+      <enum>QLayout::SetFixedSize</enum>
+     </property>
+    </layout>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <property name="sizeConstraint">
-      <enum>QLayout::SetNoConstraint</enum>
+      <enum>QLayout::SetDefaultConstraint</enum>
      </property>
     </layout>
    </item>

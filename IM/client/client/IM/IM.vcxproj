@@ -86,18 +86,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <QtMoc Include="IM.h" />
+    <QtMoc Include="IMTitleBarPanel.h" />
     <ClInclude Include="im_global.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IM.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\IMTitleBarPanel\IMTitleBarPanel.vcxproj">
-      <Project>{49d3c916-21b9-4d1a-8cb8-c6a2d1a2863a}</Project>
-    </ProjectReference>
+    <ClCompile Include="IMTitleBarPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="IM.ui" />
+    <QtUic Include="IMTitleBarPanel.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ChatPanel\ChatPanel.vcxproj">
+      <Project>{dfb0884c-76d2-4cee-81e7-f77facc34767}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\FriendPanel\FriendPanel.vcxproj">
+      <Project>{e78acba3-0fc6-4347-b700-a5cbe49496fd}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

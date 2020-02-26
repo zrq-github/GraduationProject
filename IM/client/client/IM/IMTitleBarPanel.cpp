@@ -1,6 +1,6 @@
 #include "IMTitleBarPanel.h"
-#include "ui_IMTitleBarPanel.h"
 #include <QMoveEvent>
+#include "ui_IMTitleBarPanel.h"
 
 IMTitleBarPanel::IMTitleBarPanel(QWidget *parent)
     : QWidget(parent)

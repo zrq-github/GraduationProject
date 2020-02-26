@@ -7,6 +7,9 @@
 #include "im_global.h"
 namespace Ui { class IM; };
 
+class ChatPanel;
+class FriendPanel;
+
 class IM_EXPORT IM : public QWidget
 {
     Q_OBJECT
@@ -24,5 +27,7 @@ private:
     QPoint  m_lastPos;                  //上一次的鼠标位置
 private:
     Ui::IM *ui;
+    ChatPanel *chatPanel;       //聊天面板
+    FriendPanel *friendPanel;   //好友面板
     void createUi();
 };

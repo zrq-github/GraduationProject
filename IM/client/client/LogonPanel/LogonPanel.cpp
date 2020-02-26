@@ -74,6 +74,7 @@ void LogonPanel::on_btnLogon_clicked()
     {
         writeSettings();   //保存设置
         this->accept();    //对话框 accept()，关闭对话框，
+
         //QMessageBox::about(this,"成功", "用户密码正确");
     }
     else

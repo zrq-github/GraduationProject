@@ -34,14 +34,23 @@
     <QtMoc Include="IM.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="IMTitleBarPanel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IM.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IMTitleBarPanel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="IM.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="IMTitleBarPanel.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

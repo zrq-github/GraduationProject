@@ -1,10 +1,9 @@
 #pragma once
 
 #include <QWidget>
-#include "imtitlebarpanel_global.h"
 namespace Ui { class IMTitleBarPanel; };
 
-class IMTITLEBARPANEL_EXPORT IMTitleBarPanel : public QWidget
+class IMTitleBarPanel : public QWidget
 {
     Q_OBJECT
 
