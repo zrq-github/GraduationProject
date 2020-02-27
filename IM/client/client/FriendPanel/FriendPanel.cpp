@@ -32,13 +32,33 @@ void FriendPanel::binSlots()
 {
 }
 
+bool FriendPanel::eventFilter(QObject * obj, QEvent * event)
+{
+    if (event->type() == QEvent::MouseButtonPress)
+    {
+        QList<BuddyWidget*> &child = this->findChildren<BuddyWidget*>();
+        for (BuddyWidget *i : child)
+        {
+            if (obj == i)
+            {
+                //在这里发送点击事件
+
+            }
+        }
+        return true;
+    }
+
+    return false;
+}
+
 
 
 void FriendPanel::slotAddGroup()
 {
     BuddyWidget *a1 = new BuddyWidget;
     BuddyWidget *a2 = new BuddyWidget;
-
+    a1->installEventFilter(this);
+    a2->installEventFilter(this);
     QWidget *widget = new QWidget;
     
     //布局设置

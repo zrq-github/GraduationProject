@@ -17,6 +17,8 @@ public:
 private:
     void createUi();
     void binSlots();
+public:
+    bool eventFilter(QObject *obj, QEvent *event);
 
 private slots:
     void slotAddGroup();    //Ìí¼Ó×é

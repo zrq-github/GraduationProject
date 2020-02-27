@@ -53,15 +53,8 @@ void BuddyWidget::setData(QString & name, QString & sign, QString & headPath)
     labHead->setPixmap(headPath);
 }
 
-bool BuddyWidget::eventFilter(QObject *obj, QEvent *event)
+void BuddyWidget::mouseReleaseEvent(QMouseEvent * event)
 {
-    if (obj == labHead)
-    {
-        if (event->type() == QEvent::Paint)
-        {
-            QPainter painter(labHead);
-            painter.drawPixmap(labHead->rect(), QPixmap(m_headPath));
-        }
-    }
-    return QWidget::eventFilter(obj, event);
+
+    return QWidget::mouseReleaseEvent(event);
 }
