@@ -18,7 +18,7 @@ class TcpServer;
 
 
 namespace Ui {
-class Widget;
+    class Widget;
 }
 
 
@@ -28,7 +28,7 @@ class Widget : public QWidget
     Q_OBJECT
 
 public:
-    explicit Widget(QWidget *parent = 0,QString s="");
+    explicit Widget(QWidget* parent = 0, QString s = "");
 private slots:
 
     void processPendingDatagrams();
@@ -58,34 +58,32 @@ public:
 protected:
 
     void newParticipant(QString userName,
-                            QString ipAddress);
+        QString ipAddress);
     void participantLeft(QString userName,
-                             QString time);
-    void sendMessage(MessageType type, QString serverAddress="");
+        QString time);
+    void sendMessage(MessageType type, QString serverAddress = "");
 
 
-        QString getIP();
-        QString getUserName();
-        QString getMessage();
+    QString getIP();
+    QString getUserName();
+    QString getMessage();
 
-        void hasPendingFile(QString userName, QString serverAddress,
-                                QString clientAddress, QString fileName);
-
-
+    void hasPendingFile(QString userName, QString serverAddress,
+        QString clientAddress, QString fileName);
 
 
 private:
-    Ui::Widget *ui;
+    Ui::Widget* ui;
     QString qstring;
-    QUdpSocket *udpSocket;
+    QUdpSocket* udpSocket;
     qint16 port;
     qint32 bb;
-     int i;// use to bold
+    int i;// use to bold
     QString fileName;
-        TcpServer *server;
+    TcpServer* server;
 
-        bool saveFile(const QString& filename);
-        void showxchat(QString name,QString ip,QString myname);
+    bool saveFile(const QString& filename);
+    void showxchat(QString name, QString ip, QString myname);
 
 
 

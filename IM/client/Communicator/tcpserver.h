@@ -10,7 +10,7 @@
 //class QTcpSocket;
 
 namespace Ui {
-class TcpServer;
+    class TcpServer;
 }
 
 class TcpServer : public QDialog
@@ -18,24 +18,24 @@ class TcpServer : public QDialog
     Q_OBJECT
 
 public:
-    explicit TcpServer(QWidget *parent = 0);
+    explicit TcpServer(QWidget* parent = 0);
     ~TcpServer();
 
     void initServer();
     void refused();
 
 protected:
-      void changeEvent(QEvent *); //+
-    void closeEvent(QCloseEvent *);
+    void changeEvent(QEvent*); //+
+    void closeEvent(QCloseEvent*);
 
 private:
-    Ui::TcpServer *ui;
+    Ui::TcpServer* ui;
 
     qint16 tcpPort;
-    QTcpServer *tcpServer;
+    QTcpServer* tcpServer;
     QString fileName;
     QString theFileName;
-    QFile *localFile;
+    QFile* localFile;
 
     qint64 TotalBytes;
     qint64 bytesWritten;
@@ -43,7 +43,7 @@ private:
     qint64 payloadSize;
     QByteArray outBlock;
 
-    QTcpSocket *clientConnection;
+    QTcpSocket* clientConnection;
 
     QTime time;
 

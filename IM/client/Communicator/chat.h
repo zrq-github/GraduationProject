@@ -28,26 +28,26 @@ class chat : public QDialog
 
 public:
     ~chat();
-//    chat();
-    chat(QString pasvusername, QString pasvuserip,QString Name);
+    //    chat();
+    chat(QString pasvusername, QString pasvuserip, QString Name);
     QString xpasvuserip;
     QString xpasvusername;
-    QUdpSocket *xchat;
+    QUdpSocket* xchat;
     qint32 xport;
-    void sendMessage(MessageType type,QString serverAddress="");
+    void sendMessage(MessageType type, QString serverAddress = "");
     quint16 a;
-//    static  qint32 is_opened = 0;
+    //    static  qint32 is_opened = 0;
     bool is_opened;
 
 
 
 protected:
 
-    void participantLeft(QString userName,QString time);
+    void participantLeft(QString userName, QString time);
 
 private:
-    Ui::chat *ui;
-    TcpServer *server;
+    Ui::chat* ui;
+    TcpServer* server;
     QString name;
 
 

@@ -9,7 +9,7 @@
 class QTcpSocket;
 
 namespace Ui {
-class TcpClient;
+    class TcpClient;
 }
 
 class TcpClient : public QDialog
@@ -17,20 +17,20 @@ class TcpClient : public QDialog
     Q_OBJECT
 
 public:
-    explicit TcpClient(QWidget *parent = 0);
+    explicit TcpClient(QWidget* parent = 0);
     ~TcpClient();
 
     void setHostAddress(QHostAddress address);
     void setFileName(QString fileName);
 
 protected:
-    void changeEvent(QEvent *);// +
-    void closeEvent(QCloseEvent *);
+    void changeEvent(QEvent*);// +
+    void closeEvent(QCloseEvent*);
 
 private:
-    Ui::TcpClient *ui;
+    Ui::TcpClient* ui;
 
-    QTcpSocket *tcpClient;
+    QTcpSocket* tcpClient;
     quint16 blockSize;
     QHostAddress hostAddress;
     qint16 tcpPort;
@@ -40,7 +40,7 @@ private:
     qint64 bytesToReceive;
     qint64 fileNameSize;
     QString fileName;
-    QFile *localFile;
+    QFile* localFile;
     QByteArray inBlock;
 
     QTime time;
