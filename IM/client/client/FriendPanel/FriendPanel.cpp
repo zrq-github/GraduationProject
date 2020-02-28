@@ -42,7 +42,8 @@ bool FriendPanel::eventFilter(QObject * obj, QEvent * event)
             if (obj == i)
             {
                 //在这里发送点击事件
-
+                emit this->childClick(i->getID(), i->getName());
+                return false;
             }
         }
         return true;
@@ -56,7 +57,9 @@ bool FriendPanel::eventFilter(QObject * obj, QEvent * event)
 void FriendPanel::slotAddGroup()
 {
     BuddyWidget *a1 = new BuddyWidget;
+    a1->setName("一号机");
     BuddyWidget *a2 = new BuddyWidget;
+    a2->setName("二号机");
     a1->installEventFilter(this);
     a2->installEventFilter(this);
     QWidget *widget = new QWidget;

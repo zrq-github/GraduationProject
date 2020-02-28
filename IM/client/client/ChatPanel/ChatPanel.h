@@ -14,7 +14,14 @@ public:
 
 private:
     Ui::ChatPanel *ui;
+    QString chatterId;
+    QString chatterName;
+private:
+    void createUi();
     void binSlots();
 private slots:
     void on_btnSend_click();
+    void on_labName_Change();
+
+    void slotChatterChange(QString &id,QString &name);
 };

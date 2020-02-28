@@ -14,15 +14,24 @@ public:
     BuddyWidget(QWidget *parent = Q_NULLPTR);
     ~BuddyWidget();
 public:
-    QLabel *labHead;  //头像
 
-    QLabel *m_id;       //用户id
-    QLabel *m_name;     //用户名  
-    QLabel *m_sign;     //个性签名
-    QString m_headPath; //头像路径
-    bool    isOnLine;
 public:
+    QString getID();
+    QString getName();
+    QString getSign();
 
+    void setID(QString id);
+    void setName(QString name);
+    void setSign(QString sign);
+private:
+    QString m_id;       //用户id
+    QString m_headPath; //头像路径
+
+    QLabel *labHead;  //头像
+    QLabel *labName;     //用户名  
+    QLabel *labSign;     //个性签名
+    
+    bool    isOnLine;
 private:
     void createUi();
     void setData(QString &name, QString &sign, QString &headPath);

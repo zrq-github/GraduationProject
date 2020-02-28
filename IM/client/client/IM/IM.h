@@ -29,5 +29,7 @@ private:
     Ui::IM *ui;
     ChatPanel *chatPanel;       //聊天面板
     FriendPanel *friendPanel;   //好友面板
+private:
     void createUi();
+    void binSlots();
 };

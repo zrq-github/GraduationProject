@@ -19,7 +19,8 @@ private:
     void binSlots();
 public:
     bool eventFilter(QObject *obj, QEvent *event);
-
+signals:
+    void childClick(QString &id,QString &name);      //自定义子空间点击事件
 private slots:
     void slotAddGroup();    //添加组
 };

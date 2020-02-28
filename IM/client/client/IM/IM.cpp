@@ -15,6 +15,7 @@ IM::IM(QWidget *parent)
     ui->setupUi(this);
     this->createUi();
     //this->setWindowFlags(Qt::FramelessWindowHint);      //无边框，但是在任务显示对话框标题
+    this->binSlots();
 }
 
 IM::~IM()
@@ -68,5 +69,11 @@ void IM::createUi()
     splitterRight->addWidget(chatPanel);
 
     splitterLMain->setStretchFactor(1, 3);
+}
+
+void IM::binSlots()
+{
+    connect(friendPanel, SIGNAL(childClick(QString&, QString&)),
+        chatPanel, SLOT(slotChatterChange(QString&, QString&)));
 }
 
