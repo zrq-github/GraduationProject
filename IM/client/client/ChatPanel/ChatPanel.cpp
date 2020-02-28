@@ -54,7 +54,7 @@ void ChatPanel::on_btnSend_click()
     }
     ui->editChat->append(str);                      //将编辑框的文字转到聊天框
     {
-        //发送数据包给服务器，转发给相应用户
+        //发送数据包给服务器
     }
     ui->editSend->clear();  //清空编辑框
 }
