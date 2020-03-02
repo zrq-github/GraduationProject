@@ -49,6 +49,7 @@ void LogonPanel::readSettings()
     if (saved)
     {
         ui->editUser->setText(m_user);
+        ui->editPswd->setText(m_pswd);
         ui->chkboxSavePswd->setChecked(saved);
     }
 }
@@ -94,15 +95,16 @@ void LogonPanel::on_btnLogon_clicked()
 
 QString LogonPanel::encrypt(const QString & str)
 {
-    QByteArray btArray;
-    btArray.append(str);
+    return str;
+    //QByteArray btArray;
+    //btArray.append(str);
 
-    QCryptographicHash hash(QCryptographicHash::Md5);  //Md5加密算法
-    hash.addData(btArray);  //添加数据到加密哈希值
-    QByteArray resultArray = hash.result();  //返回最终的哈希值
-    QString md5 = resultArray.toHex();//转换为16进制字符串
+    //QCryptographicHash hash(QCryptographicHash::Md5);  //Md5加密算法
+    //hash.addData(btArray);  //添加数据到加密哈希值
+    //QByteArray resultArray = hash.result();  //返回最终的哈希值
+    //QString md5 = resultArray.toHex();//转换为16进制字符串
 
-    return  md5;
+    //return  md5;
 }
 
 LogonPanel::LogonPanel(QWidget *parent)

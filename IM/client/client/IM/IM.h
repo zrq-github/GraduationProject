@@ -38,14 +38,14 @@ private:
     QString getLocalIP();
 
     QTcpSocket *tcpClient;
-    void testServer();          //测试函数
+    void testServer();          //测试函数,连接服务器的初始配置
 private slots:
     void slot_chatPanel_sendMsg(QString &str);
 
-    void onConnected();      
-    void onDisconnected();   
+    void onConnected();             
+    void onDisconnected();          
     void onSocketStateChange(QAbstractSocket::SocketState socketState);
-    void onSocketReadyRead();        //读取socket传入的数据
+    void onSocketReadyRead();       //读取socket传入的数据
 Q_SIGNALS:
-    void sig_getMsg(QString&);  //先放着，不知道干嘛用
+    void sig_getMsg(QString&);      //先放着，不知道干嘛用
 };

@@ -13,24 +13,24 @@ int main(int argc, char *argv[])
     ////w.show();
 
     ////测试主面板
-    IM *im = new IM;
-    im->show();
+    //IM *im = new IM;
+    //im->show();
 
     ////测试好友面板
     ////FriendPanel *w = new FriendPanel;
     ////w->show();
 
-    return a.exec();
+    //return a.exec();
 
-    //LogonPanel *w = new LogonPanel;
-    //if (w->exec() == QDialog::Accepted)
-    //{
-    //    IM *im = new IM;
-    //    im->show();
-    //    return a.exec();
-    //}
-    //else
-    //{
-    //    return 0;
-    //}
+    LogonPanel *w = new LogonPanel;
+    if (w->exec() == QDialog::Accepted)
+    {
+        IM *im = new IM;
+        im->show();
+        return a.exec();
+    }
+    else
+    {
+        return 0;
+    }
 }
