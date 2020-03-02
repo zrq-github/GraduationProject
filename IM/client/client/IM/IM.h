@@ -4,6 +4,7 @@
 */
 
 #include <QWidget>
+#include <QtNetwork/QTcpSocket>
 #include "im_global.h"
 namespace Ui { class IM; };
 
@@ -29,7 +30,22 @@ private:
     Ui::IM *ui;
     ChatPanel *chatPanel;       //聊天面板
     FriendPanel *friendPanel;   //好友面板
+
+
 private:
     void createUi();
     void binSlots();
+    QString getLocalIP();
+
+    QTcpSocket *tcpClient;
+    void testServer();          //测试函数
+private slots:
+    void slot_chatPanel_sendMsg(QString &str);
+
+    void onConnected();      
+    void onDisconnected();   
+    void onSocketStateChange(QAbstractSocket::SocketState socketState);
+    void onSocketReadyRead();        //读取socket传入的数据
+Q_SIGNALS:
+    void sig_getMsg(QString&);  //先放着，不知道干嘛用
 };

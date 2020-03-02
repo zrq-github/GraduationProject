@@ -6,6 +6,13 @@
 #include "ChatPanel/ChatPanel.h"
 #include <QSplitter>
 
+#include <QtNetwork/QHostAddress>
+#include <QtNetwork/QHostInfo>
+
+#ifdef WIN32  
+#pragma execution_character_set("utf-8")  
+#endif
+
 IM::IM(QWidget *parent)
     : QWidget(parent)
     , friendPanel(Q_NULLPTR)
@@ -13,9 +20,12 @@ IM::IM(QWidget *parent)
 {
     ui = new Ui::IM();
     ui->setupUi(this);
+    tcpClient = new QTcpSocket;
+
     this->createUi();
     //this->setWindowFlags(Qt::FramelessWindowHint);      //无边框，但是在任务显示对话框标题
-    this->binSlots();
+    this->binSlots(); 
+    this->testServer();
 }
 
 IM::~IM()
@@ -73,7 +83,83 @@ void IM::createUi()
 
 void IM::binSlots()
 {
+    //来自好友界面的信号
     connect(friendPanel, SIGNAL(childClick(QString&, QString&)),
         chatPanel, SLOT(slotChatterChange(QString&, QString&)));
+    //来自聊天窗口的信号
+    connect(chatPanel, &ChatPanel::sig_sendMsg, this, &IM::slot_chatPanel_sendMsg);
+    //QTcpServer信号
+    connect(tcpClient, SIGNAL(connected()), this, SLOT(onConnected()));
+    connect(tcpClient, SIGNAL(disconnected()), this, SLOT(onDisconnected()));
+    connect(tcpClient, SIGNAL(stateChanged(QAbstractSocket::SocketState)),
+        this, SLOT(onSocketStateChange(QAbstractSocket::SocketState)));
+    connect(tcpClient, SIGNAL(readyRead()),
+        this, SLOT(onSocketReadyRead()));
 }
 
+QString IM::getLocalIP()
+{
+    QString hostName = QHostInfo::localHostName();//本地主机名
+    QHostInfo   hostInfo = QHostInfo::fromName(hostName);
+    QString   localIP = "";
+
+    QList<QHostAddress> addList = hostInfo.addresses();//
+
+    if (!addList.isEmpty())
+        for (int i = 0; i < addList.count(); i++)
+        {
+            QHostAddress aHost = addList.at(i);
+            if (QAbstractSocket::IPv4Protocol == aHost.protocol())
+            {
+                localIP = aHost.toString();
+                break;
+            }
+        }
+    return localIP;
+}
+
+void IM::testServer()
+{
+    QString addr = "127.0.0.1";
+    quint16 port = 1200;
+
+    QString localIP = getLocalIP();
+    tcpClient->connectToHost(addr, port);
+}
+
+void IM::onConnected()
+{
+    //连接到服务器触发的信号
+    {
+        chatPanel->getMsg("**已连接到服务器");
+        chatPanel->getMsg("**peer address:" +
+            tcpClient->peerAddress().toString());
+        chatPanel->getMsg("**peer port:" +
+            QString::number(tcpClient->peerPort()));
+        chatPanel->getMsg("**已连接到服务器");
+    }   
+}
+
+void IM::onDisconnected()
+{
+    int a = 0;
+}
+
+void IM::onSocketStateChange(QAbstractSocket::SocketState socketState)
+{
+}
+
+void IM::onSocketReadyRead()
+{
+    while (tcpClient->canReadLine())
+        chatPanel->getMsg("server to client:\n" + tcpClient->readLine());
+}
+
+void IM::slot_chatPanel_sendMsg(QString &str)
+{
+    chatPanel->getMsg("client to server:\n" + str);
+    QByteArray  strByte = str.toUtf8();
+
+    strByte.append('\n');
+    tcpClient->write(strByte);
+}

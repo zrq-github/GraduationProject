@@ -2,6 +2,11 @@
 #include "ui_ChatPanel.h"
 #include <QLineEdit>
 
+void ChatPanel::getMsg(QString str)
+{
+    ui->editChat->append(str);
+}
+
 ChatPanel::ChatPanel(QWidget *parent)
     : QWidget(parent)
 {
@@ -26,10 +31,10 @@ void ChatPanel::createUi()
 
 void ChatPanel::binSlots()
 {
-    connect(ui->btnSend, SIGNAL(clicked()), this, SLOT(on_btnSend_click()));    //发送文本事件
+    connect(ui->btnSend, SIGNAL(clicked()), this, SLOT(slot_btnSend_click()));    //发送文本事件
 }
 
-void ChatPanel::on_labName_Change()
+void ChatPanel::slot_labName_Change()
 {
 
 }
@@ -46,15 +51,21 @@ void ChatPanel::slotChatterChange(QString & id, QString & name)
     }
 }
 
-void ChatPanel::on_btnSend_click()
+void ChatPanel::slot_btnSend_click()
 {
     QString &str = ui->editSend->toPlainText();     //得到编辑框的文字
     {
         //将文字进行大小处理
     }
     ui->editChat->append(str);                      //将编辑框的文字转到聊天框
-    {
-        //发送数据包给服务器
-    }
+
+    //
+    emit sig_sendMsg(str);
+    
     ui->editSend->clear();  //清空编辑框
+}
+
+void ChatPanel::getMsg(QString &str)
+{
+    ui->editChat->append(str);
 }
