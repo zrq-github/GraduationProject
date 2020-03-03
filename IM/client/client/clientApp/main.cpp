@@ -8,6 +8,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
     ////测试登录面板
     ////LogonPanel w;
     ////w.show();
@@ -21,6 +22,7 @@ int main(int argc, char *argv[])
     ////w->show();
 
     //return a.exec();
+
 
     LogonPanel *w = new LogonPanel;
     if (w->exec() == QDialog::Accepted)

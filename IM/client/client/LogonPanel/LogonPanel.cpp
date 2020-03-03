@@ -5,6 +5,7 @@
 #include <QMouseEvent>
 #include <QCryptographicHash>
 #include <QSettings>
+#include "AppSettings/AppSettings.h"
 
 void LogonPanel::mousePressEvent(QMouseEvent * event)
 {
@@ -36,6 +37,8 @@ void LogonPanel::mouseReleaseEvent(QMouseEvent * event)
 
 void LogonPanel::readSettings()
 {
+    appSettingsInstance;
+
     QString organization = "IM";    //用于注册表
     QString appName = "user";       //HKEY_CURRENT_USER/Software/IM/user
     QSettings settings(organization, appName);//创建注册表信息
@@ -45,7 +48,7 @@ void LogonPanel::readSettings()
     m_user = settings.value("Username", "user").toString();     //读取 Username 键的值，缺省为“user”
     QString defaultPSWD = encrypt("12345");                     //缺省密码"12345"加密后的数据
     m_pswd = settings.value("PSWD", defaultPSWD).toString();    //读取PSWD 键的值，
-
+     
     if (saved)
     {
         ui->editUser->setText(m_user);
