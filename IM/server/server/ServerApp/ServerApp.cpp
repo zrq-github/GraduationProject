@@ -1,5 +1,6 @@
 #include "ServerApp.h"
-#include <QtNetwork>
+#include <QtNetwork/QHostAddress>
+#include <QtNetwork/QHostInfo>
 #include "ui_ServerApp.h"
 
 #ifdef WIN32

@@ -1,7 +1,8 @@
 #pragma once
 
 #include <QtWidgets/QWidget>
-#include <QTcpServer>
+#include <QtNetwork/QTcpServer>
+#include <QtNetwork/QTcpSocket>
 
 namespace Ui {
     class ServerAppClass;
