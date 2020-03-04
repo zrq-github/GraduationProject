@@ -37,32 +37,40 @@ void LogonPanel::mouseReleaseEvent(QMouseEvent * event)
 
 void LogonPanel::readSettings()
 {
-    appSettingsInstance;
-
-    QString organization = "IM";    //用于注册表
-    QString appName = "user";       //HKEY_CURRENT_USER/Software/IM/user
-    QSettings settings(organization, appName);//创建注册表信息
-
-    //数据库加入后更改,这样注册表只能实现单人登录
-    bool saved = settings.value("saved", false).toBool();       //读取 saved键的值
-    m_user = settings.value("Username", "user").toString();     //读取 Username 键的值，缺省为“user”
-    QString defaultPSWD = encrypt("12345");                     //缺省密码"12345"加密后的数据
-    m_pswd = settings.value("PSWD", defaultPSWD).toString();    //读取PSWD 键的值，
-     
-    if (saved)
+    QString lastId = appSettingsInstance.getSetting("LogonSettings", "lastLogonId").toString();     //上次登录的用户
+    bool isRememberPswd = appSettingsInstance.getSetting("LogonSettings", "rememberPswd").toBool(); //是否记住密码
+    if (isRememberPswd)
     {
-        ui->editUser->setText(m_user);
-        ui->editPswd->setText(m_pswd);
-        ui->chkboxSavePswd->setChecked(saved);
+        QString lastPasw = appSettingsInstance.getSetting("LogonSettings", "lastLogonPswd").toString(); //取得密码
+        ui->editPswd->setText(lastPasw);
     }
+    ui->editUser->setText(lastId);
+
+    //QString organization = "IM";    //用于注册表
+    //QString appName = "user";       //HKEY_CURRENT_USER/Software/IM/user
+    //QSettings settings(organization, appName);//创建注册表信息
+
+    ////数据库加入后更改,这样注册表只能实现单人登录
+    //bool saved = settings.value("saved", false).toBool();       //读取 saved键的值
+    //m_user = settings.value("Username", "user").toString();     //读取 Username 键的值，缺省为“user”
+    //QString defaultPSWD = encrypt("12345");                     //缺省密码"12345"加密后的数据
+    //m_pswd = settings.value("PSWD", defaultPSWD).toString();    //读取PSWD 键的值，
+    // 
+    //if (saved)
+    //{
+    //    ui->editUser->setText(m_user);
+    //    ui->editPswd->setText(m_pswd);
+    //    ui->chkboxSavePswd->setChecked(saved);
+    //}
 }
 
 void LogonPanel::writeSettings()
 {
-    QSettings  settings("IM", "user"); //注册表键组
-    settings.setValue("Username", m_user); //用户名
-    settings.setValue("PSWD", m_pswd);   //密码，经过加密的
-    settings.setValue("saved", ui->chkboxSavePswd->isChecked());
+
+    //QSettings  settings("IM", "user"); //注册表键组
+    //settings.setValue("Username", m_user); //用户名
+    //settings.setValue("PSWD", m_pswd);   //密码，经过加密的
+    //settings.setValue("saved", ui->chkboxSavePswd->isChecked());
 }
 
 void LogonPanel::on_btnLogon_clicked()
@@ -70,30 +78,48 @@ void LogonPanel::on_btnLogon_clicked()
     QString user = ui->editUser->text().trimmed();  //用户名
     QString pswd = ui->editPswd->text().trimmed();  //密码
 
-    QString encrptPSWD = encrypt(pswd); //对输入密码进行加密
-   //连接数据库，判断密码是否正确
-
-   //现在用注册表代替
-    if ((user == m_user) && (encrptPSWD == m_pswd)) //如果用户名和密码正确
-    {
-        writeSettings();   //保存设置
-        this->accept();    //对话框 accept()，关闭对话框，
-
-        //QMessageBox::about(this,"成功", "用户密码正确");
-    }
-    else
-    {
-        m_tryCount++;      //错误次数应该有数据库返回
-        if (m_tryCount > 3)
+    //连接数据库
+    if (true)
+    {//成功,修改上次登录用户
+        appSettingsInstance.setSetting("LogonSettings", "lastLogonId", user);
+        bool isSavePswd=ui->chkboxSavePswd->isChecked();
+        if (isSavePswd)
         {
-            QMessageBox::critical(this, "错误", "输入错误次数太多，强行退出");
-            this->reject(); //退出
+            appSettingsInstance.setSetting("LogonSettings", "lastLogonPswd", pswd);
+            appSettingsInstance.setSetting("LogonSettings", "rememberPswd", true);
         }
         else
         {
-            QMessageBox::warning(this, "错误提示", "用户名或密码错误");
+            appSettingsInstance.setSetting("LogonSettings", "rememberPswd", false);
         }
+        this->accept();    //对话框 accept()，关闭对话框，
     }
+    else
+    {   //登录失败
+        QMessageBox::about(this, "错误", "用户密码不正确");
+    }
+
+   ////现在用注册表代替
+   // if ((user == m_user) && (encrptPSWD == m_pswd)) //如果用户名和密码正确
+   // {
+   //     writeSettings();   //保存设置
+   //     this->accept();    //对话框 accept()，关闭对话框，
+
+   //     //QMessageBox::about(this,"成功", "用户密码正确");
+   // }
+   // else
+   // {
+   //     m_tryCount++;      //错误次数应该有数据库返回
+   //     if (m_tryCount > 3)
+   //     {
+   //         QMessageBox::critical(this, "错误", "输入错误次数太多，强行退出");
+   //         this->reject(); //退出
+   //     }
+   //     else
+   //     {
+   //         QMessageBox::warning(this, "错误提示", "用户名或密码错误");
+   //     }
+   // }
 }
 
 QString LogonPanel::encrypt(const QString & str)

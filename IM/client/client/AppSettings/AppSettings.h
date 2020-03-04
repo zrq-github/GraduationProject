@@ -13,8 +13,9 @@ class APPSETTINGS_EXPORT AppSettings
 public:
     static AppSettings &getInstance();
     static QVariant getSetting(QString key);
+    static QVariant getSetting(QString group,QString key);
     static void setSetting(QString key, QVariant value);
-
+    static void setSetting(QString group,QString key, QVariant value);
 private:
     AppSettings();
 private:
