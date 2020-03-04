@@ -7,8 +7,6 @@
 AppSettings *AppSettings::m_appSettings = nullptr;
 QSettings *AppSettings::m_settings = nullptr;
 
-
-
 AppSettings &AppSettings::getInstance()
 {
     if (m_appSettings == nullptr)
