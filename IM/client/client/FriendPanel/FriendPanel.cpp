@@ -52,7 +52,10 @@ bool FriendPanel::eventFilter(QObject * obj, QEvent * event)
     return false;
 }
 
+void FriendPanel::slotAddFriend()
+{
 
+}
 
 void FriendPanel::slotAddGroup()
 {
