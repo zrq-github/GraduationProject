@@ -44,6 +44,7 @@ void LogonPanel::readSettings()
         QString lastPasw = appSettingsInstance.getSetting("LogonSettings", "lastLogonPswd").toString(); //取得密码
         ui->editPswd->setText(lastPasw);
     }
+    ui->chkboxSavePswd->setChecked(isRememberPswd);
     ui->editUser->setText(lastId);
 
     //QString organization = "IM";    //用于注册表

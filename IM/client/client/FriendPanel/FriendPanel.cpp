@@ -4,6 +4,7 @@
 #include <QLineEdit>
 #include <QMouseEvent>
 #include "BuddyWidget.h"
+#include <QPushButton>
 
 #ifdef WIN32  
 #pragma execution_character_set("utf-8")  
@@ -12,10 +13,14 @@
 
 FriendPanel::FriendPanel(QWidget * parent)
     :QToolBox(parent)
+    , listGroup(new QMap<QString, QWidget*>)
+    , list(new QMap<QString, QString>)
 {
-    setFocusPolicy(Qt::NoFocus);        // 去除item选中时的虚线边框  
+    //setFocusPolicy(Qt::NoFocus);        // 去除item选中时的虚线边框  
     createUi();
     binSlots();
+
+    init();
 }
 
 FriendPanel::~FriendPanel()
@@ -25,11 +30,45 @@ FriendPanel::~FriendPanel()
 void FriendPanel::createUi()
 {
     setGeometry(0, 0, 0, 0);
-    slotAddGroup();
+
 }
 
 void FriendPanel::binSlots()
 {
+    
+}
+
+void FriendPanel::addFriend(QWidget *page, QString id, QString name, QString sign, QString headPath)
+{
+    BuddyWidget *widget = new BuddyWidget;
+    widget->installEventFilter(this);
+    widget->setName(name);
+    widget->setID(id);
+    widget->setSign(sign);
+
+    QLayout *layout = page->findChild<QLayout*>("layout");
+    layout->addWidget(widget);
+}
+
+void FriendPanel::addGroup(QString groupName)
+{
+    QWidget *page = new QWidget;
+    page->setGeometry(0, 0, 0, 0);
+    QVBoxLayout *layout = new QVBoxLayout(page);
+    layout->setObjectName("layout");
+    layout->setMargin(0);
+    layout->setGeometry(QRect(0, 0, 0, 0));
+    layout->setSpacing(0);
+    layout->setSizeConstraint(QLayout::SetFixedSize);
+    page->setLayout(layout);
+
+    //QPushButton *btn1 = new QPushButton(page);
+    //QPushButton *btn2 = new QPushButton(page);
+    //layout->addWidget(btn1);
+    //layout->addWidget(btn2);
+
+    listGroup->insert(groupName, page);
+    addItem(page, groupName);
 }
 
 bool FriendPanel::eventFilter(QObject * obj, QEvent * event)
@@ -43,13 +82,20 @@ bool FriendPanel::eventFilter(QObject * obj, QEvent * event)
             {
                 //在这里发送点击事件
                 emit this->childClick(i->getID(), i->getName());
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     return false;
+}
+
+void FriendPanel::init()
+{
+    addGroup("好友分类一");
+    addFriend(listGroup->value("好友分类一"), "001", "懒人一号", "这人什么都没有写", "");
+    addFriend(listGroup->value("好友分类一"), "002", "懒人二号", "这人什么都没有写", "");
 }
 
 void FriendPanel::slotAddFriend()
@@ -59,24 +105,6 @@ void FriendPanel::slotAddFriend()
 
 void FriendPanel::slotAddGroup()
 {
-    BuddyWidget *a1 = new BuddyWidget;
-    a1->setName("一号机");
-    BuddyWidget *a2 = new BuddyWidget;
-    a2->setName("二号机");
-    a1->installEventFilter(this);
-    a2->installEventFilter(this);
-    QWidget *widget = new QWidget;
-    
-    //布局设置
-    QVBoxLayout *layout = new QVBoxLayout;
-    layout->setGeometry(QRect(0,0,0,0));
-    layout->setSizeConstraint(QLayout::SetFixedSize);
-    layout->setSpacing(0);
-    layout->addWidget(a1);
-    layout->addWidget(a2);
-    widget->setLayout(layout);
-
-    addItem(widget, "asd");
 }
 
 

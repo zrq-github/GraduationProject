@@ -31,7 +31,6 @@ private:
     ChatPanel *chatPanel;       //聊天面板
     FriendPanel *friendPanel;   //好友面板
 
-
 private:
     void createUi();
     void binSlots();
@@ -42,6 +41,7 @@ private:
 private slots:
     void slot_chatPanel_sendMsg(QString &str);
 
+    //bool eventFilter(QObject *, QEvent *);  //捕获子控件事件
     void onConnected();             
     void onDisconnected();          
     void onSocketStateChange(QAbstractSocket::SocketState socketState);
