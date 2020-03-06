@@ -1,9 +1,8 @@
 #pragma once
 
 #include <QtWidgets/QWidget>
-#include <IMNetTool/IMQTcpServer.h>
-#include <IMNetTool/IMQTcpSocket.h>
-
+#include <QtNetwork/QTcpServer>
+#include <QtNetwork/QTcpSocket>
 
 namespace Ui {
     class ServerAppClass;
@@ -23,8 +22,8 @@ private:
 private:
     Ui::ServerAppClass *ui;
 
-    IMQTcpServer *tcpServer;      //TCP服务器
-    IMQTcpSocket *tcpSocket;      //TCP通讯的Socket
+    QTcpServer *tcpServer;      //TCP服务器
+    QTcpSocket *tcpSocket;      //TCP通讯的Socket
     QString getLocalIP();       //获取本机IP地址
 private slots:
     void slotBtnStartClick();
@@ -32,6 +31,7 @@ private slots:
     void start();
     //自定义槽函数
     void    onNewConnection();  //QTcpServer的newConnection()信号
+    void    onSocketStateChange(QAbstractSocket::SocketState socketState);
     void    onClientConnected(); //Client Socket connected
     void    onClientDisconnected();//Client Socket disconnected
     void    onSocketReadyRead();//读取socket传入的数据

@@ -1,5 +1,4 @@
-﻿
-#include "LogonPanel.h"
+﻿#include "LogonPanel.h"
 #include "ui_LogonPanel.h"
 #include <QMessageBox>
 #include <QMouseEvent>

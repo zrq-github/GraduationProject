@@ -66,6 +66,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)$(TargetName).pch</PrecompiledHeaderOutputFile>
+      <AdditionalIncludeDirectories>$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories);$(SolutionDir)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -104,6 +105,11 @@
     <QtUic Include="ServerApp.ui">
       <SubType>Designer</SubType>
     </QtUic>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IMNetTool\IMNetTool.vcxproj">
+      <Project>{affcd2c5-1925-4318-8873-d10d7f0d4724}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

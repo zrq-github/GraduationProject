@@ -104,6 +104,38 @@ void ServerApp::onNewConnection()
         this, SLOT(onSocketReadyRead()));
 }
 
+void ServerApp::onSocketStateChange(QAbstractSocket::SocketState socketState)
+{
+    //socket状态变化时
+    switch (socketState)
+    {
+    case QAbstractSocket::UnconnectedState:
+        ui->LabSocketState->setText("scoket状态：UnconnectedState");
+        break;
+    case QAbstractSocket::HostLookupState:
+        ui->LabSocketState->setText("scoket状态：HostLookupState");
+        break;
+    case QAbstractSocket::ConnectingState:
+        ui->LabSocketState->setText("scoket状态：ConnectingState");
+        break;
+
+    case QAbstractSocket::ConnectedState:
+        ui->LabSocketState->setText("scoket状态：ConnectedState");
+        break;
+
+    case QAbstractSocket::BoundState:
+        ui->LabSocketState->setText("scoket状态：BoundState");
+        break;
+
+    case QAbstractSocket::ClosingState:
+        ui->LabSocketState->setText("scoket状态：ClosingState");
+        break;
+
+    case QAbstractSocket::ListeningState:
+        ui->LabSocketState->setText("scoket状态：ListeningState");
+    }
+}
+
 void ServerApp::onClientConnected()
 {
     //当客户端接入时
