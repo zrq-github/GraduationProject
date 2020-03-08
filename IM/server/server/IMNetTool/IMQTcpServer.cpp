@@ -4,14 +4,14 @@
 
 IMQTcpServer::IMQTcpServer(QObject *parent /* = 0 */, int numConnections /* = 10000 */)
 {
-    m_hashTcpClient = new QHash<int, IMQTcpSocket *>;
+    hashTcpClients = new QHash<int, IMQTcpSocket *>;
     setMaxPendingConnections(numConnections);
 }
 
 IMQTcpServer::~IMQTcpServer()
 {
     emit this->signDisConnect(-1);
-    delete m_hashTcpClient;
+    delete hashTcpClients;
 }
 
 void IMQTcpServer::setMaxPendingConnections(int numConnections)
@@ -20,20 +20,24 @@ void IMQTcpServer::setMaxPendingConnections(int numConnections)
     this->m_maxConnections = numConnections;
 }
 
-void IMQTcpServer::setData(const QByteArray & data, const int handle)
+void IMQTcpServer::slotSendDataToClient(const QByteArray & data, const int handle)
 {
+    IMQTcpSocket *sockt = hashTcpClients->find(handle).value();
+    sockt->write(data);
 }
 
-void IMQTcpServer::slotReadData(const int, const QString &, const quint16, const QByteArray &)
+void IMQTcpServer::slotReadData(const int handle, const QString &ip, const quint16 port, const QByteArray& data)
 {
+    qDebug() << "server accept client data" << endl;
+    emit readData(handle, ip, port, data);
 }
 
-void IMQTcpServer::slotSockDisConnect(int handle, QString ip, quint16 prot)
+void IMQTcpServer::slotSockDisConnect(const int handle,const QString &ip,const quint16 prot)
 {
     qDebug() << "MyTcpServer::sockDisConnectSlot thread is:" << QThread::currentThreadId();
-    IMQTcpSocket * tcp = m_hashTcpClient->value(handle);
+    IMQTcpSocket * tcp = hashTcpClients->value(handle);
 
-    m_hashTcpClient->remove(handle);//连接管理中心移除断开连接的socket
+    hashTcpClients->remove(handle);//连接管理中心移除断开连接的socket
     delete tcp;
 
     emit sockDisConnect(handle, ip, prot);
@@ -53,7 +57,7 @@ void IMQTcpServer::incomingConnection(qintptr socketDescriptor)
     connect(tcpTemp, &IMQTcpSocket::sockDisConnect, this, &IMQTcpServer::slotSockDisConnect);   //断开连接的处理
     connect(tcpTemp, &IMQTcpSocket::disconnected, thread, &QThread::quit);
 
-    m_hashTcpClient->insert(socketDescriptor, tcpTemp);
+    hashTcpClients->insert(socketDescriptor, tcpTemp);
     tcpTemp->moveToThread(thread);
     thread->start();
 

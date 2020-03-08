@@ -56,7 +56,6 @@ void AppSettings::init()
     }
     else
     {   //初始化配置文件
-        
         m_settings->setIniCodec("UTF-8");
         m_settings->beginGroup("LogonSettings");
         m_settings->setValue("lastLogonId", "");

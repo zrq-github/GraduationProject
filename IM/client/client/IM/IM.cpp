@@ -5,6 +5,9 @@
 #include "FriendPanel/FriendPanel.h"
 #include "ChatPanel/ChatPanel.h"
 #include <QSplitter>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include "AppSettings/AppSettings.h"
 
 #include <QtNetwork/QHostAddress>
 #include <QtNetwork/QHostInfo>
@@ -26,6 +29,10 @@ IM::IM(QWidget *parent)
     //this->setWindowFlags(Qt::FramelessWindowHint);      //无边框，但是在任务显示对话框标题
     this->binSlots(); 
     this->testServer();
+
+    //删除
+    QString who = appSettingsInstance.getSetting("LogonSettings", "lastLogonId").toString();
+    this->setWindowTitle(who);
 }
 
 IM::~IM()
@@ -137,7 +144,16 @@ void IM::onConnected()
         chatPanel->getMsg("**peer port:" +
             QString::number(tcpClient->peerPort()));
         chatPanel->getMsg("**已连接到服务器");
-    }   
+    }
+    //数据结构协议
+    QJsonObject json;
+    json.insert("to", "server");
+    QString id = appSettingsInstance.getSetting("LogonSettings", "lastLogonId").toString();
+    json.insert("from", id);
+    json.insert("data", "client finshed connect");
+    QJsonDocument document = QJsonDocument(json);
+
+    tcpClient->write(document.toJson());
 }
 
 void IM::onDisconnected()
@@ -157,9 +173,17 @@ void IM::onSocketReadyRead()
 
 void IM::slot_chatPanel_sendMsg(QString &str)
 {
-    chatPanel->getMsg("client to server:\n" + str);
-    QByteArray  strByte = str.toUtf8();
+    chatPanel->getMsg("client to server:\n" + str);//发送给chat，用于展示
 
-    strByte.append('\n');
-    tcpClient->write(strByte);
+    //这段代码要删掉
+    QString toWho = chatPanel->getTitle();
+    QString fromWho = this->windowTitle();
+
+    QJsonObject json;
+    json.insert("to", toWho);
+    json.insert("from", fromWho);
+    json.insert("data", str);
+    QJsonDocument document = QJsonDocument(json);
+
+    tcpClient->write(document.toJson());
 }

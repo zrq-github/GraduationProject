@@ -98,6 +98,9 @@
     <QtUic Include="IMTitleBarPanel.ui" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AppSettings\AppSettings.vcxproj">
+      <Project>{e43a123f-58e4-4f0b-b8a5-68ef2c1de1d4}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\ChatPanel\ChatPanel.vcxproj">
       <Project>{dfb0884c-76d2-4cee-81e7-f77facc34767}</Project>
     </ProjectReference>

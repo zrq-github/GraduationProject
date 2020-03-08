@@ -2,6 +2,8 @@
 #include <QtNetwork/QHostAddress>
 #include <QtNetwork/QHostInfo>
 #include "ui_ServerApp.h"
+#include <QJsonDocument>
+#include <QJsonObject>
 
 #ifdef WIN32
 #pragma execution_character_set("utf-8")
@@ -10,8 +12,9 @@
 ServerApp::ServerApp(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::ServerAppClass)
+    , hashClients(new QHash<QString, int>)
 {
-    tcpServer = new QTcpServer;
+    tcpServer = new IMQTcpServer;
     ui->setupUi(this);
     bindSlots();
 }
@@ -33,30 +36,87 @@ void ServerApp::slotBtnSendClick()
     tcpSocket->write(str);
 }
 
-void ServerApp::start()
+void ServerApp::slotStart()
 {
     QString IP = ui->comboIP->currentText();//IP地址
     quint16 port = ui->spinPort->value();//端口
     QHostAddress addr(IP);
     tcpServer->listen(addr, port);//
-//    tcpServer->listen(QHostAddress::LocalHost,port);// Equivalent to QHostAddress("127.0.0.1").
-    ui->plainTextEdit->appendPlainText("**开始监听...");
-    ui->plainTextEdit->appendPlainText("**服务器地址："
-        + tcpServer->serverAddress().toString());
-    ui->plainTextEdit->appendPlainText("**服务器端口："
-        + QString::number(tcpServer->serverPort()));
-
+    if (tcpServer->isListening())
+    {
+        ui->plainTextEdit->appendPlainText("**开始监听...");
+        ui->plainTextEdit->appendPlainText("**服务器地址："
+            + tcpServer->serverAddress().toString());
+        ui->plainTextEdit->appendPlainText("**服务器端口："
+            + QString::number(tcpServer->serverPort()));
+    }
 
     ui->LabSocketState->setText("监听状态：正在监听");
 }
 
+void ServerApp::slotNewConnectFromClient(const int descriptor, const QString & address, const quint16 port)
+{//每当服务器接收到来自新客户端的处理逻辑
+    ui->plainTextEdit->appendPlainText("NewClient Connect:");
+    ui->plainTextEdit->appendPlainText("descriptor:" + QString::number(descriptor));
+    ui->plainTextEdit->appendPlainText("address:" + address);
+    ui->plainTextEdit->appendPlainText("port:" + QString::number(port));
+}
+
+void ServerApp::slotClientDisConnect(const int descriptor, const QString & address, const quint16 port)
+{//客户端断开连接
+    ui->plainTextEdit->appendPlainText("Client Close Connect:");
+    ui->plainTextEdit->appendPlainText("descriptor:" + QString::number(descriptor));
+    ui->plainTextEdit->appendPlainText("address:" + address);
+    ui->plainTextEdit->appendPlainText("port:" + QString::number(port));
+}
+
+void ServerApp::slotReadDataFromClient(const int handle, const QString & ip, const quint16 port, const QByteArray & data)
+{
+    QJsonDocument document = QJsonDocument::fromJson(data);
+    QJsonObject object = document.object();
+
+    QString toWho = object.value("to").toString();
+    QString fromWho = object.value("from").toString();
+    if (toWho == "server")
+    {//第一次登陆验证
+        hashClients->insert(fromWho, handle);
+        qDebug() << "userID" + fromWho;
+        qDebug() << "msg:" + object.value("data:").toString();
+        ui->plainTextEdit->appendPlainText("userID:" + fromWho);
+        ui->plainTextEdit->appendPlainText("msg:" + object.value("from").toString());
+    }
+    else
+    {//发给其他用户的消息
+        auto i = hashClients->find(toWho);
+        if (i != hashClients->end())
+        {
+            int clientHandle = i.value();
+
+            ui->plainTextEdit->appendPlainText(fromWho+"给"+toWho+"发送了消息");
+
+            emit sendDataToClient(data, clientHandle);
+        }
+        else
+        {
+            //用户不在线的处理事件
+            qDebug() << "该用户:" + toWho + "不在线";
+            ui->plainTextEdit->appendPlainText("该用户:" + toWho + "不在线");
+        }
+    }
+}
+
 void ServerApp::bindSlots()
 {
-    connect(ui->btnStart, SIGNAL(clicked()), this, SLOT(start()));
+    //界面信号
+    connect(ui->btnStart, SIGNAL(clicked()), this, SLOT(slotStart()));
     connect(ui->btnSend, SIGNAL(clicked()), this, SLOT(slotBtnSendClick()));
 
-    //QTcpServer信号绑定
-    connect(tcpServer, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
+    //来自IMQTcpServer类对象的信号
+    connect(tcpServer, &IMQTcpServer::connectClient, this, &ServerApp::slotNewConnectFromClient);
+    connect(tcpServer, &IMQTcpServer::sockDisConnect, this, &ServerApp::slotClientDisConnect);
+    connect(tcpServer, &IMQTcpServer::readData, this, &ServerApp::slotReadDataFromClient);
+    
+    connect(this, &ServerApp::sendDataToClient, tcpServer, &IMQTcpServer::slotSendDataToClient);
 }
 
 QString ServerApp::getLocalIP()
@@ -83,46 +143,4 @@ QString ServerApp::getLocalIP()
 void ServerApp::slotBtnStartClick()
 {
 
-}
-
-void ServerApp::onNewConnection()
-{
-    tcpSocket = tcpServer->nextPendingConnection(); //创建socket
-
-    connect(tcpSocket, SIGNAL(connected()),
-        this, SLOT(onClientConnected()));
-    onClientConnected();//
-
-    connect(tcpSocket, SIGNAL(disconnected()),
-        this, SLOT(onClientDisconnected()));
-
-    connect(tcpSocket, SIGNAL(stateChanged(QAbstractSocket::SocketState)),
-        this, SLOT(onSocketStateChange(QAbstractSocket::SocketState)));
-    onSocketStateChange(tcpSocket->state());
-
-    connect(tcpSocket, SIGNAL(readyRead()),
-        this, SLOT(onSocketReadyRead()));
-}
-
-void ServerApp::onClientConnected()
-{
-    //当客户端接入时
-    ui->plainTextEdit->appendPlainText("**client socket connected");
-    ui->plainTextEdit->appendPlainText("**peer address:" +
-        tcpSocket->peerAddress().toString());
-    ui->plainTextEdit->appendPlainText("**peer port:" +
-        QString::number(tcpSocket->peerPort()));
-
-}
-
-void ServerApp::onClientDisconnected()
-{
-    ui->plainTextEdit->appendPlainText("**client socket disconnected");
-    tcpSocket->deleteLater();
-}
-
-void ServerApp::onSocketReadyRead()
-{
-    while (tcpSocket->canReadLine())
-        ui->plainTextEdit->appendPlainText("client to server:" + tcpSocket->readLine());
 }

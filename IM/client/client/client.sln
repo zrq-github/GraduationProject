@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DATA", "DATA", "{73F2673D-B
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppSettings", "AppSettings\AppSettings.vcxproj", "{E43A123F-58E4-4F0B-B8A5-68EF2C1DE1D4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tool", "Tool", "{6E51FC1C-F9A1-4B2D-A8F4-E7393B887106}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -75,7 +77,7 @@ Global
 		{E43A123F-58E4-4F0B-B8A5-68EF2C1DE1D4} = {73F2673D-BD78-40F7-894E-3F1F0D91F528}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		Qt5Version = qt5.9
 		SolutionGuid = {083D5D18-5608-4A5F-829D-D34477B57A0C}
+		Qt5Version = qt5.9
 	EndGlobalSection
 EndGlobal

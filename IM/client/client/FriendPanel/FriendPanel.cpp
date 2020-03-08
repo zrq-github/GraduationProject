@@ -94,8 +94,8 @@ bool FriendPanel::eventFilter(QObject * obj, QEvent * event)
 void FriendPanel::init()
 {
     addGroup("好友分类一");
-    addFriend(listGroup->value("好友分类一"), "001", "懒人一号", "这人什么都没有写", "");
-    addFriend(listGroup->value("好友分类一"), "002", "懒人二号", "这人什么都没有写", "");
+    addFriend(listGroup->value("好友分类一"), "001", "001", "这人什么都没有写", "");
+    addFriend(listGroup->value("好友分类一"), "002", "002", "这人什么都没有写", "");
 }
 
 void FriendPanel::slotAddFriend()

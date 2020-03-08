@@ -7,6 +7,11 @@ void ChatPanel::getMsg(QString str)
     ui->editChat->append(str);
 }
 
+QString ChatPanel::getTitle()
+{
+    return ui->labName->text();
+}
+
 ChatPanel::ChatPanel(QWidget *parent)
     : QWidget(parent)
 {

@@ -14,6 +14,8 @@ public:
     void getMsg(QString &str);
     void getMsg(QString str);
 
+    QString getTitle();
+
 private:
     Ui::ChatPanel *ui;
     QString chatterId;
