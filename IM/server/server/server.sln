@@ -7,6 +7,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ServerApp", "ServerApp\Serv
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IMNetTool", "IMNetTool\IMNetTool.vcxproj", "{AFFCD2C5-1925-4318-8873-D10D7F0D4724}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IMMySqlTool", "IMMySqlTool\IMMySqlTool.vcxproj", "{EC5F29F7-15DE-479B-A7FE-FA73EDB5CC8D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TextDLL", "TextDLL\TextDLL.vcxproj", "{7B5D7557-F099-4DC5-8D76-B37FF1CECCAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -27,12 +31,28 @@ Global
 		{AFFCD2C5-1925-4318-8873-D10D7F0D4724}.Release|x64.ActiveCfg = Release|x64
 		{AFFCD2C5-1925-4318-8873-D10D7F0D4724}.Release|x64.Build.0 = Release|x64
 		{AFFCD2C5-1925-4318-8873-D10D7F0D4724}.Release|x86.ActiveCfg = Release|x64
+		{EC5F29F7-15DE-479B-A7FE-FA73EDB5CC8D}.Debug|x64.ActiveCfg = Debug|x64
+		{EC5F29F7-15DE-479B-A7FE-FA73EDB5CC8D}.Debug|x64.Build.0 = Debug|x64
+		{EC5F29F7-15DE-479B-A7FE-FA73EDB5CC8D}.Debug|x86.ActiveCfg = Debug|Win32
+		{EC5F29F7-15DE-479B-A7FE-FA73EDB5CC8D}.Debug|x86.Build.0 = Debug|Win32
+		{EC5F29F7-15DE-479B-A7FE-FA73EDB5CC8D}.Release|x64.ActiveCfg = Release|x64
+		{EC5F29F7-15DE-479B-A7FE-FA73EDB5CC8D}.Release|x64.Build.0 = Release|x64
+		{EC5F29F7-15DE-479B-A7FE-FA73EDB5CC8D}.Release|x86.ActiveCfg = Release|Win32
+		{EC5F29F7-15DE-479B-A7FE-FA73EDB5CC8D}.Release|x86.Build.0 = Release|Win32
+		{7B5D7557-F099-4DC5-8D76-B37FF1CECCAB}.Debug|x64.ActiveCfg = Debug|x64
+		{7B5D7557-F099-4DC5-8D76-B37FF1CECCAB}.Debug|x64.Build.0 = Debug|x64
+		{7B5D7557-F099-4DC5-8D76-B37FF1CECCAB}.Debug|x86.ActiveCfg = Debug|Win32
+		{7B5D7557-F099-4DC5-8D76-B37FF1CECCAB}.Debug|x86.Build.0 = Debug|Win32
+		{7B5D7557-F099-4DC5-8D76-B37FF1CECCAB}.Release|x64.ActiveCfg = Release|x64
+		{7B5D7557-F099-4DC5-8D76-B37FF1CECCAB}.Release|x64.Build.0 = Release|x64
+		{7B5D7557-F099-4DC5-8D76-B37FF1CECCAB}.Release|x86.ActiveCfg = Release|Win32
+		{7B5D7557-F099-4DC5-8D76-B37FF1CECCAB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {C2037AA5-F3E3-4865-80B0-1ACE08CC3925}
 		Qt5Version = qt5.9
+		SolutionGuid = {C2037AA5-F3E3-4865-80B0-1ACE08CC3925}
 	EndGlobalSection
 EndGlobal

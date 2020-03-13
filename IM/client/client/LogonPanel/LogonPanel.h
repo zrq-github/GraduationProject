@@ -32,7 +32,9 @@ private:
 
     bool m_encrypt = false;         //是否加密
 private:
-    void readSettings();         //读取设置,从注册表(或者从本地配置）
+    void readLocalSettings();
+
+    void readSettings();
     void writeSettings();
 
     QString encrypt(const QString& str);    //字符串加密MD5

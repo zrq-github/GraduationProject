@@ -34,43 +34,27 @@ void LogonPanel::mouseReleaseEvent(QMouseEvent * event)
     m_moving = false; //停止移动
 }
 
-void LogonPanel::readSettings()
+void LogonPanel::readLocalSettings()
 {
-    QString lastId = appSettingsInstance.getSetting("LogonSettings", "lastLogonId").toString();     //上次登录的用户
-    bool isRememberPswd = appSettingsInstance.getSetting("LogonSettings", "rememberPswd").toBool(); //是否记住密码
+    QString lastId = IMSettings.getLogonSettings("userID").toString();    //上次登录的用户
+    bool isRememberPswd = IMSettings.getLogonSettings("isRemember").toBool(); //是否记住密码
     if (isRememberPswd)
     {
-        QString lastPasw = appSettingsInstance.getSetting("LogonSettings", "lastLogonPswd").toString(); //取得密码
+        QString lastPasw = IMSettings.getLogonSettings("userPswd").toString(); //取得密码
         ui->editPswd->setText(lastPasw);
     }
     ui->chkboxSavePswd->setChecked(isRememberPswd);
     ui->editUser->setText(lastId);
+}
 
-    //QString organization = "IM";    //用于注册表
-    //QString appName = "user";       //HKEY_CURRENT_USER/Software/IM/user
-    //QSettings settings(organization, appName);//创建注册表信息
+void LogonPanel::readSettings()
+{
 
-    ////数据库加入后更改,这样注册表只能实现单人登录
-    //bool saved = settings.value("saved", false).toBool();       //读取 saved键的值
-    //m_user = settings.value("Username", "user").toString();     //读取 Username 键的值，缺省为“user”
-    //QString defaultPSWD = encrypt("12345");                     //缺省密码"12345"加密后的数据
-    //m_pswd = settings.value("PSWD", defaultPSWD).toString();    //读取PSWD 键的值，
-    // 
-    //if (saved)
-    //{
-    //    ui->editUser->setText(m_user);
-    //    ui->editPswd->setText(m_pswd);
-    //    ui->chkboxSavePswd->setChecked(saved);
-    //}
 }
 
 void LogonPanel::writeSettings()
 {
 
-    //QSettings  settings("IM", "user"); //注册表键组
-    //settings.setValue("Username", m_user); //用户名
-    //settings.setValue("PSWD", m_pswd);   //密码，经过加密的
-    //settings.setValue("saved", ui->chkboxSavePswd->isChecked());
 }
 
 void LogonPanel::on_btnLogon_clicked()
@@ -79,18 +63,20 @@ void LogonPanel::on_btnLogon_clicked()
     QString pswd = ui->editPswd->text().trimmed();  //密码
 
     //连接数据库
+
+
     if (true)
-    {//成功,修改上次登录用户
-        appSettingsInstance.setSetting("LogonSettings", "lastLogonId", user);
+    {   //成功,修改上次登录用户
+        IMSettings.setLogonSettings("userId", user);
         bool isSavePswd=ui->chkboxSavePswd->isChecked();
         if (isSavePswd)
         {
-            appSettingsInstance.setSetting("LogonSettings", "lastLogonPswd", pswd);
-            appSettingsInstance.setSetting("LogonSettings", "rememberPswd", true);
+            IMSettings.setLogonSettings("userPswd", pswd);
+            IMSettings.setLogonSettings("isRemember", true);
         }
         else
         {
-            appSettingsInstance.setSetting("LogonSettings", "rememberPswd", false);
+            IMSettings.setSetting("LogonSettings", "rememberPswd", false);
         }
         this->accept();    //对话框 accept()，关闭对话框，
     }
@@ -156,7 +142,7 @@ LogonPanel::LogonPanel(QWidget *parent)
     //    setWindowFlags(flags);
     //}
 
-    readSettings();  //读取存储的用户名和密码
+    readLocalSettings();  //读取本地配置
 }
 
 LogonPanel::~LogonPanel()

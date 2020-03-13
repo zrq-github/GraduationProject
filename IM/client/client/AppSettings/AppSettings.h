@@ -6,20 +6,26 @@
 #include "appsettings_global.h"
 #include <QSettings>
 
-#define appSettingsInstance AppSettings::getInstance()
+#define IMSettings AppSettings::getInstance()
 
 class APPSETTINGS_EXPORT AppSettings
 {
 public:
     static AppSettings &getInstance();
-    static QVariant getSetting(QString key);
-    static QVariant getSetting(QString group,QString key);
-    static void setSetting(QString key, QVariant value);
-    static void setSetting(QString group,QString key, QVariant value);
+
+    QVariant getSetting(QString key);
+    QVariant getSetting(QString &group,QString &key);
+    void setSetting(QString key, QVariant value);
+    void setSetting(QString group,QString key, QVariant value);
+
+    //IM·â×°
+    QVariant getLogonSettings(QString key);
+    void setLogonSettings(QString key, QVariant value);
 private:
     AppSettings();
 private:
-    static void init();
+    virtual void init();
+
     static AppSettings *m_appSettings;
     static QSettings *m_settings;
 };

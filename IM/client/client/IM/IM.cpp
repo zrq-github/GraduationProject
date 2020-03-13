@@ -31,7 +31,7 @@ IM::IM(QWidget *parent)
     this->testServer();
 
     //删除
-    QString who = appSettingsInstance.getSetting("LogonSettings", "lastLogonId").toString();
+    QString who = IMSettings.getSetting("LogonSettings", "lastLogonId").toString();
     this->setWindowTitle(who);
 }
 
@@ -148,7 +148,7 @@ void IM::onConnected()
     //数据结构协议
     QJsonObject json;
     json.insert("to", "server");
-    QString id = appSettingsInstance.getSetting("LogonSettings", "lastLogonId").toString();
+    QString id = IMSettings.getSetting("LogonSettings", "lastLogonId").toString();
     json.insert("from", id);
     json.insert("data", "client finshed connect");
     QJsonDocument document = QJsonDocument(json);
