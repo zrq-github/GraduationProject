@@ -12,11 +12,14 @@
 #include <QDialog>
 #include "logonpanel_global.h"
 namespace Ui { class LogonPanel; };
+class QTcpSocket;
 
 class LOGONPANEL_EXPORT LogonPanel : public QDialog
 {
     Q_OBJECT
-
+public:
+    LogonPanel(QWidget *parent = Q_NULLPTR);
+    ~LogonPanel();
 protected:
     void mousePressEvent(QMouseEvent *event);       //用于鼠标拖动窗口的鼠标事件操作
     void mouseMoveEvent(QMouseEvent *event);
@@ -33,20 +36,23 @@ private:
     bool m_encrypt = false;         //是否加密
 private:
     void readLocalSettings();
+    void writeLocalSettings();
+    bool verifyID(QString &id,QString &pasw);       //验证账号密码是否正确
+    void bindSigns();
 
-    void readSettings();
-    void writeSettings();
 
     QString encrypt(const QString& str);    //字符串加密MD5
 private slots:
-    void on_btnLogon_clicked();     //登录按钮_点击事件
+    void slot_btnLogon_clicked();     //登录按钮_点击事件
+    void slotSocketRead();
+    void slotSocketConnected();       //服务器连接成功执行
 public:
-    LogonPanel(QWidget *parent = Q_NULLPTR);
-    ~LogonPanel();
+
 
     bool eventFilter(QObject *obj, QEvent *event);
 private:
     Ui::LogonPanel *ui;
+    QTcpSocket *socket;
 };
 
 #endif // LOGONPANEL_H

@@ -22,7 +22,7 @@ QVariant AppSettings::getSetting(QString key)
     return m_settings->value(key);
 }
 
-QVariant AppSettings::getSetting(QString &group, QString &key)
+QVariant AppSettings::getSetting(QString group, QString key)
 {
     return m_settings->value(group + "/" + key);
 }

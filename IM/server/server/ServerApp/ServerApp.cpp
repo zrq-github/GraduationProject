@@ -75,15 +75,39 @@ void ServerApp::slotReadDataFromClient(const int handle, const QString & ip, con
     QJsonDocument document = QJsonDocument::fromJson(data);
     QJsonObject object = document.object();
 
-    QString toWho = object.value("to").toString();
-    QString fromWho = object.value("from").toString();
+    QString &toWho = object.value("to").toString();
+    QString &fromWho = object.value("from").toString();
+    QString &type = object.value("type").toString();
+    QString &dataWho = object.value("data").toString();
+
     if (toWho == "server")
-    {//第一次登陆验证
-        hashClients->insert(fromWho, handle);
-        qDebug() << "userID" + fromWho;
-        qDebug() << "msg:" + object.value("data:").toString();
-        ui->plainTextEdit->appendPlainText("userID:" + fromWho);
-        ui->plainTextEdit->appendPlainText("msg:" + object.value("from").toString());
+    {//发送给服务器处理的信息
+        if (type == "logon")
+        {//登录验证
+            //连接数据库，查表，判断是否成功
+
+            if (true)
+            {
+                hashClients->insert(fromWho, handle);
+                QJsonObject json;
+                json.insert("to", fromWho);
+                json.insert("from", toWho);
+                json.insert("type", "logon");
+                json.insert("data", true);
+                QJsonDocument document = QJsonDocument(json);
+                emit sendDataToClient(document.toJson(), handle);
+            }
+        }
+        else
+        {
+            qDebug() << "handle" + handle;
+            qDebug() << "port" + port;
+
+            qDebug() << "userID" + fromWho;
+            qDebug() << "msg:" + object.value("data:").toString();
+            ui->plainTextEdit->appendPlainText("userID:" + fromWho);
+            ui->plainTextEdit->appendPlainText("msg:" + object.value("from").toString());
+        }
     }
     else
     {//发给其他用户的消息

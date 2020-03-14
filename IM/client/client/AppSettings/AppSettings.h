@@ -14,7 +14,7 @@ public:
     static AppSettings &getInstance();
 
     QVariant getSetting(QString key);
-    QVariant getSetting(QString &group,QString &key);
+    QVariant getSetting(QString group, QString key);
     void setSetting(QString key, QVariant value);
     void setSetting(QString group,QString key, QVariant value);
 

@@ -5,6 +5,11 @@
 #include <QCryptographicHash>
 #include <QSettings>
 #include "AppSettings/AppSettings.h"
+#include <QDebug>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QTcpSocket>
+
 
 void LogonPanel::mousePressEvent(QMouseEvent * event)
 {
@@ -47,65 +52,53 @@ void LogonPanel::readLocalSettings()
     ui->editUser->setText(lastId);
 }
 
-void LogonPanel::readSettings()
+void LogonPanel::writeLocalSettings()
 {
-
+    IMSettings.setLogonSettings("userId", ui->editUser->text().trimmed());
+    bool isSavePswd = ui->chkboxSavePswd->isChecked();
+    if (isSavePswd)
+    {
+        IMSettings.setLogonSettings("userPswd", ui->editPswd->text().trimmed());
+        IMSettings.setLogonSettings("isRemember", true);
+    }
+    else
+    {
+        IMSettings.setSetting("LogonSettings", "rememberPswd", false);
+    }
 }
 
-void LogonPanel::writeSettings()
+bool LogonPanel::verifyID(QString &id, QString &pasw)
 {
 
+
+    return true;
 }
 
-void LogonPanel::on_btnLogon_clicked()
+void LogonPanel::bindSigns()
 {
+    //ui控件绑定
+    connect(ui->btnLogon, &QPushButton::clicked, this, &LogonPanel::slot_btnLogon_clicked);
+    //socket 信号绑定
+    connect(socket, &QTcpSocket::readyRead ,this, &LogonPanel::slotSocketRead);
+    connect(socket, &QTcpSocket::connected, this, &LogonPanel::slotSocketConnected);
+}
+
+void LogonPanel::slot_btnLogon_clicked()
+{   //点击登录，准备连接服务器
     QString user = ui->editUser->text().trimmed();  //用户名
     QString pswd = ui->editPswd->text().trimmed();  //密码
 
-    //连接数据库
-
-
-    if (true)
-    {   //成功,修改上次登录用户
-        IMSettings.setLogonSettings("userId", user);
-        bool isSavePswd=ui->chkboxSavePswd->isChecked();
-        if (isSavePswd)
-        {
-            IMSettings.setLogonSettings("userPswd", pswd);
-            IMSettings.setLogonSettings("isRemember", true);
-        }
-        else
-        {
-            IMSettings.setSetting("LogonSettings", "rememberPswd", false);
-        }
-        this->accept();    //对话框 accept()，关闭对话框，
+    //将账号密码发送给服务器进行验证,连接成功执行Connected
+    QString addr = "127.0.0.1";
+    quint16 port = 1200;
+    if (socket->state() == QAbstractSocket::SocketState::ConnectedState)
+    {
+        slotSocketConnected();
     }
     else
-    {   //登录失败
-        QMessageBox::about(this, "错误", "用户密码不正确");
+    {
+        socket->connectToHost(addr, port);
     }
-
-   ////现在用注册表代替
-   // if ((user == m_user) && (encrptPSWD == m_pswd)) //如果用户名和密码正确
-   // {
-   //     writeSettings();   //保存设置
-   //     this->accept();    //对话框 accept()，关闭对话框，
-
-   //     //QMessageBox::about(this,"成功", "用户密码正确");
-   // }
-   // else
-   // {
-   //     m_tryCount++;      //错误次数应该有数据库返回
-   //     if (m_tryCount > 3)
-   //     {
-   //         QMessageBox::critical(this, "错误", "输入错误次数太多，强行退出");
-   //         this->reject(); //退出
-   //     }
-   //     else
-   //     {
-   //         QMessageBox::warning(this, "错误提示", "用户名或密码错误");
-   //     }
-   // }
 }
 
 QString LogonPanel::encrypt(const QString & str)
@@ -122,8 +115,55 @@ QString LogonPanel::encrypt(const QString & str)
     //return  md5;
 }
 
+void LogonPanel::slotSocketRead()
+{
+    QByteArray &data = socket->readAll();
+
+    QJsonDocument document = QJsonDocument::fromJson(data);
+    QJsonObject object = document.object();
+
+    QString &toWho = object.value("to").toString();
+    QString &fromWho = object.value("from").toString();
+    QString &type = object.value("type").toString();
+    bool dataWho = object.value("data").toBool();
+
+    if (fromWho == "server")
+    {//来自服务器的消息
+        if (type == "logon")
+        {//登录操作
+            if (dataWho)
+            {//登录成功的操作
+                writeLocalSettings();
+                this->accept();    //对话框 accept()，关闭对话框，
+            }
+            else
+            {
+
+            }
+        }
+    }
+}
+
+void LogonPanel::slotSocketConnected()
+{   //发送账号密码进行验证
+    qDebug("服务器连接成功");
+
+    QString &userID = ui->editUser->text().trimmed();
+    QString &userPasw = ui->editPswd->text().trimmed();
+
+    QJsonObject json;
+    json.insert("to", "server");
+    json.insert("from", userID);
+    json.insert("type", "logon");
+    json.insert("data", userPasw);
+    QJsonDocument document = QJsonDocument(json);
+
+    socket->write(document.toJson());
+}
+
 LogonPanel::LogonPanel(QWidget *parent)
     : QDialog(parent)
+    , socket(new QTcpSocket())
 {
     ui = new Ui::LogonPanel();
     ui->setupUi(this);
@@ -135,13 +175,7 @@ LogonPanel::LogonPanel(QWidget *parent)
     ui->btnMinimize->installEventFilter(this);      //安装事件过滤器
     ui->btnClose->installEventFilter(this);
 
-    //{   //给对话框加上最小化
-    //    Qt::Window    s flags = Qt::Dialog;
-    //    flags |= Qt::WindowMinimizeButtonHint;
-    //    flags |= Qt::WindowCloseButtonHint;;
-    //    setWindowFlags(flags);
-    //}
-
+    bindSigns();
     readLocalSettings();  //读取本地配置
 }
 
