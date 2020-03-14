@@ -1,0 +1,24 @@
+#include "QtMysql.h"
+#include <QtSql>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlTableModel>
+#include <QtSql/QSqlError>
+#include <QMessageBox>
+
+SqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");     //驱动 
+
+db.setHostName("localhost");          //数据库地址 
+db.setDatabaseName("project");           //数据库名
+db.setUserName("wjk");               //用户名
+db.setPassword("wangjk19980624");             //密码
+//db.setPort(3306);                   //端口默认的是3306，可以不用写 
+if (db.open())
+{
+	QMessageBox::warning(NULL, QStringLiteral("提示"), "open ok", QMessageBox::Yes);
+
+}
+else
+{
+	QMessageBox::warning(NULL, QStringLiteral("提示"), "open failed", QMessageBox::Yes);
+}
+db.close();
