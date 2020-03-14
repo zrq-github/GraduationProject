@@ -83,12 +83,11 @@ void ServerApp::slotReadDataFromClient(const int handle, const QString & ip, con
     if (toWho == "server")
     {//发送给服务器处理的信息
         if (type == "logon")
-        {//登录验证
+        {   //登录验证
             //连接数据库，查表，判断是否成功
-
             if (true)
             {
-                hashClients->insert(fromWho, handle);
+                hashClients->insert(fromWho, handle); //绑定userID和socke对象
                 QJsonObject json;
                 json.insert("to", fromWho);
                 json.insert("from", toWho);
@@ -98,26 +97,14 @@ void ServerApp::slotReadDataFromClient(const int handle, const QString & ip, con
                 emit sendDataToClient(document.toJson(), handle);
             }
         }
-        else
-        {
-            qDebug() << "handle" + handle;
-            qDebug() << "port" + port;
-
-            qDebug() << "userID" + fromWho;
-            qDebug() << "msg:" + object.value("data:").toString();
-            ui->plainTextEdit->appendPlainText("userID:" + fromWho);
-            ui->plainTextEdit->appendPlainText("msg:" + object.value("from").toString());
-        }
     }
     else
-    {//发给其他用户的消息
+    {   //发给其他用户的消息
         auto i = hashClients->find(toWho);
         if (i != hashClients->end())
         {
             int clientHandle = i.value();
-
             ui->plainTextEdit->appendPlainText(fromWho+"给"+toWho+"发送了消息");
-
             emit sendDataToClient(data, clientHandle);
         }
         else

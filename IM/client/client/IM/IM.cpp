@@ -26,8 +26,8 @@ IM::IM(QWidget *parent)
     tcpClient = new QTcpSocket;
 
     this->createUi();
-    //this->setWindowFlags(Qt::FramelessWindowHint);      //无边框，但是在任务显示对话框标题
-    this->binSlots(); 
+    this->binSlots();
+
     this->testServer();
 
     //删除
@@ -130,7 +130,6 @@ void IM::testServer()
     QString addr = "127.0.0.1";
     quint16 port = 1200;
 
-    QString localIP = getLocalIP();
     tcpClient->connectToHost(addr, port);
 }
 
@@ -145,15 +144,6 @@ void IM::onConnected()
             QString::number(tcpClient->peerPort()));
         chatPanel->getMsg("**已连接到服务器");
     }
-    //数据结构协议
-    QJsonObject json;
-    json.insert("to", "server");
-    QString id = IMSettings.getSetting("LogonSettings", "lastLogonId").toString();
-    json.insert("from", id);
-    json.insert("data", "client finshed connect");
-    QJsonDocument document = QJsonDocument(json);
-
-    tcpClient->write(document.toJson());
 }
 
 void IM::onDisconnected()
@@ -182,6 +172,7 @@ void IM::slot_chatPanel_sendMsg(QString &str)
     QJsonObject json;
     json.insert("to", toWho);
     json.insert("from", fromWho);
+    json.insert("type", "chat");
     json.insert("data", str);
     QJsonDocument document = QJsonDocument(json);
 
