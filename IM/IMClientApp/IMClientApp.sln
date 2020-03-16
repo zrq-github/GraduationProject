@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1062
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IMClientApp", "IMClientApp\IMClientApp.vcxproj", "{6F22A9BB-C99B-4CB1-8B85-F31C2A1DD7EB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UI", "UI", "{C98EE17A-2E01-4B4A-8A03-10B46A857F52}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tool", "Tool", "{C3FCF022-3554-4245-BCBC-E2D6875B974B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppSettings", "AppSettings\AppSettings.vcxproj", "{E43A123F-58E4-4F0B-B8A5-68EF2C1DE1D4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LogonPanel", "LogonPanel\LogonPanel.vcxproj", "{B1B842A6-2378-4FF5-A36E-D01DE4C7E39E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FriendPanel", "FriendPanel\FriendPanel.vcxproj", "{E78ACBA3-0FC6-4347-B700-A5CBE49496FD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6F22A9BB-C99B-4CB1-8B85-F31C2A1DD7EB}.Debug|x64.ActiveCfg = Debug|x64
+		{6F22A9BB-C99B-4CB1-8B85-F31C2A1DD7EB}.Debug|x64.Build.0 = Debug|x64
+		{6F22A9BB-C99B-4CB1-8B85-F31C2A1DD7EB}.Release|x64.ActiveCfg = Release|x64
+		{6F22A9BB-C99B-4CB1-8B85-F31C2A1DD7EB}.Release|x64.Build.0 = Release|x64
+		{E43A123F-58E4-4F0B-B8A5-68EF2C1DE1D4}.Debug|x64.ActiveCfg = Debug|x64
+		{E43A123F-58E4-4F0B-B8A5-68EF2C1DE1D4}.Debug|x64.Build.0 = Debug|x64
+		{E43A123F-58E4-4F0B-B8A5-68EF2C1DE1D4}.Release|x64.ActiveCfg = Release|x64
+		{E43A123F-58E4-4F0B-B8A5-68EF2C1DE1D4}.Release|x64.Build.0 = Release|x64
+		{B1B842A6-2378-4FF5-A36E-D01DE4C7E39E}.Debug|x64.ActiveCfg = Debug|x64
+		{B1B842A6-2378-4FF5-A36E-D01DE4C7E39E}.Debug|x64.Build.0 = Debug|x64
+		{B1B842A6-2378-4FF5-A36E-D01DE4C7E39E}.Release|x64.ActiveCfg = Release|x64
+		{B1B842A6-2378-4FF5-A36E-D01DE4C7E39E}.Release|x64.Build.0 = Release|x64
+		{E78ACBA3-0FC6-4347-B700-A5CBE49496FD}.Debug|x64.ActiveCfg = Debug|x64
+		{E78ACBA3-0FC6-4347-B700-A5CBE49496FD}.Debug|x64.Build.0 = Debug|x64
+		{E78ACBA3-0FC6-4347-B700-A5CBE49496FD}.Release|x64.ActiveCfg = Release|x64
+		{E78ACBA3-0FC6-4347-B700-A5CBE49496FD}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E43A123F-58E4-4F0B-B8A5-68EF2C1DE1D4} = {C3FCF022-3554-4245-BCBC-E2D6875B974B}
+		{B1B842A6-2378-4FF5-A36E-D01DE4C7E39E} = {C98EE17A-2E01-4B4A-8A03-10B46A857F52}
+		{E78ACBA3-0FC6-4347-B700-A5CBE49496FD} = {C98EE17A-2E01-4B4A-8A03-10B46A857F52}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {73AC6721-D414-47EE-A7BC-1AAF5A7C27BE}
+	EndGlobalSection
+EndGlobal

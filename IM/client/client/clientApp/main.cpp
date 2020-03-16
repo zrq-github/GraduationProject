@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 
 
     LogonPanel *w = new LogonPanel;
-    if (w->exec() == QDialog::Accepted)
+    if (true/*w->exec() == QDialog::Accepted*/)
     {
         IM *im = new IM;
         im->show();

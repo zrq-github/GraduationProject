@@ -4,6 +4,7 @@
 */
 
 #include <QWidget>
+#include <QHash>
 #include <QtNetwork/QTcpSocket>
 #include "im_global.h"
 namespace Ui { class IM; };
@@ -31,6 +32,8 @@ private:
     ChatPanel *chatPanel;       //聊天面板
     FriendPanel *friendPanel;   //好友面板
 
+    QHash<QString, ChatPanel*> *chatList;
+
 private:
     void createUi();
     void binSlots();
@@ -39,9 +42,9 @@ private:
     QTcpSocket *tcpClient;
     void testServer();          //测试函数,连接服务器的初始配置
 private slots:
-    void slot_chatPanel_sendMsg(QString &str);
+    void slot_chatPanel_sendMsg(QString &str);          
 
-    //bool eventFilter(QObject *, QEvent *);  //捕获子控件事件
+    //bool eventFilter(QObject *, QEvent *);            //捕获子控件事件
     void onConnected();             
     void onDisconnected();          
     void onSocketStateChange(QAbstractSocket::SocketState socketState);

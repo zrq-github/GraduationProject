@@ -20,6 +20,7 @@ IM::IM(QWidget *parent)
     : QWidget(parent)
     , friendPanel(Q_NULLPTR)
     , chatPanel(Q_NULLPTR)
+    , chatList(new QHash<QString, ChatPanel*>)
 {
     ui = new Ui::IM();
     ui->setupUi(this);
