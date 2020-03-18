@@ -21,6 +21,8 @@ protected slots:
     void slotDeletChatPanel(QString id);
 private:
     Ui::IMClientAppClass ui;
+    QString m_userID;
+
     FriendPanel *m_friendPanel;
     QHash<QString, ChatPanel*> *m_hashFriendPanel;
 };

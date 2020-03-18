@@ -3,6 +3,7 @@
 #include <QHBoxLayout>
 #include "FriendPanel/FriendPanel.h"
 #include "ChatPanel/ChatPanel.h"
+#include "AppSettings/AppSettings.h"
 
 IMClientApp::IMClientApp(QWidget *parent)
     : QWidget(parent)
@@ -12,6 +13,7 @@ IMClientApp::IMClientApp(QWidget *parent)
     ui.setupUi(this);
     //初始化数据
     m_hashFriendPanel = new QHash<QString, ChatPanel *>;
+    m_userID = IMSettings.getLogonSettings("userID").toString();
     createUi();
     bindSigns();
 }
@@ -28,7 +30,7 @@ void IMClientApp::slotCreateChatPanel(QString id, QString name)
     {
         return;
     }
-    ChatPanel *chat = new ChatPanel(id,name);
+    ChatPanel *chat = new ChatPanel(m_userID,id,name);
     connect(chat, &ChatPanel::signClose, this, &IMClientApp::slotDeletChatPanel);
     chat->setWindowTitle(name + "(" + id + ")");
     chat->show();

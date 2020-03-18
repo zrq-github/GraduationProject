@@ -1,11 +1,8 @@
 #include "ChatPanel.h"
 #include "ui_ChatPanel.h"
 #include <QLineEdit>
-
-void ChatPanel::getMsg(QString str)
-{
-    ui->editChat->append(str);
-}
+#include <QDateTime>
+#include <QDebug>
 
 QString ChatPanel::getTitle()
 {
@@ -17,13 +14,15 @@ void ChatPanel::closeEvent(QCloseEvent * event)
     emit signClose(m_chatID);
 }
 
-ChatPanel::ChatPanel(QString id,QString name, QWidget *parent)
+ChatPanel::ChatPanel(QString meID, QString id,QString name, QWidget *parent)
     : QWidget(parent)
 {
     this->m_chatID = id;
     this->m_chatName = name;
+    this->m_meID = meID;
     ui = new Ui::ChatPanel();
     ui->setupUi(this);
+    createUi();
     binSlots();
 }
 
@@ -34,50 +33,68 @@ ChatPanel::~ChatPanel()
 
 void ChatPanel::createUi()
 {
-    //初始化部分值
-    m_chatID = "0000";
-    m_chatName = "";
-
-    ui->editChat->document()->setMaximumBlockCount(200);    //设置最多显示行数
+    ui->textEdit->setReadOnly(true);
 }
 
 void ChatPanel::binSlots()
 {
+
     connect(ui->btnSend, SIGNAL(clicked()), this, SLOT(slot_btnSend_click()));    //发送文本事件
 }
 
-void ChatPanel::slot_labName_Change()
+void ChatPanel::dealMessage(QString & sendId, QString & time, QString & data)
 {
-
+    QString qstr = sendId + " " + time + "\n" + data + "\n";
+    ui->textEdit->append(qstr);
 }
 
-void ChatPanel::slotChatterChange(QString & id, QString & name)
-{
-    if (m_chatID != id || m_chatName != name)
-    {
-        ui->editChat->clear();      //更换聊天对象 文本清空
-        ui->editSend->clear();
-
-        this->m_chatID = id;
-        ui->labName->setText(name);
-    }
-}
+//void ChatPanel::dealMessage(QNChatMessage * messageW, QListWidgetItem * item, QString text, QString time, QNChatMessage::User_Type type)
+//{
+//    messageW->setFixedWidth(this->width());
+//    QSize size = messageW->fontRect(text);
+//    item->setSizeHint(size);
+//    item->setSelected(false);
+//    messageW->setText(text, time, size, type);
+//    ui->listWidget->setItemWidget(item, messageW);
+//}
+//
+//void ChatPanel::dealMessageTime(QString curMsgTime)
+//{   //如果两个消息相差一分钟,则不实现时间
+//    bool isShowTime = false;
+//    if (ui->listWidget->count() > 0) {
+//        QListWidgetItem* lastItem = ui->listWidget->item(ui->listWidget->count() - 1);
+//        QNChatMessage* messageW = (QNChatMessage*)ui->listWidget->itemWidget(lastItem);
+//        int lastTime = messageW->time().toInt();
+//        int curTime = curMsgTime.toInt();
+//        qDebug() << "curTime lastTime:" << curTime - lastTime;
+//        isShowTime = ((curTime - lastTime) > 60); // 两个消息相差一分钟
+////        isShowTime = true;
+//    }
+//    else {
+//        isShowTime = true;
+//    }
+//
+//    if (isShowTime) {
+//        QNChatMessage* messageTime = new QNChatMessage(ui->listWidget->parentWidget());
+//        QListWidgetItem* itemTime = new QListWidgetItem(ui->listWidget);
+//
+//        QSize size = QSize(this->width(), 40);
+//        itemTime->setFlags(itemTime->flags()  & ~Qt::ItemIsSelectable);
+//
+//        messageTime->resize(size);
+//        itemTime->setSizeHint(size);
+//        messageTime->setText(curMsgTime, curMsgTime, size, QNChatMessage::User_Time);
+//        ui->listWidget->setItemWidget(itemTime, messageTime);
+//    }
+//}
 
 void ChatPanel::slot_btnSend_click()
 {
-    QString &str = ui->editSend->toPlainText();     //得到编辑框的文字
-    {
-        //将文字进行大小处理
-    }
-    ui->editChat->append(str);                      //将编辑框的文字转到聊天框
+    //拿到文本
+    QString msg = ui->editSend->toPlainText();
+    ui->editSend->setText("");
+    QDateTime current_date_time = QDateTime::currentDateTime();
+    QString current_date = current_date_time.toString("hh:mm:ss");
 
-    //
-    emit sig_sendMsg(str);
-    
-    ui->editSend->clear();  //清空编辑框
-}
-
-void ChatPanel::getMsg(QString &str)
-{
-    ui->editChat->append(str);
+    dealMessage(m_meID, current_date, msg);
 }

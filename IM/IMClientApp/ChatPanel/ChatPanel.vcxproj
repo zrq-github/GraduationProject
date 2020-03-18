@@ -82,14 +82,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <QtMoc Include="QNChatMessage.h" />
     <QtMoc Include="ChatPanel.h" />
     <ClInclude Include="chatpanel_global.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChatPanel.cpp" />
+    <ClCompile Include="QNChatMessage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="ChatPanel.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="..\Resources\Resources.qrc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

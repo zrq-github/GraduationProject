@@ -100,15 +100,12 @@ void LogonPanel::slot_btnLogon_clicked()
     QString addr = "127.0.0.1";
     quint16 port = 1200;
 
-    this->accept();
-    //if (socket->state() == QAbstractSocket::SocketState::ConnectedState)
-    //{
-    //    
-    //}
-    //else
-    //{
-    //    socket->connectToHost(addr, port);
-    //}
+    if (true)
+    {
+        writeLocalSettings();
+        this->accept();
+    }
+    
 }
 
 LogonPanel::LogonPanel(QWidget *parent)
