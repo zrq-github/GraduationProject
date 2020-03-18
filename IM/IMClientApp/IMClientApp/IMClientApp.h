@@ -4,6 +4,7 @@
 #include "ui_IMClientApp.h"
 
 class FriendPanel;
+class ChatPanel;
 
 class IMClientApp : public QWidget
 {
@@ -14,7 +15,12 @@ public:
 private:
     void bindSigns();
     void createUi();
+    
+protected slots:
+    void slotCreateChatPanel(QString id, QString name);
+    void slotDeletChatPanel(QString id);
 private:
     Ui::IMClientAppClass ui;
-    FriendPanel *friendPanel;
+    FriendPanel *m_friendPanel;
+    QHash<QString, ChatPanel*> *m_hashFriendPanel;
 };

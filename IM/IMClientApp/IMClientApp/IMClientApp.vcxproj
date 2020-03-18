@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{6F22A9BB-C99B-4CB1-8B85-F31C2A1DD7EB}</ProjectGuid>
+    <ProjectGuid>{EF4DF2E6-A3FB-44A8-8114-A7EFA7958E80}</ProjectGuid>
     <Keyword>QtVS_v302</Keyword>
     <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
@@ -94,8 +94,11 @@
     <QtRcc Include="IMClientApp.qrc" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AppSettings\AppSettings.vcxproj">
-      <Project>{e43a123f-58e4-4f0b-b8a5-68ef2c1de1d4}</Project>
+    <ProjectReference Include="..\ChatPanel\ChatPanel.vcxproj">
+      <Project>{dfb0884c-76d2-4cee-81e7-f77facc34767}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\FriendPanel\FriendPanel.vcxproj">
+      <Project>{5ecfd2a9-31e3-48af-bc12-abcb69676662}</Project>
     </ProjectReference>
     <ProjectReference Include="..\LogonPanel\LogonPanel.vcxproj">
       <Project>{b1b842a6-2378-4ff5-a36e-d01de4c7e39e}</Project>

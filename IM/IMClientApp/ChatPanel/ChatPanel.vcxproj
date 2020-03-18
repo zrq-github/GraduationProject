@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B1B842A6-2378-4FF5-A36E-D01DE4C7E39E}</ProjectGuid>
+    <ProjectGuid>{DFB0884C-76D2-4CEE-81E7-F77FACC34767}</ProjectGuid>
     <Keyword>QtVS_v302</Keyword>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
@@ -20,12 +20,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
@@ -45,7 +43,7 @@
   </ImportGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <QtInstall>qt5.9</QtInstall>
-    <QtModules>core;gui;network;widgets</QtModules>
+    <QtModules>core;gui;widgets</QtModules>
   </PropertyGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <QtInstall>qt5.9</QtInstall>
@@ -61,8 +59,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <PreprocessorDefinitions>LOGONPANEL_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories);$(SolutionDir);.$(IntDir)\uic\%(RelativeDir)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CHATPANEL_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -76,8 +73,7 @@
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <PreprocessorDefinitions>LOGONPANEL_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories);$(SolutionDir);.\</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>CHATPANEL_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -86,25 +82,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <QtMoc Include="RegisterPanel.h" />
-    <QtMoc Include="LogonPanel.h" />
-    <ClInclude Include="logonpanel_global.h" />
+    <QtMoc Include="ChatPanel.h" />
+    <ClInclude Include="chatpanel_global.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LogonPanel.cpp" />
-    <ClCompile Include="RegisterPanel.cpp" />
+    <ClCompile Include="ChatPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="LogonPanel.ui" />
-    <QtUic Include="RegisterPanel.ui" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AppSettings\AppSettings.vcxproj">
-      <Project>{e43a123f-58e4-4f0b-b8a5-68ef2c1de1d4}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <QtRcc Include="..\Resources\Resources.qrc" />
+    <QtUic Include="ChatPanel.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
