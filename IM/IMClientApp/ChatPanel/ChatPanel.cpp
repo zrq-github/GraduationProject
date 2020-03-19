@@ -3,10 +3,19 @@
 #include <QLineEdit>
 #include <QDateTime>
 #include <QDebug>
+#include "AppSettings/AppSettings.h"
 
 QString ChatPanel::getTitle()
 {
     return ui->labName->text();
+}
+
+void ChatPanel::setFriendMsg(QString & chtId, QString & msg)
+{
+    QDateTime current_date_time = QDateTime::currentDateTime();
+    QString current_date = current_date_time.toString("hh:mm:ss");
+
+    dealMessage(m_chatID, current_date,msg);
 }
 
 void ChatPanel::closeEvent(QCloseEvent * event)
@@ -14,12 +23,11 @@ void ChatPanel::closeEvent(QCloseEvent * event)
     emit signClose(m_chatID);
 }
 
-ChatPanel::ChatPanel(QString meID, QString id,QString name, QWidget *parent)
+ChatPanel::ChatPanel(QString id,QString name, QWidget *parent)
     : QWidget(parent)
 {
     this->m_chatID = id;
     this->m_chatName = name;
-    this->m_meID = meID;
     ui = new Ui::ChatPanel();
     ui->setupUi(this);
     createUi();
@@ -96,5 +104,7 @@ void ChatPanel::slot_btnSend_click()
     QDateTime current_date_time = QDateTime::currentDateTime();
     QString current_date = current_date_time.toString("hh:mm:ss");
 
-    dealMessage(m_meID, current_date, msg);
+    dealMessage(IMUSERID, current_date, msg);//ui½»»¥
+
+    emit signSendMessage(m_chatID, msg);
 }

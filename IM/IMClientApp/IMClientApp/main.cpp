@@ -9,6 +9,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     qRegisterMetaType<FriendData>("FrdItemData");
     qRegisterMetaType<FriendData>("FrdItemData&");
+
     LogonPanel *w = new LogonPanel;
     if (w->exec() == QDialog::Accepted)
     {

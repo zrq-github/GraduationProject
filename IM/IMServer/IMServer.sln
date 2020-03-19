@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1062
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IMServer", "IMServer\IMServer.vcxproj", "{17D7A898-1DAD-4035-AEB7-CA382B7BD78A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IMQTcpServer", "IMQTcpServer\IMQTcpServer.vcxproj", "{252373E2-C906-4EED-A110-AD07763F3828}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{17D7A898-1DAD-4035-AEB7-CA382B7BD78A}.Debug|x64.ActiveCfg = Debug|x64
+		{17D7A898-1DAD-4035-AEB7-CA382B7BD78A}.Debug|x64.Build.0 = Debug|x64
+		{17D7A898-1DAD-4035-AEB7-CA382B7BD78A}.Release|x64.ActiveCfg = Release|x64
+		{17D7A898-1DAD-4035-AEB7-CA382B7BD78A}.Release|x64.Build.0 = Release|x64
+		{252373E2-C906-4EED-A110-AD07763F3828}.Debug|x64.ActiveCfg = Debug|x64
+		{252373E2-C906-4EED-A110-AD07763F3828}.Debug|x64.Build.0 = Debug|x64
+		{252373E2-C906-4EED-A110-AD07763F3828}.Release|x64.ActiveCfg = Release|x64
+		{252373E2-C906-4EED-A110-AD07763F3828}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {827A29E9-5DDB-4038-AF46-3CD47982E9EF}
+	EndGlobalSection
+EndGlobal

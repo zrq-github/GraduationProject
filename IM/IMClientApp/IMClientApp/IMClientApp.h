@@ -5,6 +5,7 @@
 
 class FriendPanel;
 class ChatPanel;
+class QTcpSocket;
 
 class IMClientApp : public QWidget
 {
@@ -19,9 +20,11 @@ private:
 protected slots:
     void slotCreateChatPanel(QString id, QString name);
     void slotDeletChatPanel(QString id);
+    void slotSendMessage(QString &to, QString &msg);
+
+    void slotSocketReadData();
 private:
     Ui::IMClientAppClass ui;
-    QString m_userID;
 
     FriendPanel *m_friendPanel;
     QHash<QString, ChatPanel*> *m_hashFriendPanel;

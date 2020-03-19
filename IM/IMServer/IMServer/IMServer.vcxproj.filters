@@ -28,28 +28,22 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IMClientApp.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="IMClientSocket.cpp">
+    <ClCompile Include="IMServer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="IMClientApp.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="IMClientSocket.h">
+    <QtMoc Include="IMServer.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="IMClientApp.ui">
+    <QtUic Include="IMServer.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="IMClientApp.qrc">
+    <QtRcc Include="IMServer.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
   </ItemGroup>

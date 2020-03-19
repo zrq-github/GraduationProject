@@ -102,6 +102,9 @@
     <ProjectReference Include="..\AppSettings\AppSettings.vcxproj">
       <Project>{e43a123f-58e4-4f0b-b8a5-68ef2c1de1d4}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\IMQTcpWord\IMQTcpWord.vcxproj">
+      <Project>{78c42be9-e59c-447e-8718-01ef3fe35e37}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="..\Resources\Resources.qrc" />

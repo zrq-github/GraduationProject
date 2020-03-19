@@ -4,6 +4,24 @@
 #include "FriendPanel/FriendPanel.h"
 #include "ChatPanel/ChatPanel.h"
 #include "AppSettings/AppSettings.h"
+#include "IMClientSocket.h"
+#include <QJsonObject>
+#include <QJsonDocument>
+#include "IMQTcpWord/IMQTcpWord.h"
+
+enum sendObject
+{
+    IMSERVER,
+    OTHERUSER,
+    YOUSELF,
+};
+
+enum operationType
+{
+    LOGONG,//登录
+    RETRANSMIT,//转发
+    GETFRIENDDATA,//请求好友数据
+};
 
 IMClientApp::IMClientApp(QWidget *parent)
     : QWidget(parent)
@@ -13,28 +31,30 @@ IMClientApp::IMClientApp(QWidget *parent)
     ui.setupUi(this);
     //初始化数据
     m_hashFriendPanel = new QHash<QString, ChatPanel *>;
-    m_userID = IMSettings.getLogonSettings("userID").toString();
+
     createUi();
     bindSigns();
 }
 
 void IMClientApp::bindSigns()
-{
+{ 
     connect(m_friendPanel, &FriendPanel::signCreateChatPanel, this, &IMClientApp::slotCreateChatPanel);
+    connect(IMQTcpSocket, &QTcpSocket::readyRead, this, &IMClientApp::slotSocketReadData);
 }
 
 void IMClientApp::slotCreateChatPanel(QString id, QString name)
 {
     //创建之前先判断该聊天框是否存在
-    if (m_hashFriendPanel->value(id)!=nullptr)
+    if (m_hashFriendPanel->value(id)==nullptr)
     {
-        return;
+        ChatPanel *chat = new ChatPanel(id, name);
+        connect(chat, &ChatPanel::signClose, this, &IMClientApp::slotDeletChatPanel);
+        connect(chat, &ChatPanel::signSendMessage, this, &IMClientApp::slotSendMessage);
+
+        chat->setWindowTitle(name + "(" + id + ")");
+        chat->show();
+        m_hashFriendPanel->insert(id, chat);
     }
-    ChatPanel *chat = new ChatPanel(m_userID,id,name);
-    connect(chat, &ChatPanel::signClose, this, &IMClientApp::slotDeletChatPanel);
-    chat->setWindowTitle(name + "(" + id + ")");
-    chat->show();
-    m_hashFriendPanel->insert(id, chat);
 }
 
 void IMClientApp::createUi()
@@ -54,5 +74,43 @@ void IMClientApp::slotDeletChatPanel(QString id)
         delete cp;
         cp = Q_NULLPTR;
         m_hashFriendPanel->erase(it);
+    }
+}
+
+void IMClientApp::slotSendMessage(QString & to, QString & msg)
+{//封装数据
+    QJsonObject json;
+    json.insert("sendObject", sendObject::OTHERUSER);
+    json.insert("operationType", operationType::RETRANSMIT);
+    json.insert("to", to);
+    json.insert("from", IMUSERID);
+    json.insert("data", msg);
+    QJsonDocument document = QJsonDocument(json);
+
+    qDebug() << IMQTcpSocket->state();
+
+    IMQTcpSocket->write(document.toJson());
+    IMQTcpSocket->flush();
+}
+
+void IMClientApp::slotSocketReadData()
+{
+    QJsonDocument document = QJsonDocument::fromJson(IMQTcpSocket->readAll());
+    QJsonObject object = document.object();
+
+    int sendObject = object.value("sendObject").toInt();
+    int operationType = object.value("operationType").toInt();
+    QString to = object.value("to").toString();
+    QString from = object.value("from").toString();
+    QString data = object.value("data").toString();
+
+    if (sendObject == sendObject::OTHERUSER)
+    {
+        auto i = m_hashFriendPanel->find(from);
+        if (i != m_hashFriendPanel->end())
+        {
+            ChatPanel *chat = i.value();
+            chat->setFriendMsg(from,data);
+        }
     }
 }

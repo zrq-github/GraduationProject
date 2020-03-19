@@ -29,12 +29,14 @@ private:
 
     void bindSigns();
 private slots:
-    void slot_btnLogon_clicked();     //登录按钮_点击事件
+    void slot_btnLogon_clicked();       //登录按钮_点击事件
     void slot_btnRegister_clicked();
     void slot_btnForgetPaswd_clicked();
+
+    void slotServerConnected();
+    void slotServerData();
 private:
     Ui::LogonPanel *ui;
-    QTcpSocket *socket;
 protected:
     void mousePressEvent(QMouseEvent *event);       //用于鼠标拖动窗口的鼠标事件操作
     void mouseMoveEvent(QMouseEvent *event);

@@ -8,12 +8,32 @@
 #include <QDebug>
 #include <QJsonObject>
 #include <QJsonDocument>
-#include <QTcpSocket>
+#include <QtNetwork/QTcpSocket>
 #include "RegisterPanel.h"
+#include "IMQTcpWord/IMQTcpWord.h"
 
 #ifdef WIN32  
 #pragma execution_character_set("utf-8")  
 #endif
+
+enum sendObject
+{
+    IMSERVER,
+    OTHERUSER,
+    YOUSELF,
+};
+
+enum operationType
+{
+    LOGONG,//登录
+    RETRANSMIT,//转发
+    GETFRIENDDATA,//请求好友数据
+};
+
+enum dataType
+{
+    TXT
+};
 
 void LogonPanel::mousePressEvent(QMouseEvent * event)
 {
@@ -77,6 +97,9 @@ void LogonPanel::bindSigns()
     connect(ui->btnLogon, &QPushButton::clicked, this, &LogonPanel::slot_btnLogon_clicked);
     connect(ui->btnRegister, &QPushButton::clicked, this, &LogonPanel::slot_btnRegister_clicked);
     connect(ui->btnForgetPasw, &QPushButton::clicked, this, &LogonPanel::slot_btnForgetPaswd_clicked);
+
+    connect(IMQTcpSocket, &QTcpSocket::connected, this, &LogonPanel::slotServerConnected);
+    connect(IMQTcpSocket, &QTcpSocket::readyRead, this, &LogonPanel::slotServerData);
 }
 
 void LogonPanel::slot_btnRegister_clicked()
@@ -91,26 +114,71 @@ void LogonPanel::slot_btnForgetPaswd_clicked()
     panel->exec();
 }
 
-void LogonPanel::slot_btnLogon_clicked()
-{   //点击登录，准备连接服务器
+void LogonPanel::slotServerConnected()
+{//成功连接后,发送账号密码验证
+    //验证账号密码
     QString user = ui->editUser->text().trimmed();  //用户名
     QString pswd = ui->editPswd->text().trimmed();  //密码
 
-    //将账号密码发送给服务器进行验证,连接成功执行Connected
-    QString addr = "127.0.0.1";
-    quint16 port = 1200;
+    QJsonObject json;
+    json.insert("sendObject", sendObject::IMSERVER);
+    json.insert("operationType", operationType::LOGONG);
+    json.insert("to", "");
+    json.insert("from", user);
+    json.insert("data", pswd);
+    QJsonDocument document = QJsonDocument(json);
 
-    if (true)
+    IMQTcpSocket->write(document.toJson());
+    IMQTcpSocket->flush();
+}
+
+void LogonPanel::slotServerData()
+{
+    QJsonDocument document = QJsonDocument::fromJson(IMQTcpSocket->readAll());
+    QJsonObject object = document.object();
+
+    int sendObject = object.value("sendObject").toInt();
+    int operationType = object.value("operationType").toInt();
+    QString to = object.value("to").toString();
+    QString from = object.value("from").toString();
+
+    if (sendObject == sendObject::YOUSELF)
     {
-        writeLocalSettings();
-        this->accept();
+        if (operationType == operationType::LOGONG)
+        {
+            int data = object.value("data").toInt();
+            if (data == 1)
+            {//登录验证成功
+                IMSettings.setUserID(to);
+                this->accept();
+            }
+            else
+            {
+                QMessageBox::information(NULL, "错误", "账号密码不正确");
+            }
+        }
     }
-    
+}
+
+void LogonPanel::slot_btnLogon_clicked()
+{
+    if (IMQTcpSocket->state() == QAbstractSocket::SocketState::ConnectedState)
+    {
+        slotServerConnected();
+    }
+    else
+    {
+        //尝试连接服务器
+        QString addr = IMSettings.getSetting("server", "ip").toString();
+        quint16 port = IMSettings.getSetting("server", "port").toInt();
+
+        IMQTcpSocket->connectToHost(addr, port);
+    }
+
 }
 
 LogonPanel::LogonPanel(QWidget *parent)
     : QDialog(parent)
-    , socket(new QTcpSocket())
 {
     ui = new Ui::LogonPanel();
     ui->setupUi(this);

@@ -1,9 +1,0 @@
-<RCC>
-    <qresource prefix="/logon">
-        <file>Images/background.png</file>
-    </qresource>
-    <qresource prefix="/FriendPanel">
-        <file>Images/arrowRight</file>
-        <file>Images/head.png</file>
-    </qresource>
-</RCC>

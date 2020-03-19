@@ -11,9 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{DFB0884C-76D2-4CEE-81E7-F77FACC34767}</ProjectGuid>
+    <ProjectGuid>{252373E2-C906-4EED-A110-AD07763F3828}</ProjectGuid>
     <Keyword>QtVS_v302</Keyword>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -43,11 +43,11 @@
   </ImportGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <QtInstall>qt5.9</QtInstall>
-    <QtModules>core;gui;widgets</QtModules>
+    <QtModules>core;network</QtModules>
   </PropertyGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <QtInstall>qt5.9</QtInstall>
-    <QtModules>core;gui;widgets</QtModules>
+    <QtModules>core;network</QtModules>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
     <Import Project="$(QtMsBuild)\qt.props" />
@@ -59,8 +59,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <PreprocessorDefinitions>CHATPANEL_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories);$(SolutionDir);</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>IMQTCPSERVER_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -74,7 +73,7 @@
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <PreprocessorDefinitions>CHATPANEL_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMQTCPSERVER_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -83,24 +82,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <QtMoc Include="QNChatMessage.h" />
-    <QtMoc Include="ChatPanel.h" />
-    <ClInclude Include="chatpanel_global.h" />
+    <ClCompile Include="IMQTcpServer.cpp" />
+    <ClCompile Include="IMQTcpSocket.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ChatPanel.cpp" />
-    <ClCompile Include="QNChatMessage.cpp" />
+    <QtMoc Include="IMQTcpServer.h" />
+    <ClInclude Include="imqtcpserver_global.h" />
+    <QtMoc Include="IMQTcpSocket.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="ChatPanel.ui" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtRcc Include="..\Resources\Resources.qrc" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AppSettings\AppSettings.vcxproj">
-      <Project>{e43a123f-58e4-4f0b-b8a5-68ef2c1de1d4}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

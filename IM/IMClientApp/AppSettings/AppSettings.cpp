@@ -37,6 +37,16 @@ void AppSettings::setSetting(QString group, QString key, QVariant value)
     return m_settings->setValue(group + "/" + key, value);
 }
 
+QString AppSettings::getUserID()
+{
+    return m_userID;
+}
+
+void AppSettings::setUserID(QString id)
+{
+    this->m_userID = id;
+}
+
 
 QVariant AppSettings::getLogonSettings(QString key/*userID, userPswd,isRemember,*/)
 {
@@ -77,9 +87,9 @@ void AppSettings::init()
         m_settings->endGroup();
         //初始化服务器设置
         m_settings->beginGroup("server");
-        m_settings->setValue("name", "");
-        m_settings->setValue("ip", "");
-        m_settings->setValue("port", "");
+        m_settings->setValue("name", "servername");
+        m_settings->setValue("ip", "127.0.0.0");
+        m_settings->setValue("port", 5000);
         m_settings->endGroup();
     }
 }
