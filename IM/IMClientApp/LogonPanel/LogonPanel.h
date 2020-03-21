@@ -29,9 +29,10 @@ private:
 
     void bindSigns();
 private slots:
-    void slot_btnLogon_clicked();       //登录按钮_点击事件
-    void slot_btnRegister_clicked();
-    void slot_btnForgetPaswd_clicked();
+    void slot_btnLogon_clicked();               //登录按钮
+    void slot_btnRegister_clicked();            //注册
+    void slot_btnForgetPaswd_clicked();         //忘记密码
+    void slot_btnNetSet_clicked();              //网络设置
 
     void slotServerConnected();
     void slotServerData();

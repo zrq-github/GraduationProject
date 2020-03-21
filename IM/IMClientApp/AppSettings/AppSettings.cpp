@@ -89,7 +89,7 @@ void AppSettings::init()
         m_settings->beginGroup("server");
         m_settings->setValue("name", "servername");
         m_settings->setValue("ip", "127.0.0.0");
-        m_settings->setValue("port", 5000);
+        m_settings->setValue("port", 1200);
         m_settings->endGroup();
     }
 }

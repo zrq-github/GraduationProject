@@ -198,6 +198,9 @@
    </layout>
   </widget>
   <widget class="QPushButton" name="btnRegister">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>450</x>
@@ -229,10 +232,30 @@
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QPushButton" name="btnNetSet">
+   <property name="geometry">
+    <rect>
+     <x>510</x>
+     <y>390</y>
+     <width>31</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="../Resources/Resources.qrc">
+     <normaloff>:/img/img_btn_set.png</normaloff>:/img/img_btn_set.png</iconset>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="../Resources/LogonPanel.qrc"/>
+  <include location="../Resources/Resources.qrc"/>
  </resources>
  <connections/>
 </ui>

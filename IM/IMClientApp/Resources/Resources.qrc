@@ -1,9 +1,10 @@
 <RCC>
-    <qresource prefix="/img">
-        <file>background.png</file>
-        <file>logo.ico</file>
-        <file>Customer Copy.png</file>
-        <file>CustomerService.png</file>
-        <file>loading4.gif</file>
-    </qresource>
+  <qresource prefix="/img">
+    <file>img_btn_set.png</file>
+    <file>background.png</file>
+    <file>logo.ico</file>
+    <file>Customer Copy.png</file>
+    <file>CustomerService.png</file>
+    <file>loading4.gif</file>
+  </qresource>
 </RCC>

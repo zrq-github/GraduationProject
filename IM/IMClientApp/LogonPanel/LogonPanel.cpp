@@ -11,6 +11,7 @@
 #include <QtNetwork/QTcpSocket>
 #include "RegisterPanel.h"
 #include "IMQTcpWord/IMQTcpWord.h"
+#include "NetSettingsPanel.h"
 
 #ifdef WIN32  
 #pragma execution_character_set("utf-8")  
@@ -97,6 +98,7 @@ void LogonPanel::bindSigns()
     connect(ui->btnLogon, &QPushButton::clicked, this, &LogonPanel::slot_btnLogon_clicked);
     connect(ui->btnRegister, &QPushButton::clicked, this, &LogonPanel::slot_btnRegister_clicked);
     connect(ui->btnForgetPasw, &QPushButton::clicked, this, &LogonPanel::slot_btnForgetPaswd_clicked);
+    connect(ui->btnNetSet, &QPushButton::clicked, this, &LogonPanel::slot_btnNetSet_clicked);
 
     connect(IMQTcpSocket, &QTcpSocket::connected, this, &LogonPanel::slotServerConnected);
     connect(IMQTcpSocket, &QTcpSocket::readyRead, this, &LogonPanel::slotServerData);
@@ -112,6 +114,12 @@ void LogonPanel::slot_btnForgetPaswd_clicked()
 {
     RegisterPanel *panel = new RegisterPanel(this,1);
     panel->exec();
+}
+
+void LogonPanel::slot_btnNetSet_clicked()
+{
+    NetSettingsPanel *netSet = new NetSettingsPanel(this);
+    netSet->show();
 }
 
 void LogonPanel::slotServerConnected()
