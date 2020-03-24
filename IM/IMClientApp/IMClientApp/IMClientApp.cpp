@@ -1,4 +1,5 @@
 #include "IMClientApp.h"
+#include "ui_IMClientApp.h"
 #include "LogonPanel/LogonPanel.h"
 #include <QHBoxLayout>
 #include "FriendPanel/FriendPanel.h"
@@ -28,7 +29,8 @@ IMClientApp::IMClientApp(QWidget *parent)
     , m_friendPanel(Q_NULLPTR)
     , m_hashFriendPanel(Q_NULLPTR)
 {
-    ui.setupUi(this);
+    ui = new Ui::IMClientAppClass;
+    ui->setupUi(this);
     //初始化数据
     m_hashFriendPanel = new QHash<QString, ChatPanel *>;
 
@@ -63,6 +65,9 @@ void IMClientApp::createUi()
     m_friendPanel = new FriendPanel(this);
     layout->addWidget(m_friendPanel);
     this->setLayout(layout);
+
+    //基础数据初始化
+    this->setWindowTitle(IMSettings.getLogonSettings("userID").toString());
 }
 
 void IMClientApp::slotDeletChatPanel(QString id)

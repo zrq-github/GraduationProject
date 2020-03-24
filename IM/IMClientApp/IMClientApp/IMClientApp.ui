@@ -1,25 +1,22 @@
-<UI version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>IMClientAppClass</class>
- <widget class="QWidget" name="IMClientAppClass" >
-  <property name="objectName" >
-   <string notr="true">IMClientAppClass</string>
-  </property>
-  <property name="geometry" >
+ <widget class="QWidget" name="IMClientAppClass">
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>400</height>
+    <width>287</width>
+    <height>558</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>IMClientApp</string>
   </property>
  </widget>
- <layoutDefault spacing="6" margin="11" />
- <pixmapfunction></pixmapfunction>
+ <layoutdefault spacing="6" margin="11"/>
  <resources>
-   <include location="IMClientApp.qrc"/>
+  <include location="IMClientApp.qrc"/>
  </resources>
  <connections/>
-</UI>
+</ui>

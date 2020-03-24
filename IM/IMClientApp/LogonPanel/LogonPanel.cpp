@@ -12,29 +12,11 @@
 #include "RegisterPanel.h"
 #include "IMQTcpWord/IMQTcpWord.h"
 #include "NetSettingsPanel.h"
+#include "DeftData/DeftData.h"
 
 #ifdef WIN32  
 #pragma execution_character_set("utf-8")  
 #endif
-
-enum sendObject
-{
-    IMSERVER,
-    OTHERUSER,
-    YOUSELF,
-};
-
-enum operationType
-{
-    LOGONG,//登录
-    RETRANSMIT,//转发
-    GETFRIENDDATA,//请求好友数据
-};
-
-enum dataType
-{
-    TXT
-};
 
 void LogonPanel::mousePressEvent(QMouseEvent * event)
 {

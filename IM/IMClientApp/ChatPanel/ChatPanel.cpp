@@ -28,6 +28,7 @@ ChatPanel::ChatPanel(QString id,QString name, QWidget *parent)
 {
     this->m_chatID = id;
     this->m_chatName = name;
+
     ui = new Ui::ChatPanel();
     ui->setupUi(this);
     createUi();

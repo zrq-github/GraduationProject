@@ -1,7 +1,10 @@
 #pragma once
 
 #include <QtWidgets/QWidget>
-#include "ui_IMClientApp.h"
+
+namespace Ui {
+    class IMClientAppClass;
+}
 
 class FriendPanel;
 class ChatPanel;
@@ -24,7 +27,7 @@ protected slots:
 
     void slotSocketReadData();
 private:
-    Ui::IMClientAppClass ui;
+    Ui::IMClientAppClass *ui;
 
     FriendPanel *m_friendPanel;
     QHash<QString, ChatPanel*> *m_hashFriendPanel;
