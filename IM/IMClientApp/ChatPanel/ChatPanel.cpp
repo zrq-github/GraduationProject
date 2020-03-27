@@ -4,6 +4,18 @@
 #include <QDateTime>
 #include <QDebug>
 #include "AppSettings/AppSettings.h"
+#include <QFile>
+#include <QFileDialog>
+#include "FileCilentPanel.h"
+#include "FileServerPanel.h"
+#include "Base/IMQJson.h"
+#include "Base/DeftData.h"
+#include "IMQTcpWord/IMQTcpWord.h"
+#include <QMessageBox>
+
+#ifdef WIN32  
+#pragma execution_character_set("utf-8")  
+#endif
 
 QString ChatPanel::getTitle()
 {
@@ -32,7 +44,7 @@ ChatPanel::ChatPanel(QString id,QString name, QWidget *parent)
     ui = new Ui::ChatPanel();
     ui->setupUi(this);
     createUi();
-    binSlots();
+    binSign();
 }
 
 ChatPanel::~ChatPanel()
@@ -45,9 +57,8 @@ void ChatPanel::createUi()
     ui->textEdit->setReadOnly(true);
 }
 
-void ChatPanel::binSlots()
+void ChatPanel::binSign()
 {
-
     connect(ui->btnSend, SIGNAL(clicked()), this, SLOT(slot_btnSend_click()));    //发送文本事件
 }
 
@@ -57,45 +68,24 @@ void ChatPanel::dealMessage(QString & sendId, QString & time, QString & data)
     ui->textEdit->append(qstr);
 }
 
-//void ChatPanel::dealMessage(QNChatMessage * messageW, QListWidgetItem * item, QString text, QString time, QNChatMessage::User_Type type)
-//{
-//    messageW->setFixedWidth(this->width());
-//    QSize size = messageW->fontRect(text);
-//    item->setSizeHint(size);
-//    item->setSelected(false);
-//    messageW->setText(text, time, size, type);
-//    ui->listWidget->setItemWidget(item, messageW);
-//}
-//
-//void ChatPanel::dealMessageTime(QString curMsgTime)
-//{   //如果两个消息相差一分钟,则不实现时间
-//    bool isShowTime = false;
-//    if (ui->listWidget->count() > 0) {
-//        QListWidgetItem* lastItem = ui->listWidget->item(ui->listWidget->count() - 1);
-//        QNChatMessage* messageW = (QNChatMessage*)ui->listWidget->itemWidget(lastItem);
-//        int lastTime = messageW->time().toInt();
-//        int curTime = curMsgTime.toInt();
-//        qDebug() << "curTime lastTime:" << curTime - lastTime;
-//        isShowTime = ((curTime - lastTime) > 60); // 两个消息相差一分钟
-////        isShowTime = true;
-//    }
-//    else {
-//        isShowTime = true;
-//    }
-//
-//    if (isShowTime) {
-//        QNChatMessage* messageTime = new QNChatMessage(ui->listWidget->parentWidget());
-//        QListWidgetItem* itemTime = new QListWidgetItem(ui->listWidget);
-//
-//        QSize size = QSize(this->width(), 40);
-//        itemTime->setFlags(itemTime->flags()  & ~Qt::ItemIsSelectable);
-//
-//        messageTime->resize(size);
-//        itemTime->setSizeHint(size);
-//        messageTime->setText(curMsgTime, curMsgTime, size, QNChatMessage::User_Time);
-//        ui->listWidget->setItemWidget(itemTime, messageTime);
-//    }
-//}
+void ChatPanel::hasPendingFile(QString usrname, QString srvaddr, QString clntaddr, QString filename)
+{
+    int btn = QMessageBox::information(this, tr("接受文件"), tr("来自%1(%2)的文件：%3,是否接收？").arg(usrname).arg(srvaddr).arg(filename), QMessageBox::Yes, QMessageBox::No);
+    if (btn == QMessageBox::Yes) {
+        QString name = QFileDialog::getSaveFileName(0, tr("保存文件"), filename);
+        if (!name.isEmpty())
+        {
+            FileCilentPanel *clnt = new FileCilentPanel(this);
+            clnt->setFileName(name);
+            clnt->setHostAddr(QHostAddress(srvaddr));
+            clnt->show();
+        }
+    }
+    else 
+    {
+        //拒接应该处理的语句
+    }
+}
 
 void ChatPanel::slot_btnSend_click()
 {
@@ -108,4 +98,25 @@ void ChatPanel::slot_btnSend_click()
     dealMessage(IMUSERID, current_date, msg);//ui交互
 
     emit signSendMessage(m_chatID, msg);
+}
+
+void ChatPanel::on_btnSendFile_clicked()
+{
+    fileSrv = new FileServerPanel(this);
+    connect(fileSrv, &FileServerPanel::signFileName, this, &ChatPanel::slotSendFile);
+
+    fileSrv->show();
+    fileSrv->initSrv();
+}
+
+void ChatPanel::slotSendFile(QString file)
+{
+    QByteArray byte = IMQJson::getQJsonFile(MsgType::FILENAME, m_chatID, IMUSERID, IMQTcpSocket->localAddress().toString(), file);
+    IMQTcpSocket->write(byte);
+    IMQTcpSocket->flush();
+    //emit signSendFile(byte);
+}
+
+void ChatPanel::slotSaveFile(QByteArray)
+{
 }

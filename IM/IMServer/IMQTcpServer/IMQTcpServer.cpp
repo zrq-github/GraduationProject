@@ -1,29 +1,12 @@
 #include "IMQTcpServer.h"
 #include <QJsonDocument>
 #include <QJsonObject>
+#include "Base/DeftData.h"
+#include "Base/IMQJson.h"
 
 #ifdef WIN32
 #pragma execution_character_set("utf-8")
 #endif
-
-enum sendObject
-{
-    IMSERVER,
-    OTHERUSER,
-    YOUSELF,
-};
-
-enum operationType
-{
-    LOGONG,//登录
-    RETRANSMIT,//转发
-    GETFRIENDDATA,//请求好友数据
-};
-
-enum dataType 
-{
-    TXT
-};
 
 IMQTcpServer::IMQTcpServer(QObject * parent, int numConnections)
     :QTcpServer(parent)
@@ -44,58 +27,73 @@ void IMQTcpServer::slotDealSocketData(const int handle, const QString & address,
     QJsonDocument document = QJsonDocument::fromJson(byteArray);
     QJsonObject object = document.object();
 
-    int sendObject = object.value("sendObject").toInt();
-    int operationType = object.value("operationType").toInt();
+    int type = object.value("msgType").toInt();
     QString to = object.value("to").toString();
     QString from = object.value("from").toString();
 
-    if (sendObject == sendObject::IMSERVER)
-    {//发送给服务器的信息
-        if (operationType == operationType::LOGONG)
-        {//登录验证
-            QString data = object.value("data").toString();//返回的data应该是密码
-            //查询数据库
-            if (true)
-            {
-                m_hashClient->insert(from, handle);
+    IMQTcpSocket *fromSocket = m_hashSocket->find(handle).value();  //判断是谁发送的Socket
+    IMQTcpSocket *toSocket = getSocketByUserID(to);                 //拿到是发给谁的Socket
 
-                object.insert("sendObject", sendObject::YOUSELF);
-                object.insert("data", 1);
-                object.insert("to", from);
-                object.insert("from", "");
-                QJsonDocument newDocument = QJsonDocument(object);
-                IMQTcpSocket *sockt = m_hashSocket->find(handle).value();
-                sockt->write(newDocument.toJson());
-                sockt->flush();
-            }
+    switch (type)
+    {
+    case MsgType::USERLOGIN:
+    {//连接数据库查询
+        if (true)
+        {
+            QByteArray &byte = IMQJson::getQJsonByte(MsgType::USERLOGIN, from, "server", QString::number(1));
+            m_hashClient->insert(from, handle); 
+            fromSocket->write(byte);    //发回去
+            fromSocket->flush();
         }
+        break;
+    }
+    case MsgType::USERMSG:
+    {
+        if(toSocket!=nullptr)
+        {
+            toSocket->write(byteArray); //转发
+            toSocket->flush();
+            emit signClientMessage(to, from, QString("发送了一条信息"));   //给界面ui展示用
+        }
+        else
+        {
+            emit signClientMessage(to, from, QString("用户没上线"));
+        }
+        break;
     }
 
-    if (sendObject == sendObject::OTHERUSER)
-    {//给其他用户处理的信息
-        if (operationType == operationType::RETRANSMIT)
-        {//让服务器转发
-            auto i = m_hashClient->find(to);
-            if (i != m_hashClient->end())
-            {
-                emit signClientMessage(to, from, QString("发送了一条信息"));
-                int sockeHanlde = i.value();
-                IMQTcpSocket *socket = m_hashSocket->constFind(sockeHanlde).value();
-                socket->write(byteArray);
-                socket->flush();
-            }
-            else
-            {
-                emit signClientMessage(to, from, QString("用户没上线"));
-            }
+    case MsgType::FILENAME:
+    {
+        if(toSocket!=nullptr)
+        {
+            //QString file = object.value("data").toString();
+            //QString address = fromSocket->localAddress().toString();
+            //QByteArray byte = IMQJson::getQJsonFile(MsgType::FILENAME, to, from, address, file);
+            toSocket->write(byteArray);
+            toSocket->flush();
+
+            emit signClientMessage(to, from, QString("发送了一个文件"));
         }
+        else
+        {   //用户不在线
+            QByteArray byte = IMQJson::getQJsonByte(MsgType::REFUSEFILE, from, "server", "");
+            toSocket->write(byteArray);
+            toSocket->flush();
+            emit signClientMessage(to, from, QString("用户没上线"));
+        }
+        break;
+    }
+
+    default:
+        break;
     }
 }
 
 void IMQTcpServer::incomingConnection(qintptr socketDescriptor)
 {//新连接执行
     IMQTcpSocket *socket = new IMQTcpSocket(socketDescriptor);
-    m_hashSocket->insert(socketDescriptor, socket);
+    m_hashSocket->insert(socketDescriptor, socket);     //存放新连接的句柄
+
     //绑定socket信号
     connect(socket, &IMQTcpSocket::signReadData, this, &IMQTcpServer::slotDealSocketData);
     connect(socket, &IMQTcpSocket::signSockDisConnect, this, &IMQTcpServer::slotSocketDisConnect);
@@ -108,6 +106,17 @@ void IMQTcpServer::incomingConnection(qintptr socketDescriptor)
 
     //发送有新客户端的连接信号
     emit signNewClientConnect(socketDescriptor, socket->peerAddress().toString(), socket->peerPort());
+}
+
+IMQTcpSocket * IMQTcpServer::getSocketByUserID(QString userID)
+{
+    QHash<QString, int>::iterator clientIter = m_hashClient->find(userID);
+    if (clientIter != m_hashClient->end())
+    {
+        int hdl = clientIter.value();
+        return m_hashSocket->find(hdl).value();
+    }
+    return nullptr;
 }
 
 void IMQTcpServer::slotSocketDisConnect(const int handle, const QString &address, const quint16 port)

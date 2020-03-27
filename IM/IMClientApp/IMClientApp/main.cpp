@@ -10,19 +10,19 @@ int main(int argc, char *argv[])
     qRegisterMetaType<FriendData>("FrdItemData");
     qRegisterMetaType<FriendData>("FrdItemData&");
 
-    //LogonPanel *w = new LogonPanel;
-    //if (w->exec() == QDialog::Accepted)
-    //{
-    //    IMClientApp *im = new IMClientApp;
-    //    im->show();
-    //    return a.exec();
-    //}
-    //else
-    //{
-    //    return 0;
-    //}
+    LogonPanel *w = new LogonPanel;
+    if (w->exec() == QDialog::Accepted)
+    {
+        IMClientApp *im = new IMClientApp;
+        im->show();
+        return a.exec();
+    }
+    else
+    {
+        return 0;
+    }
 
-    IMClientApp *w = new IMClientApp;
-    w->show();
-    return a.exec();
+    //IMClientApp *w = new IMClientApp;
+    //w->show();
+    //return a.exec();
 }

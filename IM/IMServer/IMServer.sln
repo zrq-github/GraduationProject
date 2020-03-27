@@ -7,6 +7,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IMServer", "IMServer\IMServ
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IMQTcpServer", "IMQTcpServer\IMQTcpServer.vcxproj", "{252373E2-C906-4EED-A110-AD07763F3828}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Base", "_Base", "{7320B4E0-1634-445C-8658-93C082AC9430}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Base", "..\IMClientApp\Base\Base.vcxproj", "{10450B03-1A21-4B52-A677-A773520E9333}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,9 +25,16 @@ Global
 		{252373E2-C906-4EED-A110-AD07763F3828}.Debug|x64.Build.0 = Debug|x64
 		{252373E2-C906-4EED-A110-AD07763F3828}.Release|x64.ActiveCfg = Release|x64
 		{252373E2-C906-4EED-A110-AD07763F3828}.Release|x64.Build.0 = Release|x64
+		{10450B03-1A21-4B52-A677-A773520E9333}.Debug|x64.ActiveCfg = Debug|x64
+		{10450B03-1A21-4B52-A677-A773520E9333}.Debug|x64.Build.0 = Debug|x64
+		{10450B03-1A21-4B52-A677-A773520E9333}.Release|x64.ActiveCfg = Release|x64
+		{10450B03-1A21-4B52-A677-A773520E9333}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{10450B03-1A21-4B52-A677-A773520E9333} = {7320B4E0-1634-445C-8658-93C082AC9430}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {827A29E9-5DDB-4038-AF46-3CD47982E9EF}

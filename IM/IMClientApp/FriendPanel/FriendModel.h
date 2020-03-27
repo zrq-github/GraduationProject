@@ -3,7 +3,7 @@
 #include <QAbstractListModel>
 #include <QListView>
 #include <QStyledItemDelegate>
-#include "DeftData/DeftData.h"
+#include "Base/DeftData.h"
 
 class FriendDelegate :public QStyledItemDelegate
 {

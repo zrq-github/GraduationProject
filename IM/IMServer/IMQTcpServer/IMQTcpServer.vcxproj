@@ -60,6 +60,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>IMQTCPSERVER_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(WorkSpace)\IMClientApp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -91,6 +92,9 @@
     <QtMoc Include="IMQTcpSocket.h" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\IMClientApp\Base\Base.vcxproj">
+      <Project>{10450b03-1a21-4b52-a677-a773520e9333}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

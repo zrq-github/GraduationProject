@@ -25,6 +25,7 @@ void NetSettingsPanel::slotBtnSave()
     QString port = ui->linePort->text();
     IMSettings.setSetting("server", "ip", ip);
     IMSettings.setSetting("server", "port", port);
+    this->close();
 }
 
 void NetSettingsPanel::createUi()

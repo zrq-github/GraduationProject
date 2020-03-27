@@ -9,7 +9,7 @@ IMServer::IMServer(QWidget *parent)
     : QWidget(parent)
 {
     ui.setupUi(this);
-    m_tcpServer = new IMQTcpServer;
+    m_tcpServer = new IMQTcpServer(this);
     createUi();
     bindSigns();
 }
@@ -50,6 +50,7 @@ void IMServer::slotStart()
     else
     {
         ui.textEdit->append("·þÎñÆ÷¼àÌýÊ§°Ü");
+        ui.textEdit->append(m_tcpServer->errorString());
     }
 }
 
@@ -67,4 +68,8 @@ void IMServer::slotClientMessage(QString & to, QString from, QString & msg)
     ui.textEdit->append("this to client :" + to);
     ui.textEdit->append("this from client:" + from);
     ui.textEdit->append("this client msg:" + msg);
+}
+
+void IMServer::slotSelectFile()
+{
 }

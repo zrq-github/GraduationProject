@@ -97,9 +97,6 @@
     <ProjectReference Include="..\AppSettings\AppSettings.vcxproj">
       <Project>{e43a123f-58e4-4f0b-b8a5-68ef2c1de1d4}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\DeftData\DeftData.vcxproj">
-      <Project>{b0b4b2b8-6a4f-4310-abba-e632d8f4a394}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\IMClientApp\IMClientApp.vcxproj">
       <Project>{ef4df2e6-a3fb-44a8-8114-a7efa7958e80}</Project>
     </ProjectReference>

@@ -23,8 +23,11 @@ signals:
 protected:
     void incomingConnection(qintptr socketDescriptor);  //每当有新连接执行
 private:
-    QHash<int, IMQTcpSocket*> *m_hashSocket;  //存放socket句柄
-    QHash<QString, int> *m_hashClient;
+    QHash<int, IMQTcpSocket*> *m_hashSocket;    //存放socket句柄
+    QHash<QString, int> *m_hashClient;          //存放用户ID所对应的句柄
+
     int m_maxConnections; //最大连接数
     QThreadPool *m_threadPool;
+
+    IMQTcpSocket *getSocketByUserID(QString userID);
 };

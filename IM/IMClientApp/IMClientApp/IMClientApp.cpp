@@ -8,21 +8,8 @@
 #include "IMClientSocket.h"
 #include <QJsonObject>
 #include <QJsonDocument>
+#include "Base/IMQJson.h"
 #include "IMQTcpWord/IMQTcpWord.h"
-
-enum sendObject
-{
-    IMSERVER,
-    OTHERUSER,
-    YOUSELF,
-};
-
-enum operationType
-{
-    LOGONG,//登录
-    RETRANSMIT,//转发
-    GETFRIENDDATA,//请求好友数据
-};
 
 IMClientApp::IMClientApp(QWidget *parent)
     : QWidget(parent)
@@ -52,6 +39,7 @@ void IMClientApp::slotCreateChatPanel(QString id, QString name)
         ChatPanel *chat = new ChatPanel(id, name);
         connect(chat, &ChatPanel::signClose, this, &IMClientApp::slotDeletChatPanel);
         connect(chat, &ChatPanel::signSendMessage, this, &IMClientApp::slotSendMessage);
+        connect(chat, &ChatPanel::signSendFile, this, &IMClientApp::slotSendFile);
 
         chat->setWindowTitle(name + "(" + id + ")");
         chat->show();
@@ -67,7 +55,7 @@ void IMClientApp::createUi()
     this->setLayout(layout);
 
     //基础数据初始化
-    this->setWindowTitle(IMSettings.getLogonSettings("userID").toString());
+    this->setWindowTitle(IMUSERID);
 }
 
 void IMClientApp::slotDeletChatPanel(QString id)
@@ -84,38 +72,54 @@ void IMClientApp::slotDeletChatPanel(QString id)
 
 void IMClientApp::slotSendMessage(QString & to, QString & msg)
 {//封装数据
-    QJsonObject json;
-    json.insert("sendObject", sendObject::OTHERUSER);
-    json.insert("operationType", operationType::RETRANSMIT);
-    json.insert("to", to);
-    json.insert("from", IMUSERID);
-    json.insert("data", msg);
-    QJsonDocument document = QJsonDocument(json);
+    QByteArray &byte = IMQJson::getQJsonByte(MsgType::USERMSG, to, IMUSERID,msg);
 
-    qDebug() << IMQTcpSocket->state();
-
-    IMQTcpSocket->write(document.toJson());
+    IMQTcpSocket->write(byte);
     IMQTcpSocket->flush();
+}
+
+void IMClientApp::slotSendFile(QByteArray &byte)
+{
+    int a = 0;
 }
 
 void IMClientApp::slotSocketReadData()
 {
-    QJsonDocument document = QJsonDocument::fromJson(IMQTcpSocket->readAll());
+    QByteArray byte = IMQTcpSocket->readAll();
+    QJsonDocument document = QJsonDocument::fromJson(byte);
     QJsonObject object = document.object();
 
-    int sendObject = object.value("sendObject").toInt();
-    int operationType = object.value("operationType").toInt();
+    int msgType = object.value("msgType").toInt();
     QString to = object.value("to").toString();
     QString from = object.value("from").toString();
-    QString data = object.value("data").toString();
 
-    if (sendObject == sendObject::OTHERUSER)
+    auto i = m_hashFriendPanel->find(from);
+    ChatPanel *chat = i.value();
+
+    if (i == m_hashFriendPanel->end())
     {
-        auto i = m_hashFriendPanel->find(from);
-        if (i != m_hashFriendPanel->end())
-        {
-            ChatPanel *chat = i.value();
-            chat->setFriendMsg(from,data);
-        }
+        return;
+    }
+    switch (msgType)
+    {
+    case MsgType::USERMSG://客服端发送的消息
+    {
+        QString data = object.value("data").toString();
+        chat->setFriendMsg(from, data);
+    }
+    break;
+
+    case  MsgType::FILENAME:
+    {
+        QString address = object.value("address").toString();
+        QString file = object.value("file").toString();
+        chat->hasPendingFile("", address, "", file);
+        break;
+    }
+
+    case MsgType::REFUSEFILE:
+        break;
+    default:
+        break;
     }
 }

@@ -94,11 +94,6 @@
   <ItemGroup>
     <QtUic Include="FriendPanel.ui" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DeftData\DeftData.vcxproj">
-      <Project>{b0b4b2b8-6a4f-4310-abba-e632d8f4a394}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
     <Import Project="$(QtMsBuild)\qt.targets" />

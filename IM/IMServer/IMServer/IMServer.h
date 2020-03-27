@@ -17,7 +17,9 @@ private slots:
     void slotStart();
     void slotNewConnect(const int handle, const QString& address, const quint16 port);
     void slotClientDisConnect(const int handle, const QString address, const quint16 port);
-    void slotClientMessage(QString &to, QString from, QString &msg);    //给ui界面用
+    void slotClientMessage(QString &to, QString from, QString &msg);        //给ui界面用
+
+    void slotSelectFile();
 private:
     Ui::IMServerClass ui;
     IMQTcpServer *m_tcpServer;

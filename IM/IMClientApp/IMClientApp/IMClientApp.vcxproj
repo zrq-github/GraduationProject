@@ -98,6 +98,9 @@
     <ProjectReference Include="..\AppSettings\AppSettings.vcxproj">
       <Project>{e43a123f-58e4-4f0b-b8a5-68ef2c1de1d4}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\Base\Base.vcxproj">
+      <Project>{10450b03-1a21-4b52-a677-a773520e9333}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\ChatPanel\ChatPanel.vcxproj">
       <Project>{dfb0884c-76d2-4cee-81e7-f77facc34767}</Project>
     </ProjectReference>

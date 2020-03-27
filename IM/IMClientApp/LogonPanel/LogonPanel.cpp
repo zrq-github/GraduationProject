@@ -6,13 +6,14 @@
 #include <QSettings>
 #include "AppSettings/AppSettings.h"
 #include <QDebug>
-#include <QJsonObject>
-#include <QJsonDocument>
 #include <QtNetwork/QTcpSocket>
 #include "RegisterPanel.h"
 #include "IMQTcpWord/IMQTcpWord.h"
+#include <QJsonObject>
+#include <QJsonDocument>
 #include "NetSettingsPanel.h"
-#include "DeftData/DeftData.h"
+#include "Base/DeftData.h"
+#include "Base/IMQJson.h"
 
 #ifdef WIN32  
 #pragma execution_character_set("utf-8")  
@@ -110,15 +111,9 @@ void LogonPanel::slotServerConnected()
     QString user = ui->editUser->text().trimmed();  //用户名
     QString pswd = ui->editPswd->text().trimmed();  //密码
 
-    QJsonObject json;
-    json.insert("sendObject", sendObject::IMSERVER);
-    json.insert("operationType", operationType::LOGONG);
-    json.insert("to", "");
-    json.insert("from", user);
-    json.insert("data", pswd);
-    QJsonDocument document = QJsonDocument(json);
+    QByteArray  byte = IMQJson::getQJsonByte(MsgType::USERLOGIN, "server" , user, pswd);
 
-    IMQTcpSocket->write(document.toJson());
+    IMQTcpSocket->write(byte);
     IMQTcpSocket->flush();
 }
 
@@ -127,26 +122,26 @@ void LogonPanel::slotServerData()
     QJsonDocument document = QJsonDocument::fromJson(IMQTcpSocket->readAll());
     QJsonObject object = document.object();
 
-    int sendObject = object.value("sendObject").toInt();
-    int operationType = object.value("operationType").toInt();
+    int type = object.value("msgType").toInt();
     QString to = object.value("to").toString();
     QString from = object.value("from").toString();
+    QString data = object.value("data").toString();
 
-    if (sendObject == sendObject::YOUSELF)
+    switch (type)
     {
-        if (operationType == operationType::LOGONG)
+    case MsgType::USERLOGIN:
+        if (data == "1")
         {
-            int data = object.value("data").toInt();
-            if (data == 1)
-            {//登录验证成功
-                IMSettings.setUserID(to);
-                this->accept();
-            }
-            else
-            {
-                QMessageBox::information(NULL, "错误", "账号密码不正确");
-            }
+            IMSettings.setUserID(to);
+            this->accept();
         }
+        else
+        {
+            QMessageBox::information(NULL, "错误", "账号密码不正确");
+        }
+        break;
+    default:
+        break;
     }
 }
 
