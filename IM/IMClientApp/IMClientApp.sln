@@ -9,21 +9,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MainUI", "MainUI", "{FFB530
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChatPanel", "ChatPanel\ChatPanel.vcxproj", "{DFB0884C-76D2-4CEE-81E7-F77FACC34767}"
 EndProject
-<<<<<<< Updated upstream
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Base", "_Base", "{C4521FB4-E04E-49AC-A947-35E66B46DE0C}"
-=======
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Base", "Base", "{C4521FB4-E04E-49AC-A947-35E66B46DE0C}"
->>>>>>> Stashed changes
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Base", "Base", "{37F29090-4A80-4A3B-81E6-FD59C4C5150B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FriendPanel", "FriendPanel\FriendPanel.vcxproj", "{5ECFD2A9-31E3-48AF-BC12-ABCB69676662}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LogonPanel", "LogonPanel\LogonPanel.vcxproj", "{B1B842A6-2378-4FF5-A36E-D01DE4C7E39E}"
 EndProject
-<<<<<<< Updated upstream
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_SINGLE", "_SINGLE", "{78CAC357-BA00-48C8-AEC1-A5A33C5497DC}"
-=======
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SINGLE", "SINGLE", "{78CAC357-BA00-48C8-AEC1-A5A33C5497DC}"
->>>>>>> Stashed changes
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SINGLE", "SINGLE", "{13239152-6BB1-4E93-8A31-19D1C57DAA9F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppSettings", "AppSettings\AppSettings.vcxproj", "{E43A123F-58E4-4F0B-B8A5-68EF2C1DE1D4}"
 EndProject
@@ -31,11 +27,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IMQTcpWord", "IMQTcpWord\IM
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UITest", "UITest\UITest.vcxproj", "{7B0BFB0F-256F-4C98-8F19-0523CD93B4C8}"
 EndProject
-<<<<<<< Updated upstream
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Base", "Base\Base.vcxproj", "{10450B03-1A21-4B52-A677-A773520E9333}"
-=======
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Base", "..\Base\DeftData\Base.vcxproj", "{CC0835C8-3AC7-4C23-B253-FDDB1887C424}"
->>>>>>> Stashed changes
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,17 +63,10 @@ Global
 		{7B0BFB0F-256F-4C98-8F19-0523CD93B4C8}.Debug|x64.Build.0 = Debug|x64
 		{7B0BFB0F-256F-4C98-8F19-0523CD93B4C8}.Release|x64.ActiveCfg = Release|x64
 		{7B0BFB0F-256F-4C98-8F19-0523CD93B4C8}.Release|x64.Build.0 = Release|x64
-<<<<<<< Updated upstream
 		{10450B03-1A21-4B52-A677-A773520E9333}.Debug|x64.ActiveCfg = Debug|x64
 		{10450B03-1A21-4B52-A677-A773520E9333}.Debug|x64.Build.0 = Debug|x64
 		{10450B03-1A21-4B52-A677-A773520E9333}.Release|x64.ActiveCfg = Release|x64
 		{10450B03-1A21-4B52-A677-A773520E9333}.Release|x64.Build.0 = Release|x64
-=======
-		{CC0835C8-3AC7-4C23-B253-FDDB1887C424}.Debug|x64.ActiveCfg = Debug|x64
-		{CC0835C8-3AC7-4C23-B253-FDDB1887C424}.Debug|x64.Build.0 = Debug|x64
-		{CC0835C8-3AC7-4C23-B253-FDDB1887C424}.Release|x64.ActiveCfg = Release|x64
-		{CC0835C8-3AC7-4C23-B253-FDDB1887C424}.Release|x64.Build.0 = Release|x64
->>>>>>> Stashed changes
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,11 +78,7 @@ Global
 		{B1B842A6-2378-4FF5-A36E-D01DE4C7E39E} = {FFB530D1-6D6C-4EE9-9345-4FE7FAFBF780}
 		{E43A123F-58E4-4F0B-B8A5-68EF2C1DE1D4} = {78CAC357-BA00-48C8-AEC1-A5A33C5497DC}
 		{78C42BE9-E59C-447E-8718-01EF3FE35E37} = {78CAC357-BA00-48C8-AEC1-A5A33C5497DC}
-<<<<<<< Updated upstream
 		{10450B03-1A21-4B52-A677-A773520E9333} = {C4521FB4-E04E-49AC-A947-35E66B46DE0C}
-=======
-		{CC0835C8-3AC7-4C23-B253-FDDB1887C424} = {C4521FB4-E04E-49AC-A947-35E66B46DE0C}
->>>>>>> Stashed changes
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DEA8519C-1041-484F-8B70-54FE17DFFB5A}
