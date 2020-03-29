@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{252373E2-C906-4EED-A110-AD07763F3828}</ProjectGuid>
+    <ProjectGuid>{409F8F9D-E610-4DDF-9F57-1BEFE7651DF6}</ProjectGuid>
     <Keyword>QtVS_v302</Keyword>
     <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
@@ -43,11 +43,11 @@
   </ImportGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <QtInstall>qt5.9</QtInstall>
-    <QtModules>core;network;sql</QtModules>
+    <QtModules>core;sql</QtModules>
   </PropertyGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <QtInstall>qt5.9</QtInstall>
-    <QtModules>core;network</QtModules>
+    <QtModules>core;sql</QtModules>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
     <Import Project="$(QtMsBuild)\qt.props" />
@@ -59,8 +59,7 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <PreprocessorDefinitions>IMQTCPSERVER_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(WorkSpace)\IMClientApp;$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>IMQTMYSQL_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -74,7 +73,7 @@
       <DebugInformationFormat />
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <PreprocessorDefinitions>IMQTCPSERVER_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>IMQTMYSQL_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -83,21 +82,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="IMQTcpServer.cpp" />
-    <ClCompile Include="IMQTcpSocket.cpp" />
+    <ClCompile Include="IMQtMySql.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="IMQTcpServer.h" />
-    <ClInclude Include="imqtcpserver_global.h" />
-    <QtMoc Include="IMQTcpSocket.h" />
+    <ClInclude Include="IMQtMySql.h" />
+    <ClInclude Include="imqtmysql_global.h" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\IMClientApp\Base\Base.vcxproj">
-      <Project>{10450b03-1a21-4b52-a677-a773520e9333}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\IMQtMySql\IMQtMySql.vcxproj">
-      <Project>{409f8f9d-e610-4ddf-9f57-1befe7651df6}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

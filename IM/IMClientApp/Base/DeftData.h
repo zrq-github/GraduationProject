@@ -4,10 +4,12 @@
 
 enum MsgType
 {
-    USERLOGIN,
-    USERMSG,
+    USERLOGIN,          //登录
+    USERLOGINSUCCEED,   //登录成功
+    USERLOGINDEFEAT,    //登录失败
+    USERMSG,            //转发用户消息
 
-    FILENAME,
+    FILENAME,           //发送文件
     REFUSEFILE,
 };
 

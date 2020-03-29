@@ -3,6 +3,7 @@
 #include <QJsonObject>
 #include "Base/DeftData.h"
 #include "Base/IMQJson.h"
+#include <IMQtMySql/IMQtMySql.h>
 
 #ifdef WIN32
 #pragma execution_character_set("utf-8")
@@ -38,10 +39,23 @@ void IMQTcpServer::slotDealSocketData(const int handle, const QString & address,
     {
     case MsgType::USERLOGIN:
     {//连接数据库查询
-        if (true)
+        QString userPaswd = object.value("data").toString();
+
+        IMQtMySql db;
+        db.connect();
+        QString userRealPaswd = db.getUserPassword(from);
+        db.disconnect();
+        if (userPaswd == userRealPaswd)
         {
-            QByteArray &byte = IMQJson::getQJsonByte(MsgType::USERLOGIN, from, "server", QString::number(1));
+            QByteArray &byte = IMQJson::getQJsonByte(MsgType::USERLOGINSUCCEED, from, "", "");
             m_hashClient->insert(from, handle); 
+            fromSocket->write(byte);    //发回去
+            fromSocket->flush();
+        }
+        else
+        {
+            QByteArray &byte = IMQJson::getQJsonByte(MsgType::USERLOGINDEFEAT, from, "", "");
+            m_hashClient->insert(from, handle);
             fromSocket->write(byte);    //发回去
             fromSocket->flush();
         }

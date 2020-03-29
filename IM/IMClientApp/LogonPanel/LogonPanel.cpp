@@ -125,21 +125,20 @@ void LogonPanel::slotServerData()
     int type = object.value("msgType").toInt();
     QString to = object.value("to").toString();
     QString from = object.value("from").toString();
-    QString data = object.value("data").toString();
 
     switch (type)
     {
-    case MsgType::USERLOGIN:
-        if (data == "1")
-        {
-            IMSettings.setUserID(to);
-            this->accept();
-        }
-        else
-        {
-            QMessageBox::information(NULL, "错误", "账号密码不正确");
-        }
+    case MsgType::USERLOGINSUCCEED:
+    {
+        IMSettings.setUserID(to);
+        this->accept();
         break;
+    }
+    case MsgType::USERLOGINDEFEAT:
+    {
+        QMessageBox::information(NULL, "错误", "账号密码不正确");
+        break;
+    }
     default:
         break;
     }

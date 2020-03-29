@@ -44,16 +44,32 @@
      <item>
       <widget class="QPushButton" name="btnSendFile">
        <property name="text">
-        <string>发送文件</string>
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../Resources/Resources.qrc">
+         <normaloff>:/img/img_btn_file.png</normaloff>:/img/img_btn_file.png</iconset>
+       </property>
+       <property name="autoDefault">
+        <bool>true</bool>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>这里放各种图标</string>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
        </property>
-      </widget>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
      </item>
     </layout>
    </item>
@@ -87,6 +103,8 @@
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../Resources/Resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

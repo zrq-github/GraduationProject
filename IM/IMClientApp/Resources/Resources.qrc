@@ -8,5 +8,6 @@
         <file>loading4.gif</file>
         <file>img_btn_close.png</file>
         <file>img_btn_min.png</file>
+        <file>img_btn_file.png</file>
     </qresource>
 </RCC>
