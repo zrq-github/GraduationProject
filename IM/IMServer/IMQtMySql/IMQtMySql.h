@@ -14,6 +14,7 @@ public:
     bool connect();
     void disconnect();
     QString getUserPassword(QString userid);
+    QStringList getUserInfo(QString userid);
 private:
     QSqlDatabase db;
     QString m_database = "QMYSQL";    //ÓÃµÄÊÇmysql

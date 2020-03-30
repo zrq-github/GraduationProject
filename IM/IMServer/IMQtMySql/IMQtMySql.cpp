@@ -2,6 +2,7 @@
 #include <QSqlQuery>
 #include <QDebug>
 #include <QVariant>
+#include "Base/DeftData.h"
 
 IMQtMySql::IMQtMySql()
 {
@@ -44,4 +45,27 @@ QString IMQtMySql::getUserPassword(QString userid)
     qDebug() << query.value("user_password").toString();
 
     return query.value("user_password").toString();
+}
+
+QStringList IMQtMySql::getUserInfo(QString userid)
+{
+    QString str = QString("select user_id,user_name from userinfo where user_id =  %1").arg(userid);
+    qDebug() << str;
+
+    QSqlQuery query(db);
+    query.exec(str);
+
+    if (query.isActive())
+    {//Ö´ÐÐ³É¹¦
+
+        query.next();
+        QStringList strList;
+        strList.insert(UserInfoType::USERID, query.value(0).toString());
+        strList.insert(UserInfoType::USERNAME, query.value(1).toString());
+
+        qDebug() << query.value(0).toString() << "  " + query.value(1).toString();
+        return strList;
+    }
+
+    return QStringList();
 }

@@ -47,6 +47,15 @@ void AppSettings::setUserID(QString id)
     this->m_userID = id;
 }
 
+QString AppSettings::getUserName()
+{
+    return m_userName;
+}
+
+void AppSettings::setUserName(QString name)
+{
+    this->m_userName = name;
+}
 
 QVariant AppSettings::getLogonSettings(QString key/*userID, userPswd,isRemember,*/)
 {

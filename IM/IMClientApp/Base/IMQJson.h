@@ -10,8 +10,8 @@ public:
 
     //static QByteArray getQJsonByte(int type, QString to, QString from, QString & data);
     static QByteArray getQJsonByte(int type, QString to, QString from, QString data);
-
     static QByteArray getQJsonFile(int type, QString to, QString from, QString address,QString file);
+    static QByteArray getQJsonUserInfo(int type, QString to, QString from, QJsonArray array);
 
     static QMap<QString, QVariant> getQMap(QByteArray &data);
 };

@@ -8,6 +8,7 @@
 
 #define IMSettings AppSettings::getInstance()
 #define IMUSERID AppSettings::getInstance().getUserID()
+#define IMUSERNAME 
 
 class APPSETTINGS_EXPORT AppSettings
 {
@@ -21,6 +22,8 @@ public:
 
     QString getUserID();
     void setUserID(QString id);
+    QString getUserName();
+    void setUserName(QString name);
     //IM·â×°
     QVariant getLogonSettings(QString key);
     void setLogonSettings(QString key, QVariant value);
@@ -32,5 +35,7 @@ private:
 
     static AppSettings *m_appSettings;
     static QSettings *m_settings;
+
     QString m_userID;
+    QString m_userName;
 };

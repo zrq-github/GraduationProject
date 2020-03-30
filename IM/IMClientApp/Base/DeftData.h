@@ -13,6 +13,12 @@ enum MsgType
     REFUSEFILE,
 };
 
+enum UserInfoType
+{
+    USERID,
+    USERNAME,
+};
+
 struct FriendData
 {
     QString id;

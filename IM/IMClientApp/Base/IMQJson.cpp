@@ -3,18 +3,7 @@
 #include <QJsonDocument>
 #include <QMap>
 #include <QVariant>
-
-//QByteArray IMQJson::getQJsonByte(int type, QString to, QString from, QString & data)
-//{
-//    QJsonObject json;
-//    json.insert("msgType", type);
-//    json.insert("to", to);
-//    json.insert("from", from);
-//    json.insert("data", data);
-//    QJsonDocument document = QJsonDocument(json);
-//
-//    return document.toJson();
-//}
+#include <QJsonArray>
 
 QByteArray IMQJson::getQJsonByte(int type, QString to, QString from, QString data)
 {
@@ -41,6 +30,28 @@ QByteArray IMQJson::getQJsonFile(int type, QString to, QString from, QString add
 
     return document.toJson();
 }
+
+QByteArray IMQJson::getQJsonUserInfo(int type, QString to, QString from, QJsonArray array)
+{
+    QJsonObject json;
+    json.insert("msgType", type);
+    json.insert("to", to);
+    json.insert("from", from);
+
+    json.insert("info", array);
+    QJsonDocument document = QJsonDocument(json);
+    return document.toJson();
+}
+
+//QByteArray IMQJson::getQJsonUserInfo(int type, QString to, QString from, QStringList strlist)
+//{
+//    QJsonObject json;
+//    json.insert("msgType", type);
+//    json.insert("to", to);
+//    json.insert("from", from);
+//
+//    return QByteArray();
+//}
 
 QMap<QString, QVariant> IMQJson::getQMap(QByteArray & data)
 {

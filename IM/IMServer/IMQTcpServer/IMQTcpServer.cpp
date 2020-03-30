@@ -4,6 +4,7 @@
 #include "Base/DeftData.h"
 #include "Base/IMQJson.h"
 #include <IMQtMySql/IMQtMySql.h>
+#include <QJsonArray>
 
 #ifdef WIN32
 #pragma execution_character_set("utf-8")
@@ -44,10 +45,15 @@ void IMQTcpServer::slotDealSocketData(const int handle, const QString & address,
         IMQtMySql db;
         db.connect();
         QString userRealPaswd = db.getUserPassword(from);
-        db.disconnect();
         if (userPaswd == userRealPaswd)
         {
-            QByteArray &byte = IMQJson::getQJsonByte(MsgType::USERLOGINSUCCEED, from, "", "");
+            QStringList strlist = db.getUserInfo(from);
+            QJsonArray jsonArray;
+            for (int i = 0; i < strlist.size(); ++i)
+            {
+                jsonArray.append(strlist[i]);
+            }
+            QByteArray &byte = IMQJson::getQJsonUserInfo(MsgType::USERLOGINSUCCEED, from, "", jsonArray);
             m_hashClient->insert(from, handle); 
             fromSocket->write(byte);    //发回去
             fromSocket->flush();
@@ -59,6 +65,7 @@ void IMQTcpServer::slotDealSocketData(const int handle, const QString & address,
             fromSocket->write(byte);    //发回去
             fromSocket->flush();
         }
+        db.disconnect();
         break;
     }
     case MsgType::USERMSG:

@@ -60,6 +60,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>IMQTMYSQL_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(WorkSpace)\IMClientApp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

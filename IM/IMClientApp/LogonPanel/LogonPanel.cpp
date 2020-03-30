@@ -11,6 +11,7 @@
 #include "IMQTcpWord/IMQTcpWord.h"
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QJsonArray>
 #include "NetSettingsPanel.h"
 #include "Base/DeftData.h"
 #include "Base/IMQJson.h"
@@ -123,14 +124,18 @@ void LogonPanel::slotServerData()
     QJsonObject object = document.object();
 
     int type = object.value("msgType").toInt();
-    QString to = object.value("to").toString();
-    QString from = object.value("from").toString();
+    QString &to = object.value("to").toString();
+    QString &from = object.value("from").toString();
 
     switch (type)
     {
     case MsgType::USERLOGINSUCCEED:
     {
-        IMSettings.setUserID(to);
+        QJsonArray &info = object.value("info").toArray();
+        IMSettings.setUserID(info[UserInfoType::USERID].toString());
+        IMSettings.setUserName(info[UserInfoType::USERNAME].toString());
+
+        qDebug() << info[UserInfoType::USERID].toString() << info[UserInfoType::USERNAME].toString();
         this->accept();
         break;
     }
