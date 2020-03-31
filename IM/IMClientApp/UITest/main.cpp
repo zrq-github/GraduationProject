@@ -4,6 +4,7 @@
 #include "IMClientApp/IMClientApp.h"
 
 #include "LogonPanel/NetSettingsPanel.h"
+#include "ChatPanel/ChatPanel.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,6 +15,8 @@ int main(int argc, char *argv[])
     //NetSettingsPanel *w = new NetSettingsPanel;
     //w->show();
 
+    ChatPanel *w = new ChatPanel;
+    w->show();
 
     return a.exec();
 }

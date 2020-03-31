@@ -31,15 +31,9 @@
     <ClCompile Include="IMClientApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IMClientSocket.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="IMClientApp.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="IMClientSocket.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

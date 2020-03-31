@@ -12,6 +12,8 @@ class FRIENDPANEL_EXPORT FriendPanel : public QWidget
 public:
     FriendPanel(QWidget *parent = Q_NULLPTR);
     ~FriendPanel();
+
+    void initFriendData(QVector<FriendDataPtr> &data);
 protected:
     void contextMenuEvent(QContextMenuEvent *event);
 signals:

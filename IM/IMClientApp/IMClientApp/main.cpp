@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
     {
         IMClientApp *im = new IMClientApp;
         im->show();
+        im->requsetFriendData();
         return a.exec();
     }
     else

@@ -185,6 +185,8 @@ LogonPanel::LogonPanel(QWidget *parent)
 
 LogonPanel::~LogonPanel()
 {
+    disconnect(IMQTcpSocket, &QTcpSocket::connected, this, &LogonPanel::slotServerConnected);
+    disconnect(IMQTcpSocket, &QTcpSocket::readyRead, this, &LogonPanel::slotServerData);
     delete ui;
 }
 

@@ -15,7 +15,7 @@ FriendModel::~FriendModel()
 {
 }
 
-void FriendModel::initData(QVector<FriendData*>& itemData)
+void FriendModel::initData(QVector<FriendDataPtr>& itemData)
 {
     this->m_ItemData = itemData;
 }

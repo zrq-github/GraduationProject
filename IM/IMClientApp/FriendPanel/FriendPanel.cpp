@@ -13,17 +13,7 @@ FriendPanel::FriendPanel(QWidget *parent)
     ui = new Ui::FriendPanel();
     ui->setupUi(this);
 
-    QVector<FriendData*> *data = new QVector<FriendData *>;
-    for (int i = 0; i < 10; i++)
-    {
-        FriendData *d = new FriendData;
-        d->id = QString::number(i);
-        d->name = QString::number(i);
-        data->append(d);
-    }
-
     m_pModel = new FriendModel(this);
-    m_pModel->initData(*data);
     m_pView = new FriendView(this);
     m_pView->setModel(m_pModel);
 
@@ -34,6 +24,11 @@ FriendPanel::FriendPanel(QWidget *parent)
 FriendPanel::~FriendPanel()
 {
     delete ui;
+}
+
+void FriendPanel::initFriendData(QVector<FriendDataPtr>& data)
+{
+    m_pModel->initData(data);
 }
 
 void FriendPanel::contextMenuEvent(QContextMenuEvent * event)

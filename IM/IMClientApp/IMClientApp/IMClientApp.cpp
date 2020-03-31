@@ -5,7 +5,6 @@
 #include "FriendPanel/FriendPanel.h"
 #include "ChatPanel/ChatPanel.h"
 #include "AppSettings/AppSettings.h"
-#include "IMClientSocket.h"
 #include <QJsonObject>
 #include <QJsonDocument>
 #include "Base/IMQJson.h"
@@ -23,6 +22,8 @@ IMClientApp::IMClientApp(QWidget *parent)
 
     createUi();
     bindSigns();
+
+    analyzeFriendData();
 }
 
 void IMClientApp::bindSigns()
@@ -58,6 +59,18 @@ void IMClientApp::createUi()
     this->setWindowTitle(IMUSERID);
 }
 
+void IMClientApp::analyzeFriendData()
+{//解析好友数据
+    for (int i = 0; i < 10; i++)
+    {
+        FriendDataPtr d = FriendDataMake();
+        d->id = QString::number(i);
+        d->name = QString::number(i);
+        m_friendData.append(d);
+    }
+    m_friendPanel->initFriendData(m_friendData);
+}
+
 void IMClientApp::slotDeletChatPanel(QString id)
 {
     QHash<QString, ChatPanel *>::iterator it = m_hashFriendPanel->find(id);
@@ -81,6 +94,11 @@ void IMClientApp::slotSendMessage(QString & to, QString & msg)
 void IMClientApp::slotSendFile(QByteArray &byte)
 {
     int a = 0;
+}
+
+void IMClientApp::requsetFriendData()
+{//请求好友数据
+    analyzeFriendData();
 }
 
 void IMClientApp::slotSocketReadData()
@@ -117,6 +135,11 @@ void IMClientApp::slotSocketReadData()
         break;
     }
 
+    case MsgType::USERFRIENDDATA:
+    {
+        analyzeFriendData();
+        break;
+    }
     case MsgType::REFUSEFILE:
         break;
     default:

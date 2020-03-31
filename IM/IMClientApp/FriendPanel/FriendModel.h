@@ -24,12 +24,12 @@ public:
     FriendModel(QObject *parent=Q_NULLPTR);
     ~FriendModel();
     
-    void initData(QVector<FriendData*> &itemData);
+    void initData(QVector<FriendDataPtr> &itemData);
 
     QVariant data(const QModelIndex & index, int role=Qt::DisplayRole) const;
     int rowCount(const QModelIndex & parent = QModelIndex()) const;
 private:
-    QVector<FriendData*> m_ItemData;
+    QVector<FriendDataPtr> m_ItemData;
 };
 
 class FriendView :public QListView
