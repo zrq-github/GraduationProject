@@ -7,6 +7,7 @@ enum MsgType
     USERLOGIN,          //登录
     USERLOGINSUCCEED,   //登录成功
     USERLOGINDEFEAT,    //登录失败
+    USERLOGINREGISTER,  //用户注册
     USERMSG,            //转发用户消息
 
     FILENAME,           //发送文件

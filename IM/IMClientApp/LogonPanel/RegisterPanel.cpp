@@ -17,7 +17,6 @@ RegisterPanel::RegisterPanel(QWidget *parent,int type)
     {
         this->changeUi();
     }
-
 }
 
 RegisterPanel::~RegisterPanel()

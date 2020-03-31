@@ -4,6 +4,10 @@
 #include <QDebug>
 #include <QMessageBox>
 
+#ifdef WIN32
+#pragma execution_character_set("utf-8")
+#endif
+
 FileCilentPanel::FileCilentPanel(QWidget *parent)
     : QDialog(parent)
 {
