@@ -5,8 +5,7 @@
 #include "FriendPanel/FriendPanel.h"
 #include "ChatPanel/ChatPanel.h"
 #include "AppSettings/AppSettings.h"
-#include <QJsonObject>
-#include <QJsonDocument>
+#include "Base/IMQTransport.h"
 #include "Base/IMQJson.h"
 #include "IMQTcpWord/IMQTcpWord.h"
 
@@ -85,7 +84,12 @@ void IMClientApp::slotDeletChatPanel(QString id)
 
 void IMClientApp::slotSendMessage(QString & to, QString & msg)
 {//封装数据
-    QByteArray &byte = IMQJson::getQJsonByte(MsgType::USERMSG, to, IMUSERID,msg);
+    MsgInfo msgInfo;
+    msgInfo.msgType = MsgType::USERMSG;
+    msgInfo.to = to;
+    msgInfo.from = IMUSERID;
+    msgInfo.msg = msg;
+    QByteArray &byte = IMQPROTOCOL::getMsgQByteArray(msgInfo);
 
     IMQTcpSocket->write(byte);
     IMQTcpSocket->flush();
@@ -103,13 +107,13 @@ void IMClientApp::requsetFriendData()
 
 void IMClientApp::slotSocketReadData()
 {
-    QByteArray byte = IMQTcpSocket->readAll();
-    QJsonDocument document = QJsonDocument::fromJson(byte);
-    QJsonObject object = document.object();
+    QDataStream in(IMQTcpSocket->readAll());
+    MsgInfo info;
+    in >> info;
 
-    int msgType = object.value("msgType").toInt();
-    QString to = object.value("to").toString();
-    QString from = object.value("from").toString();
+    int msgType = info.msgType;
+    QString to = info.to;
+    QString from = info.from;
 
     auto i = m_hashFriendPanel->find(from);
     ChatPanel *chat = i.value();
@@ -122,15 +126,15 @@ void IMClientApp::slotSocketReadData()
     {
     case MsgType::USERMSG://客服端发送的消息
     {
-        QString data = object.value("data").toString();
-        chat->setFriendMsg(from, data);
+        QString msg = info.msg;
+        chat->setFriendMsg(from, msg);
     }
     break;
 
     case  MsgType::FILENAME:
     {
-        QString address = object.value("address").toString();
-        QString file = object.value("file").toString();
+        QString address = info.address;
+        QString file = info.msg;
         chat->hasPendingFile("", address, "", file);
         break;
     }

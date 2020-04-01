@@ -5,6 +5,7 @@
 #include "Base/IMQJson.h"
 #include <IMQtMySql/IMQtMySql.h>
 #include <QJsonArray>
+#include "Base/IMQTransport.h"
 
 #ifdef WIN32
 #pragma execution_character_set("utf-8")
@@ -26,12 +27,13 @@ IMQTcpServer::~IMQTcpServer()
 
 void IMQTcpServer::slotDealSocketData(const int handle, const QString & address, const quint16 port, const QByteArray & byteArray)
 {//需要处理的socket数据
-    QJsonDocument document = QJsonDocument::fromJson(byteArray);
-    QJsonObject object = document.object();
+    QDataStream in(byteArray);
+    MsgInfo info;
+    in >> info;
 
-    int type = object.value("msgType").toInt();
-    QString to = object.value("to").toString();
-    QString from = object.value("from").toString();
+    int type = info.msgType;
+    QString to = info.to;
+    QString from = info.from;
 
     IMQTcpSocket *fromSocket = m_hashSocket->find(handle).value();  //判断是谁发送的Socket
     IMQTcpSocket *toSocket = getSocketByUserID(to);                 //拿到是发给谁的Socket
@@ -40,27 +42,28 @@ void IMQTcpServer::slotDealSocketData(const int handle, const QString & address,
     {
     case MsgType::USERLOGIN:
     {//连接数据库查询
-        QString userPaswd = object.value("data").toString();
-
+        QString userPaswd = info.msg;
         IMQtMySql db;
         db.connect();
         QString userRealPaswd = db.getUserPassword(from);
         if (userPaswd == userRealPaswd)
         {
-            QStringList strlist = db.getUserInfo(from);
-            QJsonArray jsonArray;
-            for (int i = 0; i < strlist.size(); ++i)
-            {
-                jsonArray.append(strlist[i]);
-            }
-            QByteArray &byte = IMQJson::getQJsonUserInfo(MsgType::USERLOGINSUCCEED, from, "", jsonArray);
+            QStringList strList = db.getUserInfo(from);   //拿到该用户的信息
+            UserInfo userInfo;
+            userInfo.id = strList[UserInfoType::USERID];
+            userInfo.name = strList[UserInfoType::USERNAME];
+
+            info.msgType = MsgType::USERLOGINSUCCEED;
+            QByteArray &byte = IMQPROTOCOL::getUserInfoQByteArray(info, userInfo);
             m_hashClient->insert(from, handle); 
             fromSocket->write(byte);    //发回去
             fromSocket->flush();
         }
         else
         {
-            QByteArray &byte = IMQJson::getQJsonByte(MsgType::USERLOGINDEFEAT, from, "", "");
+            info.msgType = MsgType::USERLOGINDEFEAT;
+            QByteArray &byte = IMQPROTOCOL::getMsgQByteArray(info);
+
             m_hashClient->insert(from, handle);
             fromSocket->write(byte);    //发回去
             fromSocket->flush();
@@ -87,9 +90,6 @@ void IMQTcpServer::slotDealSocketData(const int handle, const QString & address,
     {
         if(toSocket!=nullptr)
         {
-            //QString file = object.value("data").toString();
-            //QString address = fromSocket->localAddress().toString();
-            //QByteArray byte = IMQJson::getQJsonFile(MsgType::FILENAME, to, from, address, file);
             toSocket->write(byteArray);
             toSocket->flush();
 

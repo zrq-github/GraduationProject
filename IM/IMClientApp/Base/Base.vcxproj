@@ -84,11 +84,13 @@
   <ItemGroup>
     <ClCompile Include="DeftData.cpp" />
     <ClCompile Include="IMQJson.cpp" />
+    <ClCompile Include="IMQTransport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base_global.h" />
     <ClInclude Include="DeftData.h" />
     <ClInclude Include="IMQJson.h" />
+    <ClInclude Include="IMQTransport.h" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

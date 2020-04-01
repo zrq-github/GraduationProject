@@ -27,7 +27,6 @@ public:
     //IM·â×°
     QVariant getLogonSettings(QString key);
     void setLogonSettings(QString key, QVariant value);
-
 private:
     AppSettings();
 private:

@@ -8,10 +8,10 @@
 #include <QFileDialog>
 #include "FileCilentPanel.h"
 #include "FileServerPanel.h"
-#include "Base/IMQJson.h"
 #include "Base/DeftData.h"
 #include "IMQTcpWord/IMQTcpWord.h"
 #include <QMessageBox>
+#include "Base/IMQTransport.h"
 
 #ifdef WIN32  
 #pragma execution_character_set("utf-8")  
@@ -111,7 +111,14 @@ void ChatPanel::on_btnSendFile_clicked()
 
 void ChatPanel::slotSendFile(QString file)
 {
-    QByteArray byte = IMQJson::getQJsonFile(MsgType::FILENAME, m_chatID, IMUSERID, IMQTcpSocket->localAddress().toString(), file);
+    MsgInfo msgInfo;
+    msgInfo.msgType = MsgType::FILENAME;
+    msgInfo.to = m_chatID;
+    msgInfo.from = IMUSERID;
+    msgInfo.msg = file;
+    msgInfo.address = IMQTcpSocket->peerAddress().toString();
+
+    QByteArray &byte = IMQPROTOCOL::getMsgQByteArray(msgInfo);
     IMQTcpSocket->write(byte);
     IMQTcpSocket->flush();
     //emit signSendFile(byte);

@@ -15,6 +15,7 @@
 #include "NetSettingsPanel.h"
 #include "Base/DeftData.h"
 #include "Base/IMQJson.h"
+#include "Base/IMQTransport.h"
 
 #ifdef WIN32  
 #pragma execution_character_set("utf-8")  
@@ -112,7 +113,15 @@ void LogonPanel::slotServerConnected()
     QString user = ui->editUser->text().trimmed();  //用户名
     QString pswd = ui->editPswd->text().trimmed();  //密码
 
-    QByteArray  byte = IMQJson::getQJsonByte(MsgType::USERLOGIN, "server" , user, pswd);
+    //QByteArray  byte = IMQJson::getQJsonByte(MsgType::USERLOGIN, "server" , user, pswd);
+
+    MsgInfo info;
+    info.msgType = MsgType::USERLOGIN;
+    info.from = user;
+    info.to = "";
+    info.msg = pswd;
+
+    QByteArray &byte = IMQPROTOCOL::getMsgQByteArray(info);
 
     IMQTcpSocket->write(byte);
     IMQTcpSocket->flush();
@@ -120,22 +129,24 @@ void LogonPanel::slotServerConnected()
 
 void LogonPanel::slotServerData()
 {
-    QJsonDocument document = QJsonDocument::fromJson(IMQTcpSocket->readAll());
-    QJsonObject object = document.object();
+    QDataStream in(IMQTcpSocket->readAll());
+    MsgInfo info;
+    in >> info;
 
-    int type = object.value("msgType").toInt();
-    QString &to = object.value("to").toString();
-    QString &from = object.value("from").toString();
+    int type = info.msgType;
+    QString &to = info.to;
+    QString &from = info.from;
 
     switch (type)
     {
     case MsgType::USERLOGINSUCCEED:
     {
-        QJsonArray &info = object.value("info").toArray();
-        IMSettings.setUserID(info[UserInfoType::USERID].toString());
-        IMSettings.setUserName(info[UserInfoType::USERNAME].toString());
+        UserInfo userInfo;
+        in >> userInfo;
+        IMSettings.setUserID(userInfo.id);
+        IMSettings.setUserName(userInfo.name);
 
-        qDebug() << info[UserInfoType::USERID].toString() << info[UserInfoType::USERNAME].toString();
+        qDebug() << userInfo.id << userInfo.id;
         this->accept();
         break;
     }
