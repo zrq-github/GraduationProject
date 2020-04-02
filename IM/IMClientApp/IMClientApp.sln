@@ -11,8 +11,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ChatPanel", "ChatPanel\Chat
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Base", "_Base", "{C4521FB4-E04E-49AC-A947-35E66B46DE0C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Base", "Base", "{37F29090-4A80-4A3B-81E6-FD59C4C5150B}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FriendPanel", "FriendPanel\FriendPanel.vcxproj", "{5ECFD2A9-31E3-48AF-BC12-ABCB69676662}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LogonPanel", "LogonPanel\LogonPanel.vcxproj", "{B1B842A6-2378-4FF5-A36E-D01DE4C7E39E}"
@@ -26,6 +24,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UITest", "UITest\UITest.vcxproj", "{7B0BFB0F-256F-4C98-8F19-0523CD93B4C8}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Base", "Base\Base.vcxproj", "{10450B03-1A21-4B52-A677-A773520E9333}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpencvText", "OpencvText\OpencvText.vcxproj", "{BBE24C89-5BD0-481A-855C-8B988B81D794}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +65,10 @@ Global
 		{10450B03-1A21-4B52-A677-A773520E9333}.Debug|x64.Build.0 = Debug|x64
 		{10450B03-1A21-4B52-A677-A773520E9333}.Release|x64.ActiveCfg = Release|x64
 		{10450B03-1A21-4B52-A677-A773520E9333}.Release|x64.Build.0 = Release|x64
+		{BBE24C89-5BD0-481A-855C-8B988B81D794}.Debug|x64.ActiveCfg = Debug|x64
+		{BBE24C89-5BD0-481A-855C-8B988B81D794}.Debug|x64.Build.0 = Debug|x64
+		{BBE24C89-5BD0-481A-855C-8B988B81D794}.Release|x64.ActiveCfg = Release|x64
+		{BBE24C89-5BD0-481A-855C-8B988B81D794}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
