@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{BBE24C89-5BD0-481A-855C-8B988B81D794}</ProjectGuid>
+    <ProjectGuid>{A929CEB2-9283-4C18-AF0E-B592F4FD6E17}</ProjectGuid>
     <Keyword>QtVS_v302</Keyword>
     <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
@@ -38,10 +38,6 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>$(IncludePath)</IncludePath>
-    <ReferencePath>C:\Users\58317\Downloads\AnyChatCoreSDK_Win32_V8.0\AnyChatCoreSDK_Win32_r8825\bin\x64\serversdk;$(ReferencePath)</ReferencePath>
-  </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
@@ -51,7 +47,7 @@
   </PropertyGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <QtInstall>qt5.9</QtInstall>
-    <QtModules>core;gui;widgets</QtModules>
+    <QtModules>core;gui;network;widgets</QtModules>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
     <Import Project="$(QtMsBuild)\qt.props" />
@@ -63,14 +59,14 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
-      <AdditionalIncludeDirectories>$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories);$(opencv34)\build\include;C:\Users\58317\Downloads\AnyChatCoreSDK_Win32_V8.0\AnyChatCoreSDK_Win32_r8825\sdk\client\c++\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(opencv34)\build\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Users\58317\Downloads\AnyChatCoreSDK_Win32_V8.0\AnyChatCoreSDK_Win32_r8825\bin\x64\client;C:\Users\58317\Downloads\AnyChatCoreSDK_Win32_V8.0\AnyChatCoreSDK_Win32_r8825\sdk\client\c++\lib\x64;$(opencv34)\build\x64\vc15\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opencv_world340d.lib;%(AdditionalDependencies);BRAnyChatCore.lib;</AdditionalDependencies>
+      <AdditionalDependencies>$(Qt_LIBS_);%(AdditionalDependencies);opencv_world340d.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(Qt_LIBPATH_);%(AdditionalLibraryDirectories);$(opencv34)\build\x64\vc15\lib;</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -88,16 +84,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="OpencvText.cpp" />
+    <ClCompile Include="OpencvServerTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="OpencvText.h" />
+    <QtMoc Include="OpencvServerTest.h" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="OpencvText.ui" />
+    <QtUic Include="OpencvServerTest.ui" />
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="OpencvText.qrc" />
+    <QtRcc Include="OpencvServerTest.qrc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

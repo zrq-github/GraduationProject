@@ -8,10 +8,11 @@
 #include <QFileDialog>
 #include "FileCilentPanel.h"
 #include "FileServerPanel.h"
-#include "Base/DeftData.h"
 #include "IMQTcpWord/IMQTcpWord.h"
 #include <QMessageBox>
 #include "Base/IMQTransport.h"
+#include "AppSettings/AppPath.h"
+#include "VideoChatPanel.h"
 
 #ifdef WIN32  
 #pragma execution_character_set("utf-8")  
@@ -37,6 +38,7 @@ void ChatPanel::closeEvent(QCloseEvent * event)
 
 ChatPanel::ChatPanel(QString id,QString name, QWidget *parent)
     : QWidget(parent)
+    ,m_videoChat(NULL)
 {
     this->m_chatID = id;
     this->m_chatName = name;
@@ -55,6 +57,10 @@ ChatPanel::~ChatPanel()
 void ChatPanel::createUi()
 {
     ui->textEdit->setReadOnly(true);
+
+    qDebug() << IMPATH::appImgPath("img_btn_video_chat.png");
+    ui->btnVideoChat->setIcon(QIcon(IMPATH::appImgPath("img_btn_video_chat.png")));
+    ui->btnVideoChat->setIconSize(QSize(20, 20));
 }
 
 void ChatPanel::binSign()
@@ -109,6 +115,24 @@ void ChatPanel::on_btnSendFile_clicked()
     fileSrv->initSrv();
 }
 
+void ChatPanel::on_btnVideoChat_clicked()
+{
+    if (m_videoChat == NULL)
+    {
+        m_videoChat = new VideoChatPanel(m_chatID + "(" + m_chatName + ")");
+    }
+    m_videoChat->show();
+
+    MsgInfo msgInfo;
+    msgInfo.msgType = MsgType::VIDEOCHAT;
+    msgInfo.to = m_chatID;
+    msgInfo.from = IMUSERID;
+    msgInfo.address = IMQTcpSocket->peerAddress().toString();
+
+    QByteArray &byte = IMQPROTOCOL::getMsgQByteArray(msgInfo);
+    IMQTcpSocket->write(byte);
+}
+
 void ChatPanel::slotSendFile(QString file)
 {
     MsgInfo msgInfo;
@@ -127,3 +151,39 @@ void ChatPanel::slotSendFile(QString file)
 void ChatPanel::slotSaveFile(QByteArray)
 {
 }
+
+void ChatPanel::slotVidelChat(MsgInfo info)
+{
+    if (info.msgType == MsgType::VIDEOCHAT)
+    {
+        QString address = info.address;
+        int btn = QMessageBox::information(this, tr("视频请求"), tr("来自%1(%2)的视频请求").arg(m_chatName).arg(address), QMessageBox::Yes, QMessageBox::No);
+        if (btn == QMessageBox::Yes)
+        {
+            if (m_videoChat == NULL)
+            {
+                m_videoChat = new VideoChatPanel(m_chatID + "(" + m_chatName + ")");
+                m_videoChat->show();
+                m_videoChat->setAddress(address);   //拿到对方的ip地址
+                m_videoChat->setIsTransfer(true);   //将自己的摄像头数据传输给对方
+                //提示对方，我已经接受你的视频请求，让对方开始传输数据
+                MsgInfo msgInfo;
+                msgInfo.msgType = MsgType::VIDEOCHATACCEPT;
+                msgInfo.to = m_chatID;
+                msgInfo.from = IMUSERID;
+                msgInfo.address = IMQTcpSocket->peerAddress().toString();
+                QByteArray &byte = IMQPROTOCOL::getMsgQByteArray(msgInfo);
+                IMQTcpSocket->write(byte);
+            }
+        }
+        else
+        {
+            //拒接应该处理的语句
+        }
+    }
+    else if (info.msgType == MsgType::VIDEOCHATACCEPT)
+    {
+        m_videoChat->setIsTransfer(true);
+    }
+}
+

@@ -60,12 +60,14 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>CHATPANEL_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories);$(SolutionDir);.\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories);$(SolutionDir);$(opencv34)\build\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(Qt_LIBS_);%(AdditionalDependencies);opencv_world340d.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(Qt_LIBPATH_);%(AdditionalLibraryDirectories);$(opencv34)\build\x64\vc15\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -83,6 +85,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <QtMoc Include="VideoChatPanel.h" />
     <QtMoc Include="FileCilentPanel.h" />
     <QtMoc Include="FileServerPanel.h" />
     <QtMoc Include="QNChatMessage.h" />
@@ -94,11 +97,13 @@
     <ClCompile Include="FileCilentPanel.cpp" />
     <ClCompile Include="FileServerPanel.cpp" />
     <ClCompile Include="QNChatMessage.cpp" />
+    <ClCompile Include="VideoChatPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="ChatPanel.ui" />
     <QtUic Include="FileCilentPanel.ui" />
     <QtUic Include="FileServerPanel.ui" />
+    <QtUic Include="VideoChatPanel.ui" />
   </ItemGroup>
   <ItemGroup>
     <QtRcc Include="..\Resources\Resources.qrc" />

@@ -40,6 +40,7 @@ void IMClientApp::slotCreateChatPanel(QString id, QString name)
         connect(chat, &ChatPanel::signClose, this, &IMClientApp::slotDeletChatPanel);
         connect(chat, &ChatPanel::signSendMessage, this, &IMClientApp::slotSendMessage);
         connect(chat, &ChatPanel::signSendFile, this, &IMClientApp::slotSendFile);
+        connect(this, &IMClientApp::signChatVideoChat, chat, &ChatPanel::slotVidelChat);
 
         chat->setWindowTitle(name + "(" + id + ")");
         chat->show();
@@ -119,18 +120,19 @@ void IMClientApp::slotSocketReadData()
     ChatPanel *chat = i.value();
 
     if (i == m_hashFriendPanel->end())
-    {
+    {//没有该对话框跳过
+        qDebug() << "聊天窗口没有打开";
         return;
     }
+
     switch (msgType)
     {
     case MsgType::USERMSG://客服端发送的消息
     {
         QString msg = info.msg;
         chat->setFriendMsg(from, msg);
+        break;
     }
-    break;
-
     case  MsgType::FILENAME:
     {
         QString address = info.address;
@@ -138,7 +140,6 @@ void IMClientApp::slotSocketReadData()
         chat->hasPendingFile("", address, "", file);
         break;
     }
-
     case MsgType::USERFRIENDDATA:
     {
         analyzeFriendData();
@@ -146,6 +147,12 @@ void IMClientApp::slotSocketReadData()
     }
     case MsgType::REFUSEFILE:
         break;
+    case MsgType::VIDEOCHAT:
+    case MsgType::VIDEOCHATACCEPT:
+    {
+        signChatVideoChat(info);
+        break;
+    }
     default:
         break;
     }

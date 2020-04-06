@@ -43,6 +43,9 @@
     <QtMoc Include="FileCilentPanel.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="VideoChatPanel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChatPanel.cpp">
@@ -57,6 +60,9 @@
     <ClCompile Include="FileCilentPanel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VideoChatPanel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="ChatPanel.ui">
@@ -66,6 +72,9 @@
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="FileCilentPanel.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="VideoChatPanel.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

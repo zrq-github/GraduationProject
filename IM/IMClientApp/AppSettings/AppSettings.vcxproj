@@ -82,9 +82,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AppPath.cpp" />
     <ClCompile Include="AppSettings.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AppPath.h" />
     <ClInclude Include="AppSettings.h" />
     <ClInclude Include="appsettings_global.h" />
   </ItemGroup>

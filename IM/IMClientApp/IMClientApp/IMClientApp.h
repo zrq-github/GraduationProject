@@ -29,6 +29,9 @@ private:
     FriendPanel *m_friendPanel;
     QHash<QString, ChatPanel*> *m_hashFriendPanel;
     QVector<FriendDataPtr>  m_friendData;
+
+signals:
+    void signChatVideoChat(MsgInfo);
 protected slots:
     void slotCreateChatPanel(QString id, QString name);     //创建聊天窗口
     void slotDeletChatPanel(QString id);                    //删除聊天窗口

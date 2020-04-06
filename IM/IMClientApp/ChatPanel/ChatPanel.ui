@@ -78,6 +78,26 @@
           </widget>
          </item>
          <item>
+          <widget class="QPushButton" name="btnVideoChat">
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset resource="../Resources/Resources.qrc">
+             <normaloff>:/img/img_btn_file.png</normaloff>:/img/img_btn_file.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>20</width>
+             <height>20</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="horizontalSpacer_2">
            <property name="orientation">
             <enum>Qt::Horizontal</enum>

@@ -16,7 +16,11 @@ enum MsgType
 
     USERFRIENDDATA,     //请求用户好友数据
     FILENAME,           //发送文件
-    REFUSEFILE,
+    REFUSEFILE,         //拒接发送文件
+
+    VIDEOCHAT,          //请求视频聊天
+    VIDEOCHATREFUSE,    //拒接视频聊天
+    VIDEOCHATACCEPT,    //接受视频聊天
 };
 
 enum UserInfoType

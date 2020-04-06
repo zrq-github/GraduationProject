@@ -1,4 +1,6 @@
-#pragma once
+#ifndef AppSettings_H
+#define AppSettings_H
+
 /*
 ** 应用配置信息的读写(单例模式)
 */
@@ -8,7 +10,6 @@
 
 #define IMSettings AppSettings::getInstance()
 #define IMUSERID AppSettings::getInstance().getUserID()
-#define IMUSERNAME 
 
 class APPSETTINGS_EXPORT AppSettings
 {
@@ -38,3 +39,4 @@ private:
     QString m_userID;
     QString m_userName;
 };
+#endif
