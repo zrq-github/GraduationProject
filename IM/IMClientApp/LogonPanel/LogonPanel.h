@@ -7,11 +7,11 @@
 
 #include <QDialog>
 #include "logonpanel_global.h"
+#include <QtNetwork/QTcpSocket>
 namespace Ui 
 { 
     class LogonPanel; 
 };
-class QTcpSocket;
 
 class LOGONPANEL_EXPORT LogonPanel : public QDialog
 {
@@ -36,6 +36,8 @@ private slots:
 
     void slotServerConnected();
     void slotServerData();
+
+    void slotSocketError(QAbstractSocket::SocketError);
 private:
     Ui::LogonPanel *ui;
 protected:

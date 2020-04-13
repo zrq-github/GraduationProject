@@ -24,18 +24,12 @@
     <ClCompile Include="DeftData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IMQJson.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="IMQTransport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DeftData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IMQJson.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IMQTransport.h">

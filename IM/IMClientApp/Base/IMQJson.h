@@ -4,7 +4,7 @@
 #include "base_global.h"
 
 
-static class BASE_EXPORT IMQJson
+class BASE_EXPORT IMQJson
 {
 public:
 

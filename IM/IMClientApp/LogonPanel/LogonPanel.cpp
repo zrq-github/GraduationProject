@@ -6,12 +6,8 @@
 #include <QSettings>
 #include "AppSettings/AppSettings.h"
 #include <QDebug>
-#include <QtNetwork/QTcpSocket>
 #include "RegisterPanel.h"
 #include "IMQTcpWord/IMQTcpWord.h"
-#include <QJsonObject>
-#include <QJsonDocument>
-#include <QJsonArray>
 #include "NetSettingsPanel.h"
 #include "Base/DeftData.h"
 #include "Base/IMQJson.h"
@@ -87,6 +83,9 @@ void LogonPanel::bindSigns()
 
     connect(IMQTcpSocket, &QTcpSocket::connected, this, &LogonPanel::slotServerConnected);
     connect(IMQTcpSocket, &QTcpSocket::readyRead, this, &LogonPanel::slotServerData);
+
+    connect(IMQTcpSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(slotSocketError(QAbstractSocket::SocketError)));
+
 }
 
 void LogonPanel::slot_btnRegister_clicked()
@@ -157,6 +156,15 @@ void LogonPanel::slotServerData()
     }
     default:
         break;
+    }
+}
+
+void LogonPanel::slotSocketError(QAbstractSocket::SocketError socketError)
+{
+    if (socketError == QAbstractSocket::SocketError::ConnectionRefusedError)
+    {
+        qDebug() << "The connection was refused by the peer (or timed out)";
+        QMessageBox::information(NULL, "网络连接错误", "The connection was refused by the peer (or timed out)");
     }
 }
 

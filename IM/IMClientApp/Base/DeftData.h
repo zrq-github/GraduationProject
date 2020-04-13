@@ -6,7 +6,7 @@
 #include <QByteArray>
 #include <QDataStream>
 
-enum MsgType
+enum MsgType    
 {
     USERLOGIN,          //登录
     USERLOGINSUCCEED,   //登录成功
@@ -22,7 +22,6 @@ enum MsgType
     VIDEOCHATREFUSE,    //拒接视频聊天
     VIDEOCHATACCEPT,    //接受视频聊天
 };
-
 enum UserInfoType
 {
     USERID,
@@ -48,7 +47,6 @@ public:
         return intput;
     }
 };
-
 struct UserInfo
 {
 public:
@@ -66,8 +64,27 @@ public:
         return intput;
     }
 };
-
 #define FriendDataPtr std::shared_ptr<UserInfo>
 #define FriendDataMake std::make_shared<UserInfo>
 
 #endif // !DEFTDATA_H
+
+#ifndef COMMAND_DEFINE_H
+#define COMMAND_DEFINE_H
+//日志级别的提示信息
+static const char * KEYINFOPREFIX = " Key: \n";
+static const char * ERRORPREFIX = " Error: \n";
+static const char * WARNINGPREFIX = " Warning: \n";
+static const char * INFOPREFIX = " Info: \n";
+
+static const int MAX_STR_LEN = 1024;
+//日志级别枚举
+enum EnumLogLevel
+{
+    LOGLEVELALL,    //所有信息都写日志
+    LOGLEVELMID,        //写错误、警告信息
+    LOGLEVELNORMAL,        //只写错误信息
+    LOGLEVELSTOP,        //不写日志
+};
+
+#endif
