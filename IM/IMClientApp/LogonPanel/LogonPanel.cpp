@@ -166,7 +166,6 @@ void LogonPanel::slotSocketError(QAbstractSocket::SocketError socketError)
         qDebug() << "The connection was refused by the peer (or timed out)";
         QMessageBox::information(NULL, "网络连接错误", "The connection was refused by the peer (or timed out)");
     }
-
 }
 
 void LogonPanel::slot_btnLogon_clicked()
