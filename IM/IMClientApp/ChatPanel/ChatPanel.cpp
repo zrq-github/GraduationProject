@@ -58,8 +58,8 @@ void ChatPanel::createUi()
 {
     ui->textEdit->setReadOnly(true);
 
-    qDebug() << IMPATH::appImgPath("img_btn_video_chat.png");
-    ui->btnVideoChat->setIcon(QIcon(IMPATH::appImgPath("img_btn_video_chat.png")));
+    qDebug() << IMPATH::ImgPath("img_btn_video_chat.png");
+    ui->btnVideoChat->setIcon(QIcon(IMPATH::ImgPath("img_btn_video_chat.png")));
     ui->btnVideoChat->setIconSize(QSize(20, 20));
 }
 

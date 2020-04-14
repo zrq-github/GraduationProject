@@ -42,9 +42,4 @@
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
-  <ItemGroup>
-    <QtRcc Include="IMClientApp.qrc">
-      <Filter>Resource Files</Filter>
-    </QtRcc>
-  </ItemGroup>
 </Project>

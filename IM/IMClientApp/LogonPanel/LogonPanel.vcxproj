@@ -97,7 +97,9 @@
     <ClCompile Include="RegisterPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="LogonPanel.ui" />
+    <QtUic Include="LogonPanel.ui">
+      <SubType>Designer</SubType>
+    </QtUic>
     <QtUic Include="NetSettingsPanel.ui" />
     <QtUic Include="RegisterPanel.ui" />
   </ItemGroup>
@@ -111,9 +113,6 @@
     <ProjectReference Include="..\IMQTcpWord\IMQTcpWord.vcxproj">
       <Project>{78c42be9-e59c-447e-8718-01ef3fe35e37}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <QtRcc Include="..\Resources\Resources.qrc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

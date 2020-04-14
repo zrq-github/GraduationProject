@@ -24,6 +24,7 @@ private:
     bool    m_moving = false;       //表示窗口是否在鼠标操作下移动
     QPoint  m_lastPos;              //上一次的鼠标位置
 private:
+    void creatUI();
     void readLocalSettings();
     void writeLocalSettings();
 

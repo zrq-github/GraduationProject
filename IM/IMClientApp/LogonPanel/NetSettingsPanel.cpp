@@ -1,6 +1,7 @@
 #include "NetSettingsPanel.h"
 #include "ui_NetSettingsPanel.h"
 #include "AppSettings/AppSettings.h"
+#include <QDebug>
 
 NetSettingsPanel::NetSettingsPanel(QWidget *parent)
     : QDialog(parent)
@@ -8,14 +9,18 @@ NetSettingsPanel::NetSettingsPanel(QWidget *parent)
     ui = new Ui::NetSettingsPanel();
     ui->setupUi(this);
     this->createUi();
+    this->setAttribute(Qt::WA_DeleteOnClose, true);
     bindSign();
 
     ui->lineIP->setText(IMSettings.getSetting("server", "ip").toString());
     ui->linePort->setText(IMSettings.getSetting("server", "port").toString());
+
+    qDebug() << "new NetSettingsPanel";
 }
 
 NetSettingsPanel::~NetSettingsPanel()
 {
+    qDebug() << "delete NetSettingsPanel";
     delete ui;
 }
 

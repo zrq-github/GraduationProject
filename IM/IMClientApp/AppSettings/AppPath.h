@@ -11,7 +11,7 @@ class APPSETTINGS_EXPORT AppPath
 public:
     static QString appPath();
     static QString appResourse();
-    static QString appImgPath(QString);
+    static QString ImgPath(QString imgName);
 };
 
 #endif // APPPATH_h

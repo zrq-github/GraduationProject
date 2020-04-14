@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>560</width>
-    <height>430</height>
+    <width>540</width>
+    <height>400</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,8 +22,8 @@
   <widget class="QPushButton" name="btnLogon">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>370</y>
+     <x>160</x>
+     <y>350</y>
      <width>251</width>
      <height>41</height>
     </rect>
@@ -42,33 +42,30 @@
     </rect>
    </property>
    <property name="text">
-    <string/>
-   </property>
-   <property name="pixmap">
-    <pixmap>../Resources/background.png</pixmap>
+    <string>img_logon_backgroud.png</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="lab_head">
    <property name="geometry">
     <rect>
      <x>40</x>
      <y>240</y>
-     <width>121</width>
-     <height>121</height>
+     <width>100</width>
+     <height>100</height>
     </rect>
    </property>
    <property name="text">
-    <string/>
+    <string>lab_head</string>
    </property>
-   <property name="pixmap">
-    <pixmap>../Resources/background.png</pixmap>
+   <property name="scaledContents">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>250</y>
+     <x>170</x>
+     <y>240</y>
      <width>251</width>
      <height>101</height>
     </rect>
@@ -136,7 +133,7 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>470</x>
+     <x>450</x>
      <y>0</y>
      <width>91</width>
      <height>41</height>
@@ -203,8 +200,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>450</x>
-     <y>260</y>
+     <x>440</x>
+     <y>250</y>
      <width>93</width>
      <height>28</height>
     </rect>
@@ -219,8 +216,8 @@
   <widget class="QPushButton" name="btnForgetPasw">
    <property name="geometry">
     <rect>
-     <x>450</x>
-     <y>300</y>
+     <x>440</x>
+     <y>290</y>
      <width>93</width>
      <height>28</height>
     </rect>
@@ -235,27 +232,38 @@
   <widget class="QPushButton" name="btnNetSet">
    <property name="geometry">
     <rect>
-     <x>510</x>
-     <y>390</y>
+     <x>470</x>
+     <y>350</y>
      <width>31</width>
      <height>31</height>
     </rect>
    </property>
    <property name="text">
-    <string/>
+    <string>img_btn_set.png</string>
    </property>
    <property name="icon">
-    <iconset resource="../Resources/Resources.qrc">
+    <iconset>
      <normaloff>:/img/img_btn_set.png</normaloff>:/img/img_btn_set.png</iconset>
    </property>
    <property name="flat">
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QLabel" name="lab_logo">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>70</y>
+     <width>180</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>img_logon_logo.png</string>
+   </property>
+  </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources>
-  <include location="../Resources/Resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
