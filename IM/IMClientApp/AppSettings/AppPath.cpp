@@ -11,7 +11,7 @@ QString AppPath::appResourse()
     return QApplication::applicationDirPath() + "\\Resources";
 }
 
-QString AppPath::appImgPath(QString imgPath)
+QString AppPath::ImgPath(QString imgName)
 {
-    return AppPath::appResourse() + "\\" + imgPath;
+    return AppPath::appResourse() + "\\" + imgName;
 }

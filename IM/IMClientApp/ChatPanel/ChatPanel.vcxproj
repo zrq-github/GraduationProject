@@ -106,9 +106,6 @@
     <QtUic Include="VideoChatPanel.ui" />
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="..\Resources\Resources.qrc" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\AppSettings\AppSettings.vcxproj">
       <Project>{e43a123f-58e4-4f0b-b8a5-68ef2c1de1d4}</Project>
     </ProjectReference>

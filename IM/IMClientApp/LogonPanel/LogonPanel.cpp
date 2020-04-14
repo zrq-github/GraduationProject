@@ -3,8 +3,10 @@
 #include <QMessageBox>
 #include <QMouseEvent>
 #include <QCryptographicHash>
+#include <QMovie>
 #include <QSettings>
 #include "AppSettings/AppSettings.h"
+#include "AppSettings/AppPath.h"
 #include <QDebug>
 #include "RegisterPanel.h"
 #include "IMQTcpWord/IMQTcpWord.h"
@@ -43,6 +45,32 @@ void LogonPanel::mouseReleaseEvent(QMouseEvent * event)
 {
     Q_UNUSED(event);
     m_moving = false; //停止移动
+}
+
+void LogonPanel::creatUI()
+{
+    QPixmap pixmap;
+
+    ui->editPswd->setEchoMode(QLineEdit::Password);     //设置为密码输入模式
+    this->setAttribute(Qt::WA_DeleteOnClose);           //设置为关闭时删除
+    //this->setWindowFlags(Qt::SplashScreen);             //设置为SplashScreen, 窗口无边
+    this->setWindowFlags(Qt::FramelessWindowHint);      //无边框，但是在任务显示对话框标题
+
+    QMovie *movie = new QMovie(IMPATH::ImgPath("img_logon_backgroud.gif"));
+    movie->setScaledSize(QSize(540, 210));
+    this->ui->label->setMovie(movie);
+    movie->start();
+
+    pixmap.load(IMPATH::ImgPath("img_logon_logo.png"));
+    this->ui->lab_logo->setPixmap(pixmap);
+
+    this->ui->btnNetSet->setText(NULL);
+    pixmap.load(IMPATH::ImgPath("img_btn_set.png"));
+    this->ui->btnNetSet->setIcon(QIcon(pixmap));
+
+    pixmap.load(IMPATH::ImgPath("img_logon_default_head.png"));
+    pixmap.scaled(100, 100);
+    this->ui->lab_head->setPixmap(pixmap);
 }
 
 void LogonPanel::readLocalSettings()
@@ -190,14 +218,11 @@ LogonPanel::LogonPanel(QWidget *parent)
 {
     ui = new Ui::LogonPanel();
     ui->setupUi(this);
-    ui->editPswd->setEchoMode(QLineEdit::Password);     //设置为密码输入模式
-    this->setAttribute(Qt::WA_DeleteOnClose);           //设置为关闭时删除
-    //this->setWindowFlags(Qt::SplashScreen);             //设置为SplashScreen, 窗口无边
-    this->setWindowFlags(Qt::FramelessWindowHint);      //无边框，但是在任务显示对话框标题
 
     ui->btnMinimize->installEventFilter(this);      //安装事件过滤器
     ui->btnClose->installEventFilter(this);
 
+    creatUI();
     bindSigns();
     readLocalSettings();  //读取本地配置
 }
