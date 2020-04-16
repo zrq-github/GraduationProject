@@ -36,6 +36,16 @@ void RegisterPanel::changeUi()
     this->setWindowTitle("修改密码");
 }
 
+bool RegisterPanel::verifyAccount(QString strId)
+{
+    return false;
+}
+
+bool RegisterPanel::verifyAccountPawd(QString strPawd)
+{
+    return false;
+}
+
 void RegisterPanel::slot_btnRegister_clicked()
 {   //连接服务器
     if (this->m_type)

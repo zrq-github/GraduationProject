@@ -5,15 +5,15 @@
 #include <QCryptographicHash>
 #include <QMovie>
 #include <QSettings>
+#include <QDebug>
 #include "AppSettings/AppSettings.h"
 #include "AppSettings/AppPath.h"
-#include <QDebug>
 #include "RegisterPanel.h"
 #include "IMQTcpWord/IMQTcpWord.h"
 #include "NetSettingsPanel.h"
 #include "Base/DeftData.h"
-#include "Base/IMQJson.h"
 #include "Base/IMQTransport.h"
+#include "QtUITool/QImageTool.h"
 
 #ifdef WIN32  
 #pragma execution_character_set("utf-8")  
@@ -68,9 +68,9 @@ void LogonPanel::creatUI()
     pixmap.load(IMPATH::ImgPath("img_btn_set.png"));
     this->ui->btnNetSet->setIcon(QIcon(pixmap));
 
-    pixmap.load(IMPATH::ImgPath("img_logon_default_head.png"));
-    pixmap.scaled(100, 100);
-    this->ui->lab_head->setPixmap(pixmap);
+    //pixmap.load(IMPATH::ImgPath("img_logon_default_head.png"));
+    //pixmap.scaled(100, 100);
+    this->ui->lab_head->setPixmap(QImageTool::generatePixmap(IMPATH::ImgPath("img_logon_default_head.png"), 100));
 }
 
 void LogonPanel::readLocalSettings()
@@ -131,7 +131,7 @@ void LogonPanel::slot_btnForgetPaswd_clicked()
 void LogonPanel::slot_btnNetSet_clicked()
 {
     NetSettingsPanel *netSet = new NetSettingsPanel(this);
-    netSet->show();
+    netSet->exec();
 }
 
 void LogonPanel::slotServerConnected()
@@ -139,8 +139,6 @@ void LogonPanel::slotServerConnected()
     //验证账号密码
     QString user = ui->editUser->text().trimmed();  //用户名
     QString pswd = ui->editPswd->text().trimmed();  //密码
-
-    //QByteArray  byte = IMQJson::getQJsonByte(MsgType::USERLOGIN, "server" , user, pswd);
 
     MsgInfo info;
     info.msgType = MsgType::USERLOGIN;
@@ -198,6 +196,7 @@ void LogonPanel::slotSocketError(QAbstractSocket::SocketError socketError)
 
 void LogonPanel::slot_btnLogon_clicked()
 {
+
     if (IMQTcpSocket->state() == QAbstractSocket::SocketState::ConnectedState)
     {
         slotServerConnected();
@@ -210,7 +209,6 @@ void LogonPanel::slot_btnLogon_clicked()
 
         IMQTcpSocket->connectToHost(addr, port);
     }
-
 }
 
 LogonPanel::LogonPanel(QWidget *parent)
@@ -218,19 +216,20 @@ LogonPanel::LogonPanel(QWidget *parent)
 {
     ui = new Ui::LogonPanel();
     ui->setupUi(this);
-
     ui->btnMinimize->installEventFilter(this);      //安装事件过滤器
     ui->btnClose->installEventFilter(this);
-
     creatUI();
     bindSigns();
     readLocalSettings();  //读取本地配置
+
+    qDebug() << "new LogonPanel";
 }
 
 LogonPanel::~LogonPanel()
 {
     disconnect(IMQTcpSocket, &QTcpSocket::connected, this, &LogonPanel::slotServerConnected);
     disconnect(IMQTcpSocket, &QTcpSocket::readyRead, this, &LogonPanel::slotServerData);
+    qDebug() << "delete LogonPanel";
     delete ui;
 }
 

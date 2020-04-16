@@ -13,6 +13,9 @@ public:
 private:
     void bindSigns();
     void changeUi();
+
+    bool verifyAccount(QString strId);   //验证账号是否符合规范
+    bool verifyAccountPawd(QString strPawd);    //验证密码是否符合规范
 private slots:
     void slot_btnRegister_clicked();
 private:

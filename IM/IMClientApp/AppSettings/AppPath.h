@@ -1,7 +1,8 @@
-
 #ifndef APPPATH_h
 #define APPPATH_h
-
+/**
+ * Â·¾¶Àà(QT)
+ */
 #include "appsettings_global.h"
 
 #define IMPATH AppPath

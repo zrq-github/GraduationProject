@@ -8,8 +8,10 @@ NetSettingsPanel::NetSettingsPanel(QWidget *parent)
 {
     ui = new Ui::NetSettingsPanel();
     ui->setupUi(this);
-    this->createUi();
+    this->setWindowFlags(Qt::Dialog | Qt::WindowCloseButtonHint);
     this->setAttribute(Qt::WA_DeleteOnClose, true);
+    
+    this->createUi();
     bindSign();
 
     ui->lineIP->setText(IMSettings.getSetting("server", "ip").toString());
