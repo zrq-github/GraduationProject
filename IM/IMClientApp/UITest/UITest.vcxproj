@@ -97,6 +97,9 @@
     <ProjectReference Include="..\ChatPanel\ChatPanel.vcxproj">
       <Project>{dfb0884c-76d2-4cee-81e7-f77facc34767}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\FriendPanel\FriendPanel.vcxproj">
+      <Project>{5ecfd2a9-31e3-48af-bc12-abcb69676662}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\IMClientApp\IMClientApp.vcxproj">
       <Project>{ef4df2e6-a3fb-44a8-8114-a7efa7958e80}</Project>
     </ProjectReference>
