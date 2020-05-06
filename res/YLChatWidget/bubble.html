@@ -1,0 +1,335 @@
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <head>
+        <link rel="stylesheet" type="text/css" href="bootstrap-3.3.6/css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+
+        <style>
+        img{max-width:100px;max-height:100px;margin: 0 0;}
+        /*定义显示的格式*/
+        p{
+            color:  black;
+            font-family: "Arial", "san-serif";
+            font-size: 16px;
+           /*display: inline;*/
+        }
+
+        /*自己的消息*/
+        .myMsg{
+            max-height: 300px;
+            max-width:  300px;
+            position: relative;
+            float: right;
+        }
+        /*显示自己的头像*/
+        .divMyHead{
+            position: relative;
+            float: right;
+            margin:5px 0px 5px 0px;
+            right: 1px;
+            border-radius: 5px;
+            }
+        .divMyHead{
+            moz-user-select: -moz-none;
+            -moz-user-select: none;
+            -o-user-select:none;
+            -khtml-user-select:none;
+            -webkit-user-select:none;
+            -ms-user-select:none;
+            user-select:none;
+         }
+        /*对方的消息*/
+        .otherMsg{
+            max-height: 300px;
+            max-width:  300px;
+            position: relative;
+            float: right;
+        }
+        /*显示对方的头像*/
+        .divotherHead{
+            position: relative;
+            float: left;
+            margin:5px 0px 0px 0px;
+            left: 1px;
+            border-radius: 50% 50% 50% 50%;
+        }
+        .divotherHead{
+            moz-user-select: -moz-none;
+            -moz-user-select: none;
+            -o-user-select:none;
+            -khtml-user-select:none;
+            -webkit-user-select:none;
+            -ms-user-select:none;
+            user-select:none;
+         }
+        /*实现对方发送来的消息的方框*/
+        .triangle-left{
+            float:left;
+            max-width:380px;
+            border:1px solid #ffffff;
+            border-radius:5px;
+            padding:4px;
+            background:#FFFFFF;
+            position:relative;
+            display:inline-block;
+            margin:5px 10px 5px 10px;
+            word-wrap: break-word;
+        }
+
+        .triangle-left:before{
+            position:absolute;
+            content:"";
+            display:block;
+        }
+        /*实现对方消息的那个小三角，小三角的实现其实是将一个正方形对角线划分为四个小三角，其余的三个设置颜色不可见，只将对自己有用的那一个留下来*/
+        .triangle-left.left:before{
+            border-color:rgba(0, 0, 0, 0) #FFFFFF rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+            border-width:5px 5px 5px 0;
+            border-style:solid;
+            bottom:auto;
+            left:-5px;
+            top:8px;
+        }
+        .triangle-left.left:after{
+            border-color:rgba(0, 0, 0, 0) #ffffff rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+            border-width:5px 5px 5px 0;
+            border-style:solid;
+            bottom:auto;
+            left:-5px;
+            top:8px;
+        }
+        /*实现右边的气泡*/
+        .triangle-right{
+            float:right;
+            max-width:380px;
+            border:1px solid #bedfff;
+            border-radius:5px;
+            padding:5px;
+            background:#bedfff;
+            position:relative;
+            display:inline-block;
+            margin:5px 20px 5px 0;
+            word-wrap: break-word;
+        }
+        .triangle-right:before{
+            position:absolute;
+            content:"";
+            display:block;
+        }
+        .triangle-right.right:before{
+            border-color:rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #bedfff;
+            border-width:5px 0px 5px 5px;
+            border-style:solid;
+            bottom:auto;
+            right:-6px;
+            top:8px;
+        }
+        .triangle-right:after{
+            position:absolute;
+            content:"";
+            display:block;
+        }
+        .triangle-right.right:after{
+            border-color:rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #bedfff;
+            border-width:5px 0px 5px 5px;
+            border-style:solid;
+            bottom:auto;
+            right:-6px;
+            top:8px;
+        }
+
+
+        .more{overflow: hidden;padding:0px;text-align: center;}
+        .more a{font-size:12px;color:#25C6FC;display: block;width: 100px;padding:0px 0;margin:0 auto;text-align:center;border-radius:3px;}
+        .more a:hover{text-decoration: none;}
+
+        .pfile{
+            text-align: center; /*让div内部文字居中*/
+            max-width:50%;
+            margin-left:auto;
+            margin-right:auto;
+            margin-top:10px;
+            margin-bottom:10px;
+        }
+
+        .filetip{
+           text-align: center; /*让div内部文字居中*/
+           background-color: #fff;
+           border-radius: 20px;
+           font-size: 12px;
+           padding: 5px;
+           margin-left:auto;
+           margin-right:auto;
+           display:inline-block;
+         }
+
+
+        .group-name-left
+        {
+            text-align: left;
+            font-size: 14px;
+            color: #676767;
+            margin: 0 0 0 40;
+        }
+
+        .fileicon
+        {
+                position: relative;
+                float: right;
+        }
+        .filename{
+                font-size:14px;
+                color:black;
+        }
+        .file
+        {
+                position: relative;
+                float: right;
+        }
+        .fileinfo
+        {
+                margin:0px;
+        }
+
+        .filesize
+        {
+                font-size:10px;
+                color:gray;
+        }
+        .tipmsg
+        {
+                font-size:12px;
+                color:gray;
+                margin:0px;
+                margin-top:3px;
+                padding:0px;
+        }
+        .file
+        {
+                position: relative;
+                float: top;
+        }
+
+        .op
+        {
+                margin:0px;
+        }
+
+
+        .openfile
+        {
+                font-size:12px;
+                color:#3DD3FA;
+                margin:0px;
+                padding:0px;
+                margin-right:10px;
+                float:right;
+        }
+
+        .opendir
+        {
+                font-size:12px;
+                color:#3DD3FA;
+                margin:0px;
+                padding:0px;
+                float:right;
+
+        }
+
+        </style>
+
+
+        <script src="js/qwebchannel.js"></script>
+
+        <script language="JavaScript" >
+
+        function mouseDown(e)
+        {
+            if(e.button ==2)
+            {
+                var target = e.target || e.srcElement;
+                var text = target.innerHTML;
+                new QWebChannel(qt.webChannelTransport, function(channel)
+                {
+                    window.bridge = channel.objects.T;
+                    bridge.showContentPMenu(target.id);
+                });
+            }
+
+        }
+
+        function audioLeftMouseDown(e)
+        {
+            if(e.button == 0)
+            {
+                var target = e.target || e.srcElement;
+                var img = target.children[0];
+                img.src = 'qrc:/res/YLChatWidget/left.gif';
+                new QWebChannel(qt.webChannelTransport, function(channel)
+                {
+                    window.bridge = channel.objects.T;
+                    bridge.playAudio(target.id);
+                });
+            }
+        }
+        function audioRightMouseDown(e)
+        {
+            if(e.button == 0)
+            {
+                var target = e.target || e.srcElement;
+                var img = target.children[0];
+                img.src = 'qrc:/res/YLChatWidget/right.gif';
+
+            }
+        }
+
+        function loadmore1()
+        {
+            var parent = document.getElementById("content");
+	    var child = document.getElementById("more");
+            parent.removeChild(child);
+		
+            new QWebChannel(qt.webChannelTransport, function(channel)
+                {
+                    window.bridge = channel.objects.T;
+                    bridge.loadMore();
+                });
+
+        }
+
+
+        document.ondragstart = function(event)
+        {
+            return false;
+        };
+
+        function img()
+        {
+
+        }
+
+        function getAll(){
+            content = document.body.innerHTML
+        }
+
+        function clear(){
+            document.body.innerHTML=""
+        }
+
+        function keepOnBottom()
+        {
+            var div = document.getElementById('content');
+            div.scrollTop = div.scrollHeight;
+        }
+        </script>
+    </head>
+    <body id="content" style="background:#FAFAFA;">
+    <div id="more" class="more"><a href="javascript:;" onClick="loadmore1();"><img src="qrc:/res/YLChatWidget/time.png"/>查看更多消息</a></div>
+
+
+
+</body>
+<script src="js/jquery-2.1.1.min.js">
+
+</script>
+</html>
