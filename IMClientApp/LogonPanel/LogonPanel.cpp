@@ -104,8 +104,7 @@ void LogonPanel::writeLocalSettings()
 
 void LogonPanel::bindSigns()
 {
-    connect(&IMQTcpWord::getInstance(), &IMQTcpWord::signLogonSucceed,
-        this, [this]() {this->accept(); });
+    connect(&IMQTcpWord::getInstance(), &IMQTcpWord::signLogonSucceed, this, &LogonPanel::slotLogonSucceed);
 }
 
 void LogonPanel::on_btnLogon_clicked()
@@ -137,7 +136,7 @@ void LogonPanel::on_btnRegister_clicked()
     panel->exec();
 }
 
-void LogonPanel::on_btnForgetPaswd_clicked()
+void LogonPanel::on_btnForgetPasw_clicked()
 {
     QDEBUG_CONSOLE(QString("clicked forgetpaswd"));
     RegisterPanel *panel = new RegisterPanel(this, 1);
@@ -149,6 +148,21 @@ void LogonPanel::on_btnNetSet_clicked()
     QDEBUG_CONSOLE(QString("clicked netset"));
     NetSettingsPanel *netSet = new NetSettingsPanel(this);
     netSet->exec();
+}
+
+void LogonPanel::slotLogonSucceed()
+{
+    if (ui->chkboxSavePswd->checkState() == Qt::Checked)
+    {//记住密码被点击
+        IMSettings.setLogonSettings("userID", ui->editUser->text());
+        IMSettings.setLogonSettings("userPswd", ui->editPswd->text());
+        IMSettings.setLogonSettings("isRemember", true);
+    }
+    else
+    {
+        IMSettings.setLogonSettings("isRemember", false);
+    }
+    this->accept();
 }
 
 void LogonPanel::slotServerConnected()

@@ -43,7 +43,7 @@ QVariant AppSettings::getLogonSettings(QString key/*userID, userPswd,isRemember,
     return getSetting(group, key);
 }
 
-void AppSettings::setLogonSettings(QString key,QVariant value)
+void AppSettings::setLogonSettings(QString key/*userID, userPswd,isRemember,*/,QVariant value)
 {
     QString group = "LogonSettings";
     setSetting(group, key,value);

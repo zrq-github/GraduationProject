@@ -32,9 +32,10 @@ private:
 private slots:
     void on_btnLogon_clicked();                 //µÇÂ¼°´Å¥
     void on_btnRegister_clicked();              //×¢²á
-    void on_btnForgetPaswd_clicked();           //Íü¼ÇÃÜÂë
+    void on_btnForgetPasw_clicked();           //Íü¼ÇÃÜÂë
     void on_btnNetSet_clicked();                //ÍøÂçÉèÖÃ
 
+    void slotLogonSucceed();
     void slotServerConnected();
     void slotServerData();
 
