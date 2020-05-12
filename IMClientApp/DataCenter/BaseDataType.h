@@ -14,7 +14,9 @@ enum MsgType
     USERLOGIN,          //登录
     USERLOGINSUCCEED,   //登录成功
     USERLOGINDEFEAT,    //登录失败
+
     USERLOGINREGISTER,  //用户注册
+    USERCHANGEPASSWORD, //用户修改密码
     USERMSG,            //转发用户消息
 
     USERFRIENDDATA,     //请求用户好友数据

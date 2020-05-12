@@ -13,10 +13,12 @@ IMQTcpServer::IMQTcpServer(QObject *parent/* = Q_NULLPTR*/, int numConnections/*
     m_hashClient = new QHash<QString, int>;
 
     qDebug() << "server initialize succeed";
+    db.connect();
 }
 
 IMQTcpServer::~IMQTcpServer()
 {
+    db.disconnect();
 }
 
 void IMQTcpServer::incomingConnection(qintptr socketDescriptor)
@@ -50,15 +52,20 @@ void IMQTcpServer::slotDealSocketData(const int handle, const QString & address,
     IMQTcpSocket *fromSocket = m_hashSocket->find(handle).value();  //判断是谁发送的Socket
     IMQTcpSocket *toSocket = getSocketByUserID(to);                 //拿到是发给谁的Socket
 
+
+    if (!db.connect())
+    {
+        qDebug() << "数据库连接失败！";
+        return;
+    }
+
     switch (type)
     {
     case MsgType::USERLOGIN:
     {//连接数据库查询
         qDebug() << from << " userlogin request ";
-        IMQtMySql db;
-        db.connect();
-
         QString userPaswd = info.msg;
+
         QString userRealPaswd = db.getUserPassword(from);
 
         if (userPaswd == userRealPaswd)
@@ -85,7 +92,6 @@ void IMQTcpServer::slotDealSocketData(const int handle, const QString & address,
             fromSocket->write(byte);    //发回去
             fromSocket->flush();
         }
-        db.disconnect();
         break;
     }
     case MsgType::USERMSG:
@@ -100,6 +106,23 @@ void IMQTcpServer::slotDealSocketData(const int handle, const QString & address,
         {
             emit signClientMessage(to, from, QString("用户没上线"));
         }
+        break;
+    }
+    case MsgType::USERCHANGEPASSWORD:
+    {
+        bool is= db.updateLogon(from, info.msg);
+        if (is)
+        {
+            info.msgType = MsgType::USERCHANGEPASSWORD;
+            info.to = info.from;
+            info.from = "server";
+            info.msg = "1";
+            QByteArray byte = DataAnalysis::byteFromMsgInfo(info);
+            fromSocket->write(byte);
+            fromSocket->flush();
+        }
+        
+        
         break;
     }
     //case MsgType::FILENAME:

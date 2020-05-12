@@ -23,4 +23,5 @@ public slots:
     void slotDisConnect();
 private:
     qintptr socketID;
+
 };

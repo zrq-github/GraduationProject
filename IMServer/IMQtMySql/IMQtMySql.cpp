@@ -1,6 +1,7 @@
 #include "IMQtMySql.h"
 #include <QSqlQuery>
 #include "DataCenter/BaseDataType.h"
+#include <QDebug>
 
 IMQtMySql::IMQtMySql()
 {
@@ -66,4 +67,23 @@ QStringList IMQtMySql::getUserInfo(QString userid)
     }
 
     return QStringList();
+}
+
+bool IMQtMySql::updateLogon(QString userID, QString userPassword)
+{
+    QString str = QString("UPDATE `im`.`logon` SET `user_password` = '%1' WHERE (`user_id` = '%2');").arg(userPassword, userID);
+    qDebug() << str;
+
+    QSqlQuery query(db);
+    query.exec(str);
+    if (query.isActive())
+    {
+        qDebug() << QString("%1 query updateLogon succeed!").arg(userID);
+        return true;
+    }
+    else
+    {
+        qDebug() << QString("%1 query updateLogon failed!").arg(userID);
+        return false;
+    }
 }

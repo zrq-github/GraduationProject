@@ -15,6 +15,9 @@ public:
     void disconnect();
     QString getUserPassword(QString userid);
     QStringList getUserInfo(QString userid);
+
+    bool updateLogon(QString userID, QString userPassword); //修改登录密码
+
 private:
     QSqlDatabase db;
     QString m_database = "QMYSQL";    //用的是mysql

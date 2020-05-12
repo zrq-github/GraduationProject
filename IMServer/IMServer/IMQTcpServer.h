@@ -4,6 +4,7 @@
 #include <QTcpSocket>
 #include <QThreadPool>
 #include "IMQTcpSocket.h"
+#include "IMQtMySql/IMQtMySql.h"
 
 class IMQTcpServer : public QTcpServer
 {
@@ -30,4 +31,6 @@ private:
     QThreadPool *m_threadPool;
 
     IMQTcpSocket *getSocketByUserID(QString userID);
+
+    IMQtMySql db;
 };
