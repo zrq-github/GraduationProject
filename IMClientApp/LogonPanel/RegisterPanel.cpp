@@ -86,6 +86,20 @@ void RegisterPanel::slot_sockt_readData()
         }
         return;
     }
+
+    if (msgInfo.msgType == MsgType::USERLOGINREGISTER)
+    {
+        if (msgInfo.msg == "1")
+        {//新增用户成功
+            QMessageBox::about(this, QString("注册"), QString("注册成功"));
+            this->close();
+        }
+        else
+        {
+            QMessageBox::about(this, QString("注册"), QString("注册失败"));
+        }
+        return;
+    }
 }
 
 void RegisterPanel::slot_btnRegister_clicked()

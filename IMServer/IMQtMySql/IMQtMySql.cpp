@@ -87,3 +87,25 @@ bool IMQtMySql::updateLogon(QString userID, QString userPassword)
         return false;
     }
 }
+
+bool IMQtMySql::addUser(QString userID, QString userPassword)
+{
+    QString str = QString("INSERT INTO `im`.`logon` (`user_id`, `user_password`) VALUES ('%1', '%2');").arg(userID, userPassword);
+    QString str1 = QString("INSERT INTO `im`.`userinfo` (`user_id`, `user_name`) VALUES ('%1', '%2');").arg(userID, QString("no Name"));
+    qDebug() << str + str1;
+
+    QSqlQuery query(db);
+    query.exec(str.append(str1));
+
+    if (query.isActive())
+    {
+        qDebug() << QString("%1 add succeed!").arg(userID);
+        return true;
+    }
+    else
+    {
+        qDebug() << QString("%1 add failed!").arg(userID);
+        return false;
+    }
+    return false;
+}

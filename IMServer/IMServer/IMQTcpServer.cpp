@@ -121,8 +121,31 @@ void IMQTcpServer::slotDealSocketData(const int handle, const QString & address,
             fromSocket->write(byte);
             fromSocket->flush();
         }
-        
-        
+        break;
+    }
+    case MsgType::USERLOGINREGISTER:
+    {
+        bool is = db.addUser(from, info.msg);
+        if (is)
+        {
+            info.msgType = MsgType::USERLOGINREGISTER;
+            info.to = info.from;
+            info.from = "server";
+            info.msg = "1";
+            QByteArray byte = DataAnalysis::byteFromMsgInfo(info);
+            fromSocket->write(byte);
+            fromSocket->flush();
+        }
+        else
+        {
+            info.msgType = MsgType::USERLOGINREGISTER;
+            info.to = info.from;
+            info.from = "server";
+            info.msg = "0";
+            QByteArray byte = DataAnalysis::byteFromMsgInfo(info);
+            fromSocket->write(byte);
+            fromSocket->flush();
+        }
         break;
     }
     //case MsgType::FILENAME:

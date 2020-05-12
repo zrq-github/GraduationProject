@@ -17,6 +17,7 @@ public:
     QStringList getUserInfo(QString userid);
 
     bool updateLogon(QString userID, QString userPassword); //修改登录密码
+    bool addUser(QString userID, QString userPassword);     //新增用户
 
 private:
     QSqlDatabase db;
