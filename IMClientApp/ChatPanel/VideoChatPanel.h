@@ -25,7 +25,7 @@ private:
     bool    m_isTransfer;
     QString m_address;
     quint16 m_port;
-    //quint16 m_otherPort;  //测试用端口
+    quint16 m_otherPort;  //测试用端口
     //播放器参数
     cv::Mat frame;
     cv::Mat bfFrame;

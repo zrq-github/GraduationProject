@@ -48,6 +48,8 @@ void IMQTcpWord::slotSocketReadData()
         break;
     }
     case MsgType::VIDEOCHAT:
+    case MsgType::VIDEOCHATACCEPT:
+    case MsgType::VIDEOCHATREFUSE:
     {
         emit signVideoChat(msgInfo);
         break;

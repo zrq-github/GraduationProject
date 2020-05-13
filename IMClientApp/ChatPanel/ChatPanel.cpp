@@ -185,14 +185,14 @@ void ChatPanel::slotVidelChat(MsgInfo info)
                 IMQTcpSocket->write(byte);
             }
         }
-        else if (info.msgType == MsgType::VIDEOCHATACCEPT)
-        {//接受视频请求事件
+    }
+    else if (info.msgType == MsgType::VIDEOCHATACCEPT)
+    {//接受视频请求事件
+        m_videoChat->setIsTransfer(true);
+    }
+    else if (info.msgType == MsgType::VIDEOCHATREFUSE)
+    {//拒接应该处理的语句
 
-        }
-        else if(info.msgType==MsgType::VIDEOCHATREFUSE)
-        {//拒接应该处理的语句
-            
-        }
     }
 }
 

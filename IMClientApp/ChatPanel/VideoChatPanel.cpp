@@ -4,6 +4,7 @@
 #include <QDebug>
 #include <QBuffer>
 #include "AppSettings/AppPath.h"
+#include "DataCenter/IMQTcpWord.h"
 #ifdef WIN32  
 #pragma execution_character_set("utf-8")  
 #endif
@@ -29,10 +30,13 @@ void VideoChatPanel::init()
 {
     m_isTransfer = false;
     m_port = 9001;
-    //m_otherPort = 9002; 测试用端口
+    m_otherPort = 9002; //测试用端口
     //网络初始化
     m_udpSocket = new QUdpSocket(this);
-    m_udpSocket->bind(QHostAddress::LocalHost, quint16(m_port));
+    m_udpSocket->bind(IMQTcpSocket->peerAddress(), quint16(m_port));
+    
+    qDebug() << IMQTcpSocket->peerAddress();
+
     if (!m_udpSocket->isValid())
     {
         qDebug() << QHostAddress::LocalHost+" udpsock绑定失败";
@@ -97,7 +101,7 @@ void VideoChatPanel::timerEvent(QTimerEvent * event)
             //数据压缩算法
             QByteArray base64Byte = compressByte.toBase64();
 
-            m_udpSocket->writeDatagram(base64Byte.data(), base64Byte.size(),QHostAddress(m_address), m_port);
+            m_udpSocket->writeDatagram(base64Byte.data(), base64Byte.size(), QHostAddress(m_address), m_port);
         }
     }
 }
@@ -117,5 +121,5 @@ void VideoChatPanel::slotPendingDatagram()
     image.loadFromData(uncompressByte);
 
     //qDebug() << ui->labVideoOther->width() << " " << ui->labVideoOther->height();
-    ui->labVideoOther->setPixmap(QPixmap::fromImage(image));
+    ui->labVideoOther->setPixmap(QPixmap::fromImage(QImage(AppPath::ImgPath("img_logon_default_head.png"))));
 }
