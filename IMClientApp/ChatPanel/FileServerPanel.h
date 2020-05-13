@@ -20,7 +20,7 @@ public:
 
     void initSrv();
     void refused();
-
+    void setAcceptID(QString userID);
 protected:
     void closeEvent(QCloseEvent *);
 private:
@@ -41,6 +41,7 @@ private:
     QTcpSocket *clntConn;   //客服端连接的套接字
 
     QTime time;
+    QString m_userID;
 private slots:
     void sndMsg();
     void updClntProgress(qint64 numBytes);
@@ -48,8 +49,7 @@ private slots:
     void on_btnOpen_clicked();
     void on_btnSend_clicked();
     void on_btnClose_clicked();
-signals:
-    void signFileName(QString);
+
 };
 
 #endif

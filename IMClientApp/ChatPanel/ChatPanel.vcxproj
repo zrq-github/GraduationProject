@@ -109,6 +109,9 @@
     <ProjectReference Include="..\AppSettings\AppSettings.vcxproj">
       <Project>{e43a123f-58e4-4f0b-b8a5-68ef2c1de1d4}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\ConfigCenter\ConfigCenter.vcxproj">
+      <Project>{287eb77d-4bc1-4778-bafc-83576ed0276b}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\DataCenter\DataCenter.vcxproj">
       <Project>{cc7923f2-8ee4-47b1-8d21-1b35fa49386d}</Project>
     </ProjectReference>

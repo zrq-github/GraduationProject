@@ -60,7 +60,8 @@ void ChatPanel::createUi()
     ui->textEdit->setReadOnly(true);
     ui->labName->setText(QString("%1(%2)").arg(m_chatName, m_chatID));
 
-
+    ui->btnSendFile->setIcon(QIcon(IMPATH::ImgPath("floder.png", "Resources\\FileIcon")));
+    ui->btnSendFile->setIconSize(QSize(20, 20));
     qDebug() << IMPATH::ImgPath("img_btn_video_chat.png");
     ui->btnVideoChat->setIcon(QIcon(IMPATH::ImgPath("img_btn_video_chat.png")));
     ui->btnVideoChat->setIconSize(QSize(20, 20));
@@ -69,6 +70,7 @@ void ChatPanel::createUi()
 void ChatPanel::binSign()
 {
     connect(ui->btnSend, SIGNAL(clicked()), this, SLOT(slot_btnSend_click()));    //发送文本事件
+    connect(&IMQTcpWord::getInstance(), &IMQTcpWord::signFileName, this, &ChatPanel::slotSaveFile);
 }
 
 void ChatPanel::dealMessage(QString & sendId, QString & time, QString & data)
@@ -116,10 +118,11 @@ void ChatPanel::slot_btnSend_click()
 void ChatPanel::on_btnSendFile_clicked()
 {
     fileSrv = new FileServerPanel(this);
-    connect(fileSrv, &FileServerPanel::signFileName, this, &ChatPanel::slotSendFile);
 
-    fileSrv->show();
     fileSrv->initSrv();
+    fileSrv->setAcceptID(m_chatID);
+    fileSrv->show();
+    
 }
 
 void ChatPanel::on_btnVideoChat_clicked()
@@ -136,6 +139,11 @@ void ChatPanel::on_btnVideoChat_clicked()
     IMQTcpSocket->write(byte);
 }
 
+void ChatPanel::slotSaveFile(MsgInfo msgInfo)
+{
+    this->hasPendingFile(msgInfo.from, msgInfo.address, nullptr, msgInfo.msg);
+}
+
 void ChatPanel::slotSendFile(QString file)
 {
     MsgInfo msgInfo;// (MsgType::FILENAME, IMUSERID, m_chatID, file, IMQTcpSocket->peerAddress().toString());
@@ -144,10 +152,6 @@ void ChatPanel::slotSendFile(QString file)
     IMQTcpSocket->write(byte);
     IMQTcpSocket->flush();
     //emit signSendFile(byte);
-}
-
-void ChatPanel::slotSaveFile(QByteArray)
-{
 }
 
 void ChatPanel::slotVidelChat(MsgInfo info)

@@ -3,7 +3,6 @@
 #include <QWidget>
 #include "chatpanel_global.h"
 #include <QListWidgetItem>
-
 #include "DataCenter/BaseDataType.h"
 namespace Ui { class ChatPanel; };
 class FileCilentPanel;
@@ -47,7 +46,8 @@ private slots :
     void on_btnVideoChat_clicked();     //打开视频聊天功能
 
     void slotSendFile(QString);         //发送文件名
-    void slotSaveFile(QByteArray);
+
+    void slotSaveFile(MsgInfo);           //处理请求接受文件
 
 public slots:
     void slotVidelChat(MsgInfo);       //处理视频聊天功能

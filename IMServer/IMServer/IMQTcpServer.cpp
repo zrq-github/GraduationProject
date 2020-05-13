@@ -148,29 +148,30 @@ void IMQTcpServer::slotDealSocketData(const int handle, const QString & address,
         }
         break;
     }
-    //case MsgType::FILENAME:
-    //{
-    //    if (toSocket != nullptr)
-    //    {
-    //        toSocket->write(byteArray);
-    //        toSocket->flush();
+    case MsgType::FILENAME:
+    {
+        if (toSocket != nullptr)
+        {
+            toSocket->write(byteArray);
+            toSocket->flush();
 
-    //        emit signClientMessage(to, from, QString("发送了一个文件"));
-    //    }
-    //    else
-    //    {   //用户不在线
-    //        MsgInfo infoFile;
-    //        infoFile.msgType = MsgType::REFUSEFILE;
-    //        infoFile.to = from;
-    //        infoFile.from = "server";
+            emit signClientMessage(to, from, QString("发送了一个文件"));
+        }
+        else
+        {   //用户不在线
+            
+            MsgInfo infoFile;
+            //infoFile.msgType = MsgType::REFUSEFILE;
+            //infoFile.to = from;
+            //infoFile.from = "server";
 
-    //        QByteArray byte = IMQPROTOCOL::getMsgQByteArray(infoFile);
-    //        toSocket->write(byteArray);
-    //        toSocket->flush();
-    //        emit signClientMessage(to, from, QString("用户没上线"));
-    //    }
-    //    break;
-    //}
+            //QByteArray byte = IMQPROTOCOL::getMsgQByteArray(infoFile);
+            //toSocket->write(byteArray);
+            //toSocket->flush();
+            //emit signClientMessage(to, from, QString("用户没上线"));
+        }
+        break;
+    }
     //case MsgType::VIDEOCHAT:
     //{
     //    if (toSocket != nullptr)

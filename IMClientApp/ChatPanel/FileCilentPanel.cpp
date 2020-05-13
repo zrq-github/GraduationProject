@@ -40,6 +40,11 @@ void FileCilentPanel::setFileName(QString name)
     locFile = new QFile(name);
 }
 
+void FileCilentPanel::setAcceptID(QString userID)
+{
+    this->m_userID = userID;
+}
+
 void FileCilentPanel::closeEvent(QCloseEvent *)
 {
     on_btnClose_clicked();
@@ -56,7 +61,7 @@ void FileCilentPanel::newConn()
 void FileCilentPanel::readMsg()
 {
     QDataStream in(tClnt);
-    in.setVersion(QDataStream::Qt_4_7);
+    in.setVersion(QDataStream::Qt_5_9);
 
     float useTime = time.elapsed();
 

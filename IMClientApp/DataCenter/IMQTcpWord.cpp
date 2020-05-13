@@ -40,10 +40,16 @@ void IMQTcpWord::slotSocketReadData()
     {
         //MsgInfoPtr msgInfo = std::make_shared<MsgInfo>(msgInfo);
         emit signChatMsg(msgInfo);
+        break;
     }
-    break;
+    case MsgType::FILENAME:
+    {
+        emit signFileName(msgInfo);
+        break;
+    }
     default:
         break;
+
     }
 }
 

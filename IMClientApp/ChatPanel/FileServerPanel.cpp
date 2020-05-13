@@ -7,6 +7,12 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QDebug>
+#include "DataCenter/IMQTcpWord.h"
+#include "DataCenter/BaseDataType.h"
+#include "DataCenter/DataCenter.h"
+#include "DataCenter/DataAnalysis.h"
+#include <QByteArray>
+#include <QHostAddress>
 
 #ifdef WIN32  
 #pragma execution_character_set("utf-8")  
@@ -129,14 +135,21 @@ void FileServerPanel::on_btnOpen_clicked()
 
 void FileServerPanel::on_btnSend_clicked()
 {
-    if (!tSrv->listen(QHostAddress::Any, tPort))//开始监听
+    QString sIP = IMQTcpSocket->peerAddress().toString();
+
+    if (!tSrv->listen(IMQTcpSocket->peerAddress(), tPort))//开始监听
     {
         qDebug() << tSrv->errorString();
         close();
         return;
     }
     ui->labStatus->setText(tr("等待对方接收... ..."));
-    signFileName(fileName);
+
+    UserInfoPtr &userInfo = DataCenterInst.getMyInfo();
+    MsgInfo info(MsgType::FILENAME, userInfo->id, m_userID, fileName, sIP, tPort);
+    QByteArray byte = DataAnalysis::byteFromMsgInfo(info);
+    IMQTcpSocket->write(byte);
+    IMQTcpSocket->flush();
 }
 
 void FileServerPanel::on_btnClose_clicked()
@@ -144,9 +157,14 @@ void FileServerPanel::on_btnClose_clicked()
     if (tSrv->isListening())
     {
         tSrv->close();
-        if (locFile->isOpen())
-            locFile->close();
+        //if (locFile->isOpen())
+        //    locFile->close();
         clntConn->abort();
     }
-    close();
+    this->close();
+}
+
+void FileServerPanel::setAcceptID(QString userID)
+{
+    m_userID = userID;
 }

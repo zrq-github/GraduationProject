@@ -21,7 +21,7 @@ public:
 
     void setHostAddr(QHostAddress addr);    //获取发送端IP地址
     void setFileName(QString name);         //获取文件保存路径
-
+    void setAcceptID(QString userID);
 protected:
     void closeEvent(QCloseEvent *);
 
@@ -41,6 +41,7 @@ private:
     QByteArray inBlock;
 
     QTime time;
+    QString m_userID;
 private slots:
     void newConn();
     void readMsg();
