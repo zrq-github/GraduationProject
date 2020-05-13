@@ -33,12 +33,12 @@ private:
     QHostAddress hostAddr;
     qint16 tPort;
 
-    qint64 totalBytes;
-    qint64 bytesReceived;
-    qint64 fileNameSize;
-    QString fileName;
-    QFile *locFile;
-    QByteArray inBlock;
+    qint64 totalBytes;      //需要接受的总字节数
+    qint64 bytesReceived;   //已接受的字节数
+    qint64 fileNameSize;    //文件的大小
+    QString fileName;       //文件的名字
+    QFile *locFile;         //当前文件的路径
+    QByteArray inBlock;     //接受缓存区
 
     QTime time;
     QString m_userID;

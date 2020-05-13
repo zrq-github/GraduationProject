@@ -29,6 +29,7 @@ private:
     //²¥·ÅÆ÷²ÎÊý
     cv::Mat frame;
     cv::Mat bfFrame;
+
     int timerID;
     cv::VideoCapture capture;
 

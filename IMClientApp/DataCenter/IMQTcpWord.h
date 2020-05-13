@@ -22,6 +22,7 @@ signals:
     void signLogonSucceed();
     void signChatMsg(MsgInfo);
     void signFileName(MsgInfo);
+    void signVideoChat(MsgInfo);
 protected slots:
     void slotSocketReadData();                      //处理服务器返回的信息
 private:

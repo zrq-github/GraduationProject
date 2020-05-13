@@ -65,7 +65,7 @@ void FileServerPanel::closeEvent(QCloseEvent *)
 void FileServerPanel::sndMsg()
 {  //用户确认后,
     ui->btnSend->setEnabled(false);
-    clntConn = tSrv->nextPendingConnection();
+    clntConn = tSrv->nextPendingConnection();   //拿到连接方的socket
     connect(clntConn, SIGNAL(bytesWritten(qint64)), this, SLOT(updClntProgress(qint64)));
 
     ui->labStatus->setText(tr("开始传送文件 %1 ！").arg(theFileName));
@@ -75,17 +75,17 @@ void FileServerPanel::sndMsg()
         QMessageBox::warning(this, tr("应用程序"), tr("无法读取文件 %1:\n%2").arg(fileName).arg(locFile->errorString()));
         return;
     }
-    totalBytes = locFile->size();
+    totalBytes = locFile->size();   //计算文件的总大小
     QDataStream sendOut(&outBlock, QIODevice::WriteOnly);
-    sendOut.setVersion(QDataStream::Qt_4_7);
+    sendOut.setVersion(QDataStream::Qt_5_9);
     time.start();  // 开始计时
     QString curFile = fileName.right(fileName.size() - fileName.lastIndexOf('/') - 1);
     sendOut << qint64(0) << qint64(0) << curFile;
     totalBytes += outBlock.size();
-    sendOut.device()->seek(0);
-    sendOut << totalBytes << qint64((outBlock.size() - sizeof(qint64) * 2));
-    bytesTobeWrite = totalBytes - clntConn->write(outBlock);
-    outBlock.resize(0);
+    sendOut.device()->seek(0);  
+    sendOut << totalBytes << qint64((outBlock.size() - sizeof(qint64) * 2));    //包头包含发送数据的大小
+    bytesTobeWrite = totalBytes - clntConn->write(outBlock);                    //待发送的字节=总字节-发送缓冲区的字节
+    outBlock.resize(0); //缓冲区清0
 }
 
 void FileServerPanel::updClntProgress(qint64 numBytes)

@@ -172,51 +172,51 @@ void IMQTcpServer::slotDealSocketData(const int handle, const QString & address,
         }
         break;
     }
-    //case MsgType::VIDEOCHAT:
-    //{
-    //    if (toSocket != nullptr)
-    //    {
-    //        toSocket->write(byteArray);
-    //        toSocket->flush();
+    case MsgType::VIDEOCHAT:
+    {
+        if (toSocket != nullptr)
+        {
+            toSocket->write(byteArray);
+            toSocket->flush();
 
-    //        emit signClientMessage(to, from, QString("发送了一个视频请求"));
-    //    }
-    //    else
-    //    {   //用户不在线
-    //        MsgInfo infoVideoChat;
-    //        infoVideoChat.msgType = MsgType::VIDEOCHATREFUSE;
-    //        infoVideoChat.to = from;
-    //        infoVideoChat.from = "server";
+            emit signClientMessage(to, from, QString("视频请求"));
+        }
+        else
+        {   //用户不在线
+ /*           MsgInfo infoVideoChat;
+            infoVideoChat.msgType = MsgType::VIDEOCHATREFUSE;
+            infoVideoChat.to = from;
+            infoVideoChat.from = "server";
 
-    //        QByteArray byte = IMQPROTOCOL::getMsgQByteArray(infoVideoChat);
-    //        fromSocket->write(byteArray);
-    //        fromSocket->flush();
-    //        emit signClientMessage(to, from, QString("用户没上线"));
-    //    }
-    //    break;
-    //}
-    //case MsgType::VIDEOCHATACCEPT:
-    //{
-    //    if (toSocket != nullptr)
-    //    {
-    //        toSocket->write(byteArray);
-    //        toSocket->flush();
+            QByteArray byte = IMQPROTOCOL::getMsgQByteArray(infoVideoChat);
+            fromSocket->write(byteArray);
+            fromSocket->flush();
+            emit signClientMessage(to, from, QString("用户没上线"));*/
+        }
+        break;
+    }
+    case MsgType::VIDEOCHATACCEPT:
+    {
+        if (toSocket != nullptr)
+        {
+            toSocket->write(byteArray);
+            toSocket->flush();
 
-    //        emit signClientMessage(to, from, QString("接受了一个视频请求"));
-    //    }
-    //    else
-    //    {   //用户不在线
-    //        MsgInfo infoVideoChat;
-    //        infoVideoChat.msgType = MsgType::VIDEOCHATREFUSE;
-    //        infoVideoChat.to = from;
+            emit signClientMessage(to, from, QString("接受了一个视频请求"));
+        }
+        else
+        {   //用户不在线
+            //MsgInfo infoVideoChat;
+            //infoVideoChat.msgType = MsgType::VIDEOCHATREFUSE;
+            //infoVideoChat.to = from;
 
-    //        QByteArray byte = IMQPROTOCOL::getMsgQByteArray(infoVideoChat);
-    //        fromSocket->write(byteArray);
-    //        fromSocket->flush();
-    //        emit signClientMessage(to, from, QString("用户没上线"));
-    //    }
-    //    break;
-    //}
+            //QByteArray byte = IMQPROTOCOL::getMsgQByteArray(infoVideoChat);
+            //fromSocket->write(byteArray);
+            //fromSocket->flush();
+            //emit signClientMessage(to, from, QString("用户没上线"));
+        }
+        break;
+    }
     default:
         break;
     }

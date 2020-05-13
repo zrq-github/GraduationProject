@@ -1,12 +1,10 @@
 /*-------------------------------------------------
 #
 # Project created by QtCreator
-# Author: 沙振宇
-# CreateTime: 2018-07-23
-# UpdateTime: 2019-12-27
+# Author: 
+# CreateTime: 
+# UpdateTime: 
 # Info: Qt5气泡式聊天框——QListWidget+QPainter实现
-# Url:https://shazhenyu.blog.csdn.net/article/details/81505832
-# Github:https://github.com/ShaShiDiZhuanLan/Demo_MessageChat_Qt
 #
 #-------------------------------------------------*/
 #ifndef QNCHATMESSAGE_H

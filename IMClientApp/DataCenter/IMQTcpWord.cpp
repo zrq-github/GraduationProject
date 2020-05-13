@@ -47,6 +47,11 @@ void IMQTcpWord::slotSocketReadData()
         emit signFileName(msgInfo);
         break;
     }
+    case MsgType::VIDEOCHAT:
+    {
+        emit signVideoChat(msgInfo);
+        break;
+    }
     default:
         break;
 

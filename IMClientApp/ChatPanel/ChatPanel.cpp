@@ -11,6 +11,7 @@
 #include "DataCenter/IMQTcpWord.h"
 #include "DataCenter/DataAnalysis.h"
 #include "DataCenter/DataCenter.h"
+#include "DataCenter/BaseDataType.h"
 #include <QMessageBox>
 #include "AppSettings/AppPath.h"
 #include "VideoChatPanel.h"
@@ -52,6 +53,7 @@ ChatPanel::ChatPanel(QString id,QString name, QWidget *parent)
 
 ChatPanel::~ChatPanel()
 {
+    this->disconnect();
     delete ui;
 }
 
@@ -60,7 +62,9 @@ void ChatPanel::createUi()
     ui->textEdit->setReadOnly(true);
     ui->labName->setText(QString("%1(%2)").arg(m_chatName, m_chatID));
 
-    ui->btnSendFile->setIcon(QIcon(IMPATH::ImgPath("floder.png", "Resources\\FileIcon")));
+    ui->btnSendFile->setIcon(QIcon(IMPATH::ImgPath("floder.png", "Resources//FileIcon")));
+
+
     ui->btnSendFile->setIconSize(QSize(20, 20));
     qDebug() << IMPATH::ImgPath("img_btn_video_chat.png");
     ui->btnVideoChat->setIcon(QIcon(IMPATH::ImgPath("img_btn_video_chat.png")));
@@ -70,7 +74,8 @@ void ChatPanel::createUi()
 void ChatPanel::binSign()
 {
     connect(ui->btnSend, SIGNAL(clicked()), this, SLOT(slot_btnSend_click()));    //发送文本事件
-    connect(&IMQTcpWord::getInstance(), &IMQTcpWord::signFileName, this, &ChatPanel::slotSaveFile);
+    connect(&IMQTcpWord::getInstance(), &IMQTcpWord::signFileName, this, &ChatPanel::slotSaveFile); //请求接受文件
+    connect(&IMQTcpWord::getInstance(), &IMQTcpWord::signVideoChat, this, &ChatPanel::slotVidelChat);//请求视频聊天
 }
 
 void ChatPanel::dealMessage(QString & sendId, QString & time, QString & data)
@@ -133,10 +138,12 @@ void ChatPanel::on_btnVideoChat_clicked()
     }
     m_videoChat->show();
 
-    MsgInfo msgInfo;// (MsgType::VIDEOCHAT, IMUSERID, m_chatID, nullptr, IMQTcpSocket->peerAddress().toString());
+    UserInfoPtr &userInfo = DataCenterInst.getMyInfo();
+    MsgInfo msgInfo(MsgType::VIDEOCHAT, userInfo->id, m_chatID, QString::number(MsgType::VIDEOCHATACCEPT), IMQTcpSocket->peerAddress().toString());
 
     QByteArray &byte = DataAnalysis::byteFromMsgInfo(msgInfo);
     IMQTcpSocket->write(byte);
+    IMQTcpSocket->flush();
 }
 
 void ChatPanel::slotSaveFile(MsgInfo msgInfo)
@@ -169,20 +176,23 @@ void ChatPanel::slotVidelChat(MsgInfo info)
                 m_videoChat->setAddress(address);   //拿到对方的ip地址
                 m_videoChat->setIsTransfer(true);   //将自己的摄像头数据传输给对方
                 //提示对方，我已经接受你的视频请求，让对方开始传输数据
-                MsgInfo msgInfo;// (MsgType::VIDEOCHATACCEPT, IMUSERID, m_chatID, IMQTcpSocket->peerAddress().toString());
+
+                UserInfoPtr userInfo = DataCenterInst.getMyInfo();
+                MsgInfo msgInfo(MsgType::VIDEOCHATACCEPT, userInfo->id, m_chatID,
+                    QString::number(MsgType::VIDEOCHATACCEPT), IMQTcpSocket->peerAddress().toString());
 
                 QByteArray byte = DataAnalysis::byteFromMsgInfo(msgInfo);
                 IMQTcpSocket->write(byte);
             }
         }
-        else
-        {
-            //拒接应该处理的语句
+        else if (info.msgType == MsgType::VIDEOCHATACCEPT)
+        {//接受视频请求事件
+
         }
-    }
-    else if (info.msgType == MsgType::VIDEOCHATACCEPT)
-    {
-        m_videoChat->setIsTransfer(true);
+        else if(info.msgType==MsgType::VIDEOCHATREFUSE)
+        {//拒接应该处理的语句
+            
+        }
     }
 }
 

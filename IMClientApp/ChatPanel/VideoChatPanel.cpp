@@ -69,10 +69,19 @@ void VideoChatPanel::timerEvent(QTimerEvent * event)
         {
             capture.read(frame);
         }
-        cvtColor(bfFrame, frame, CV_BGR2RGB);
-        QImage image((unsigned char *)(bfFrame.data),
-            bfFrame.cols, bfFrame.rows,
-            QImage::Format_RGB888);
+        bfFrame = frame;
+        //if (frame.channels() == 4) {
+        //    cv::cvtColor(bfFrame, frame, CV_BGRA2GRAY);
+        //}
+        //else if (frame.channels() == 3) {
+        //    cv::cvtColor(bfFrame, frame, CV_BGR2GRAY);
+        //}
+        //else if (frame.channels() == 2) {
+        //    cv::cvtColor(bfFrame, frame, CV_BGR5652GRAY);
+        //}
+        QImage image = QImage((const unsigned char*)(bfFrame.data),
+            bfFrame.cols, bfFrame.rows,bfFrame.step,
+            QImage::Format_RGB888).rgbSwapped();
 
         ui->labVideoMe->setPixmap(QPixmap::fromImage(image));
 
