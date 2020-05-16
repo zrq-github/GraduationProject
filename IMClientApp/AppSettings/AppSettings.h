@@ -9,7 +9,6 @@
 #include <QSettings>
 
 #define IMSettings AppSettings::getInstance()
-
 class APPSETTINGS_EXPORT AppSettings
 {
 public:
@@ -20,7 +19,7 @@ public:
     void setSetting(QString key, QVariant value);
     void setSetting(QString group,QString key, QVariant value);
 
-    //IM封装
+    //封装登录配置信息
     QVariant getLogonSettings(QString key);
     void setLogonSettings(QString key, QVariant value);
 private:

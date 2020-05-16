@@ -5,14 +5,13 @@
  */
 #include "appsettings_global.h"
 #include <QObject>
-#define IMPATH AppPath
 
+#define IMPATH AppPath
 class APPSETTINGS_EXPORT AppPath
 {
 public:
     static QString appPath();
     static QString appFilePath(QString str = "Resources");
-
     static QString ImgPath(QString fileName,QString fielPath="Resources");
 };
 
