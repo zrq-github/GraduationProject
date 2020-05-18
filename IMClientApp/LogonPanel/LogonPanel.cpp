@@ -13,8 +13,13 @@
 #include "DataCenter/BaseDataType.h"
 #include "DataCenter/IMQTcpWord.h"
 #include "DataCenter/DataAnalysis.h"
+#include "VerificationCodeLabel.h"
 
 #include "QDebugTool/QDebugTool.h"
+
+#ifdef WIN32  
+#pragma execution_character_set("utf-8")  
+#endif
 
 
 void LogonPanel::mousePressEvent(QMouseEvent * event)
@@ -89,17 +94,18 @@ void LogonPanel::readLocalSettings()
 
 void LogonPanel::writeLocalSettings()
 {
-    IMSettings.setLogonSettings("userId", ui->editUser->text().trimmed());
-    bool isSavePswd = ui->chkboxSavePswd->isChecked();
-    if (isSavePswd)
-    {
-        IMSettings.setLogonSettings("userPswd", ui->editPswd->text().trimmed());
-        IMSettings.setLogonSettings("isRemember", true);
-    }
-    else
-    {
-        IMSettings.setSetting("LogonSettings", "rememberPswd", false);
-    }
+
+    //IMSettings.setLogonSettings("userId", ui->editUser->text().trimmed());
+    //bool isSavePswd = ui->chkboxSavePswd->isChecked();
+    //if (isSavePswd)
+    //{
+    //    IMSettings.setLogonSettings("userPswd", ui->editPswd->text().trimmed());
+    //    IMSettings.setLogonSettings("isRemember", true);
+    //}
+    //else
+    //{
+    //    IMSettings.setSetting("LogonSettings", "rememberPswd", false);
+    //}
 }
 
 void LogonPanel::bindSigns()
@@ -109,24 +115,44 @@ void LogonPanel::bindSigns()
 
 void LogonPanel::on_btnLogon_clicked()
 {
-    QDEBUG_CONSOLE(QString("clicked logon"));
-    if (IMQTcpSocket->state() == QAbstractSocket::SocketState::ConnectedState)
-    {   //tcp已连接
-        QString user = ui->editUser->text().trimmed();  //用户名
-        QString pswd = ui->editPswd->text().trimmed();  //密码
-
-        MsgInfo info(MsgType::USERLOGIN, user, nullptr, pswd, IMQTcpSocket->peerAddress().toString(), IMQTcpSocket->peerPort());
-
-        QByteArray byte = DataAnalysis::byteFromMsgInfo(info);
-        IMQTcpSocket->write(byte);
-        IMQTcpSocket->flush();
+    //启动验证
+    if (m_verifyWidget == nullptr && verifyState == 0)
+    {
+        m_verifyWidget = new VerifyWidget;
+        verifyState = m_verifyWidget->exec();
     }
-    else
-    {   //tcp未连接
-        QString addr = IMSettings.getSetting("server", "ip").toString();
-        quint16 port = IMSettings.getSetting("server", "port").toInt();
-        IMQTcpWordInstance.connectHost(addr, port);
+    else if(verifyState == 0)
+    {
+        verifyState = m_verifyWidget->exec();
     }
+
+    if (verifyState == QDialog::Accepted)
+    {//验证成功
+        QDEBUG_CONSOLE(QString("clicked logon"));
+        if (IMQTcpSocket->state() == QAbstractSocket::SocketState::ConnectedState)
+        {   //tcp已连接
+            QString user = ui->editUser->text().trimmed();  //用户名
+            QString pswd = ui->editPswd->text().trimmed();  //密码
+
+            MsgInfo info(MsgType::USERLOGIN, user, nullptr, pswd, IMQTcpSocket->peerAddress().toString(), IMQTcpSocket->peerPort());
+
+            QByteArray byte = DataAnalysis::byteFromMsgInfo(info);
+            IMQTcpSocket->write(byte);
+            IMQTcpSocket->flush();
+        }
+        else
+        {   //tcp未连接
+            QString addr = IMSettings.getSetting("server", "ip").toString();
+            quint16 port = IMSettings.getSetting("server", "port").toInt();
+            IMQTcpWordInstance.connectHost(addr, port);
+        }
+    }
+    else if (verifyState == QDialog::Rejected)
+    {//验证失败
+        qDebug() << "验证失败";
+    }
+
+
 }
 
 void LogonPanel::on_btnRegister_clicked()
@@ -184,6 +210,7 @@ void LogonPanel::slotSocketError(QAbstractSocket::SocketError socketError)
 
 LogonPanel::LogonPanel(QWidget *parent)
     : QDialog(parent)
+    , m_verifyWidget(nullptr)
 {
     ui = new Ui::LogonPanel();
     ui->setupUi(this);
@@ -230,3 +257,76 @@ bool LogonPanel::eventFilter(QObject * obj, QEvent * event)
         return QWidget::eventFilter(obj, event);
     }
 }
+
+VerifyWidget::VerifyWidget(QWidget *parent)
+    : QDialog(parent)
+    , m_verifyLab(nullptr)
+    , m_verifyEdit(nullptr)
+    , m_verifyBtn(nullptr)
+{
+    this->setWindowTitle(QString("验证码"));
+    this->setFixedSize(400, 120);
+    this->setAttribute(Qt::WA_DeleteOnClose);           //设置为关闭时删除
+    this->setWindowFlags(Qt::CustomizeWindowHint | Qt::WindowCloseButtonHint);
+    this->createUI();
+    this->bindSlots();
+
+    m_verifyLab->installEventFilter(this);
+}
+
+VerifyWidget::~VerifyWidget()
+{
+}
+
+bool VerifyWidget::eventFilter(QObject * object, QEvent * event)
+{
+    return false;
+}
+
+void VerifyWidget::createUI()
+{
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout->setSpacing(0);
+    layout->setContentsMargins(0, 0, 0, 0);
+    this->setLayout(layout);
+
+    m_verifyLab = new VerificationCodeLabel(this);
+    m_verifyLab->setGeometry(0, 0, 150, 70);
+    layout->addWidget(m_verifyLab);
+
+    m_verifyEdit = new QLineEdit(this);
+    m_verifyEdit->setGeometry(160, 30, 100, 25);
+    layout->addWidget(m_verifyEdit);
+
+    m_verifyState = new QLabel(this);
+    m_verifyState->setFixedSize(this->width(), 20);
+    m_verifyState->setText(QString("请输入验证码，该验证码区分大小写"));
+    layout->addWidget(m_verifyState);
+
+    m_verifyBtn = new QPushButton(this);
+    m_verifyBtn->setObjectName(QString("btnVerify"));
+    m_verifyBtn->setGeometry(140, 80, 80, 30);
+    m_verifyBtn->setText(QString("确定"));
+    layout->addWidget(m_verifyBtn);
+}
+
+void VerifyWidget::bindSlots()
+{
+    connect(m_verifyBtn, &QPushButton::clicked, this, &VerifyWidget::slot_verifyBtn_clicked);
+}
+
+void VerifyWidget::slot_verifyBtn_clicked()
+{
+    QString userCode = m_verifyEdit->text();
+    QString realCode = m_verifyLab->getVerify();
+    if (QString::compare(userCode, realCode) == 0)
+    {//两个数相等
+        this->accept();
+    }
+    else
+    {
+        m_verifyState->setText("验证码错误，请重新输入");
+        m_verifyLab->refreshVerify();//刷新验证码
+    }
+}
+

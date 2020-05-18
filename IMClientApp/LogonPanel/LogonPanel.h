@@ -12,6 +12,29 @@ namespace Ui
 { 
     class LogonPanel; 
 };
+class VerificationCodeLabel;
+class QLabel;
+class QLineEdit;
+class QPushButton;
+
+class VerifyWidget :public QDialog
+{
+    Q_OBJECT
+public:
+    VerifyWidget(QWidget *parent = Q_NULLPTR);
+    ~VerifyWidget();
+public:
+    bool eventFilter(QObject *object, QEvent *event);
+private:
+    void createUI();
+    void bindSlots();
+    VerificationCodeLabel *m_verifyLab;
+    QLineEdit *m_verifyEdit;
+    QPushButton *m_verifyBtn;
+    QLabel *m_verifyState;
+private slots:
+    void slot_verifyBtn_clicked();
+};
 
 class LOGONPANEL_EXPORT LogonPanel : public QDialog
 {
@@ -23,6 +46,7 @@ public:
 private:
     bool    m_moving = false;       //表示窗口是否在鼠标操作下移动
     QPoint  m_lastPos;              //上一次的鼠标位置
+    int verifyState = 0;
 private:
     void creatUI();
     void readLocalSettings();
@@ -43,12 +67,14 @@ private slots:
 private:
     Ui::LogonPanel *ui;
     QMovie *movie;
+    VerifyWidget *m_verifyWidget;
 protected:
     void mousePressEvent(QMouseEvent *event);       //用于鼠标拖动窗口的鼠标事件操作
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
 public:
     bool eventFilter(QObject *obj, QEvent *event);
+
 };
 
 #endif // LOGONPANEL_H

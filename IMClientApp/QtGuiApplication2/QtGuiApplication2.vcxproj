@@ -96,6 +96,9 @@
     <ProjectReference Include="..\FriendPanel\FriendPanel.vcxproj">
       <Project>{a995ceea-7184-4abc-a182-5161bee3736b}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\LogonPanel\LogonPanel.vcxproj">
+      <Project>{6d8f1cd0-28d2-4716-8f9d-33bfa5b61705}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

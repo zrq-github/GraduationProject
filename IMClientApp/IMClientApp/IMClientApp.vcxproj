@@ -103,9 +103,6 @@
     <ProjectReference Include="..\FriendPanel\FriendPanel.vcxproj">
       <Project>{a995ceea-7184-4abc-a182-5161bee3736b}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\LogonPanel\LogonPanel.vcxproj">
-      <Project>{b1b842a6-2378-4ff5-a36e-d01de4c7e39e}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\QtUITool\QtUITool.vcxproj">
       <Project>{96db75c0-96e6-442e-bb78-040292d0773f}</Project>
     </ProjectReference>

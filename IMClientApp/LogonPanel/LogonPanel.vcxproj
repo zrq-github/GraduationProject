@@ -10,8 +10,45 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="LogonPanel.ui" />
+    <QtUic Include="NetSettingsPanel.ui" />
+    <QtUic Include="RegisterPanel.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="LogonPanel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="logonpanel_global.h" />
+    <QtMoc Include="VerificationCodeLabel.h" />
+    <QtMoc Include="RegisterPanel.h" />
+    <QtMoc Include="NetSettingsPanel.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="LogonPanel.cpp" />
+    <ClCompile Include="NetSettingsPanel.cpp" />
+    <ClCompile Include="RegisterPanel.cpp" />
+    <ClCompile Include="VerificationCodeLabel.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppSettings\AppSettings.vcxproj">
+      <Project>{e43a123f-58e4-4f0b-b8a5-68ef2c1de1d4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\ConfigCenter\ConfigCenter.vcxproj">
+      <Project>{287eb77d-4bc1-4778-bafc-83576ed0276b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\DataCenter\DataCenter.vcxproj">
+      <Project>{cc7923f2-8ee4-47b1-8d21-1b35fa49386d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\QDebugTool\QDebugTool.vcxproj">
+      <Project>{f461e33c-73f2-4dcf-bcc7-46f5db854454}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\QtUITool\QtUITool.vcxproj">
+      <Project>{96db75c0-96e6-442e-bb78-040292d0773f}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B1B842A6-2378-4FF5-A36E-D01DE4C7E39E}</ProjectGuid>
+    <ProjectGuid>{6D8F1CD0-28D2-4716-8F9D-33BFA5B61705}</ProjectGuid>
     <Keyword>QtVS_v302</Keyword>
     <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
@@ -20,12 +57,10 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
@@ -49,7 +84,7 @@
   </PropertyGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <QtInstall>Qt5.9.9</QtInstall>
-    <QtModules>core;gui;widgets</QtModules>
+    <QtModules>core;gui;network;widgets</QtModules>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
     <Import Project="$(QtMsBuild)\qt.props" />
@@ -62,7 +97,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>LOGONPANEL_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(SolutionDir);</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories);$(SolutionDir);.\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -77,7 +112,6 @@
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <PreprocessorDefinitions>LOGONPANEL_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories);$(SolutionDir);.\</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -85,41 +119,6 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <QtMoc Include="NetSettingsPanel.h" />
-    <QtMoc Include="RegisterPanel.h" />
-    <QtMoc Include="LogonPanel.h" />
-    <ClInclude Include="logonpanel_global.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="LogonPanel.cpp" />
-    <ClCompile Include="NetSettingsPanel.cpp" />
-    <ClCompile Include="RegisterPanel.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtUic Include="LogonPanel.ui">
-      <SubType>Designer</SubType>
-    </QtUic>
-    <QtUic Include="NetSettingsPanel.ui" />
-    <QtUic Include="RegisterPanel.ui" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AppSettings\AppSettings.vcxproj">
-      <Project>{e43a123f-58e4-4f0b-b8a5-68ef2c1de1d4}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\ConfigCenter\ConfigCenter.vcxproj">
-      <Project>{287eb77d-4bc1-4778-bafc-83576ed0276b}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\DataCenter\DataCenter.vcxproj">
-      <Project>{cc7923f2-8ee4-47b1-8d21-1b35fa49386d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\QDebugTool\QDebugTool.vcxproj">
-      <Project>{f461e33c-73f2-4dcf-bcc7-46f5db854454}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\QtUITool\QtUITool.vcxproj">
-      <Project>{96db75c0-96e6-442e-bb78-040292d0773f}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
     <Import Project="$(QtMsBuild)\qt.targets" />
